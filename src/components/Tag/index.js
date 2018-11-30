@@ -24,6 +24,12 @@ class Tag extends React.Component {
                     text: "培训课件"
                 })
                 break;
+            case 2: 
+                this.setState({
+                    color: "green",
+                    text: "随便什么"
+                })
+                break;
         }
     }
 

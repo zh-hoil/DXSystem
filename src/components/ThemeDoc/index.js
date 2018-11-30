@@ -9,7 +9,7 @@ class ThemeDoc extends React.Component {
     }
     render() {
         return (
-            <div className="theme-doc">
+            <div id={this.props.doc_id} className="theme-doc">
                 <div className="theme-title">
                     <div  className="icon" >
                         <img src={this.props.imgSrc}  />
@@ -18,9 +18,8 @@ class ThemeDoc extends React.Component {
                         <div className="title-text">{this.props.title}</div>
                         <div>
                             <Tag themeDocSort={this.props.themeDocSort} />
-                            <Evaluate />
+                            <Evaluate evaluate={this.props.evaluate}/>
                         </div>
-                        
                     </div>
                 </div>
                 <div className="theme-message">{this.props.message}</div>
@@ -30,9 +29,11 @@ class ThemeDoc extends React.Component {
 }
 
 ThemeDoc.propsType = {
+    doc_id: PropTypes.number.isRequired,
     imgSrc: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     themeDocSort: PropTypes.number.isRequired,
+    evaluate: PropTypes.number.isRequired,
     message: PropTypes.string.isRequired
 }
 export default ThemeDoc;
