@@ -2,6 +2,7 @@ import React from "react";
 import SearchBar from "Components/SearchBar";
 import ThemeList from "Components/ThemeList";
 import { withRouter } from "react-router-dom";
+import "./index.less";
 class ThemeSearch extends React.Component {
     constructor(props) {
         super(props);
@@ -13,7 +14,7 @@ class ThemeSearch extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="theme-search">
                 <SearchBar searchBoolean={false} />
                 <ThemeList />
             </div>

@@ -7,7 +7,7 @@ class SearchHistory extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div className="search-history">
                 <SearchBar searchBoolean={true} />
                 这里是搜索历史
             </div>
