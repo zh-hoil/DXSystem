@@ -1,0 +1,50 @@
+.theme-doc{
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid gray;
+    &:last-child{
+        border-bottom: none;
+    }
+    .theme-title{
+        position: relative;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        .icon{
+            width: 60px; 
+            height: 60px;
+            overflow: hidden;
+            border-radius: 8px;
+            img{
+                width: 60px; 
+                height: 60px;
+            }
+        }
+        .title{
+            position: absolute;
+            left: 60px;
+            right: 0;
+            display: inline-block;
+            margin-left: 10px;
+            .title-text{
+                font-size: 16px;
+            }
+            .tag, .evaluate{
+                margin-top: 10px;
+            }
+            .evaluate{
+                position: absolute;
+                right: 0;
+            }
+        }
+    }
+    .theme-message{
+        margin-right: 10px;
+        font-size: 15px;
+        color: gray;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    } 
+}

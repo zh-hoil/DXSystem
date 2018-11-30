@@ -19,6 +19,11 @@ const NCCMenu = Loadable({
     loading: Loading
 });
 
+const ThemeSearch = Loadable({
+    loader: () => import("Pages/ThemeSearch"),
+    loading: Loading
+});
+
 
 
 const routes = [
@@ -38,6 +43,10 @@ const routes = [
     {
         path: "/ncc",
         component: NCCMenu
+    },
+    {
+        path: "/themeSearch",
+        component: ThemeSearch
     }
 ];
 const RouteWithSubRoutes = route => (

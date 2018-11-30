@@ -7,7 +7,7 @@ import home6 from 'Assets/images/home6.png'; // 图表统计
 import './index.less';
 
 const menuList = [
-    { title: "搜索资料", path: "/", icon: home1 },
+    { title: "搜索资料", path: "/themeSearch", icon: home1 },
     { title: "我的关注", path: "/", icon: home7 },
     { title: "排行榜", path: "/", icon: home5 },
     { title: "图表统计", path: "/", icon: home6 }
