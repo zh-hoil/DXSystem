@@ -31,7 +31,12 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
     }
-    componentDidMount() {}
+    componentDidMount() {
+        if(this.props.location.search){
+            
+            window.localStorage.setItem("YY_userInfo",userID);
+        }
+    }
     render() {
         return (
             <div className="home">
