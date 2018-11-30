@@ -14,7 +14,7 @@ module.exports = (dirname) => {
             rules: [
                 {
                     test: /\.js[x]?$/,
-                    exclude: /node_modules\/(?!(dom7|ssr-window|swiper)\/).*/,
+                    exclude: /node_modules/,
                     loader: "babel-loader"
                 },
                 {
