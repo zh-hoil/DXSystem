@@ -31,9 +31,6 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
     }
-    handleClick = () => {
-        this.props.updateTitle("首页-修改");
-    };
     componentDidMount() {}
     render() {
         return (
@@ -42,11 +39,6 @@ class Home extends React.Component {
                     <Banner banerList={List} />
                 </div>
                 <HomeMenu />
-                {/* <div className="home_menu">
-                    <h1 className="title">{this.props.title}</h1>
-                    <Link to="/page1">Page1</Link>
-                    <button onClick={this.handleClick}>修改标题</button>
-                </div> */}
             </div>
         );
     }

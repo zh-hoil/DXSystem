@@ -8,6 +8,19 @@ const Page1 = Loadable({
     loader: () => import("Pages/Page1"),
     loading: Loading
 });
+
+const NCMenu = Loadable({
+    loader: () => import("Pages/NCMenu"),
+    loading: Loading
+});
+
+const NCCMenu = Loadable({
+    loader: () => import("Pages/NCCMenu"),
+    loading: Loading
+});
+
+
+
 const routes = [
     {
         path: "/",
@@ -17,6 +30,14 @@ const routes = [
     {
         path: "/page1",
         component: Page1
+    },
+    {
+        path: "/nc",
+        component: NCMenu
+    },
+    {
+        path: "/ncc",
+        component: NCCMenu
     }
 ];
 const RouteWithSubRoutes = route => (
