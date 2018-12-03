@@ -1,17 +1,36 @@
 import React from "react";
 import "./index.less";
-import SearchBar from "Components/SearchBar";
+import SearchBarComponent from "Components/SearchBar";
+import HistoryList from "./historyList";
+import { connect } from "react-redux";
+import { clearData } from "Store/SearchHistory/action";
 class SearchHistory extends React.Component {
-    constructor(props, context) {
-        super(props, context);
+    constructor(props) {
+        super(props);
+        // this.state = {
+        //     searchText: "piu"
+        // }
+    }
+
+    componentWillUnmount () {
+        //卸载页面前 清空数据
+        if(this.props.clearData) {
+            this.props.clearData();
+        }
     }
     render() {
         return (
             <div className="search-history">
-                <SearchBar searchBoolean={true} />
-                这里是搜索历史
+                <SearchBarComponent searchBoolean={true} />
+                <HistoryList searchText="asdf"/>
             </div>
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        searchText: state.searchText
+    }
+}
+SearchHistory = connect(mapStateToProps, { clearData })(SearchHistory)
 export default SearchHistory;

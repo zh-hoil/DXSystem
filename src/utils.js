@@ -4,7 +4,27 @@ export function getTargetAttr (dom, attr) {
     return dom[attr]?dom[attr]:(dom.parentNode?getTargetAttr(dom.parentNode, attr):"")
 }
 
-export function sortBy(arr, key) {
-    //将数组按key排序
-    return arr
+
+
+//数组按照数组中对象某key值排序
+export function sortBy(arr, key, boolean) {
+    function compare(key) {
+        return function (obj1, obj2) {
+            if(obj1[key]<obj2[key]){
+                return -1
+            }else if(obj1[key]>obj2[key]){
+                return 1
+            }
+            return 0
+        }
+    }
+    if(boolean) {
+        //从小到大
+        return arr.sort(compare(key))
+    }else{
+        //从大到小
+        return arr.sort(compare(key)).reverse()
+    }
 }
+
+

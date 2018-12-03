@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = (dirname) => {
+    console.log(">>>>>>>>")
+    console.log(dirname)
     return {
         entry: {
             app: "./app.js"
