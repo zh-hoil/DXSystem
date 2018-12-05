@@ -12,7 +12,7 @@ class ThemeCocs extends React.Component {
         if(!theme_doc_id) {
             return 
         }
-        window.location.hash =  "/themeDetials/" + theme_doc_id
+        window.location.hash =  "/themeDetails/" + theme_doc_id
     }
 
     render() {

@@ -22,7 +22,7 @@ class SearchHistory extends React.Component {
         return (
             <div className="search-history">
                 <SearchBarComponent searchBoolean={true} />
-                <HistoryList searchText="asdf"/>
+                <HistoryList />
             </div>
         )
     }

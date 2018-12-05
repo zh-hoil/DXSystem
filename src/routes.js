@@ -29,8 +29,8 @@ const SearchHistory = Loadable({
     loading: Loading
 });
 
-const ThemeDetials = Loadable({
-    loader: () => import("Pages/ThemeDetials"),
+const ThemeDetails = Loadable({
+    loader: () => import("Pages/ThemeDetails"),
     loading: Loading
 });
 
@@ -64,9 +64,9 @@ const routes = [
         component: SearchHistory
     },
     {
-        path: "/themeDetials/:theme_id",
+        path: "/themeDetails/:theme_id",
         exact: true,
-        component: ThemeDetials
+        component: ThemeDetails
     }
     
 ];

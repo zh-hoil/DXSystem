@@ -27,4 +27,30 @@ export function sortBy(arr, key, boolean) {
     }
 }
 
+//保存数据到本地存储中
+export function addLocalStorage(key, value) {
+    let arr = getLocalStorage(key);
+    if(!arr){
+        arr = [];
+    }else{
+        //查看本地已有数据中是否已含有value
+        for(let oldVal of arr) {
+            if(oldVal == value){
+                return
+            }
+        }
+    }
+    arr.push(value);
+    localStorage.setItem(key, JSON.stringify(arr))
+}
+
+export function getLocalStorage(key) {
+    let value = localStorage.getItem(key);
+    if(!value){
+        console.log("没有纪录呢")
+        return 
+    }
+    return JSON.parse(value)
+}
+
 
