@@ -34,6 +34,16 @@ const ThemeDetails = Loadable({
     loading: Loading
 });
 
+const PraiseDetail = Loadable({
+    loader: () => import("Pages/PraiseDetail"),
+    loading: Loading
+});
+
+const SearchRusults = Loadable({
+    loader: () => import("Pages/SearchRusults"),
+    loading: Loading
+});
+
 
 
 
@@ -67,6 +77,14 @@ const routes = [
         path: "/themeDetails/:theme_id",
         exact: true,
         component: ThemeDetails
+    },
+    {
+        path: "/praiseDetail",
+        component: PraiseDetail
+    },
+    {
+        path: "/searchRusults",
+        component: SearchRusults
     }
     
 ];

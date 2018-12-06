@@ -55,7 +55,7 @@ class HistoryList extends React.Component {
         }
 
         //访问搜索接口 并跳转到详情页
-        window.location.hash = "/themeSearch"
+        window.location.hash = "/searchRusults"
          
 
 

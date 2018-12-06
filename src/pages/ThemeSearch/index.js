@@ -3,6 +3,7 @@ import SearchBar from "Components/SearchBar";
 import ThemeList from "./ThemeList";
 import { Drawer, List } from 'antd-mobile';
 import "./index.less";
+import { Ajax } from "Public/js/Ajax";
 class ThemeSearch extends React.Component {
     constructor(props) {
         super(props);
@@ -10,13 +11,60 @@ class ThemeSearch extends React.Component {
             open: false
         }
     }
-    componentDidMount () {
-        
+    componentDidMount() {
+        // axios.get('/getNCCloudThemeField', {
+        //     params: {
+        //         userId: "0001AA1000000002W4SU",
+        //     }
+
+        // })
+        //     .then(function (response) {
+        //         console.log(response);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+        // Ajax({
+        //     url: "/commentTopic",
+        //     // transformRequest: [function (data) {
+        //     //     let ret = ''
+        //     //     for (let it in data) {
+        //     //         ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+        //     //     }
+        //     //     return ret
+        //     // }],
+        //     data: {
+        //         themeId: '2',
+        //         userId: '0001AA1000000002W4SU',
+        //         content: "asdfasdfsd",
+        //         star: "2",
+        //         modules: "eg"
+        //     },
+        //     method: "post",
+
+        // }).then(function (response) {
+        //     console.log(response);
+        // })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });;
+        Ajax.post('/commentTopic', {
+            themeId: '2',
+            userId: '0001AA1000000002W4SU',
+            content: "asdfasdfsd",
+            star: "2",
+            modules: "eg"
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
-    onOpenChange = (...args) => {
-        this.setState({ 
-            ...this.state,
-            open: !this.state.open 
+    onOpenChange () {
+        this.setState({
+            open: !this.state.open
         });
     }
 
@@ -38,10 +86,10 @@ class ThemeSearch extends React.Component {
         return (<div>
             <Drawer
                 position="right"
-                style={{ minHeight: document.documentElement.clientHeight}}
+                style={{ minHeight: document.documentElement.clientHeight }}
                 sidebar={sidebar}
                 open={this.state.open}
-                onOpenChange={this.onOpenChange}
+                onOpenChange={this.onOpenChange.bind(this)}
             >
                 <div>
                     <SearchBar triggleDrawer={this.onOpenChange.bind(this)} searchBoolean={false} />

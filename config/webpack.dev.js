@@ -28,7 +28,7 @@ module.exports = (dirname, config) => {
             proxy: {
                 "/": {
                     // 代理地址
-                    target: "http://10.11.115.25:8888/"
+                    target: "http://10.11.115.74:5050/fiwechat/"
                 }
             }
         },

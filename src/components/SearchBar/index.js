@@ -17,7 +17,9 @@ class SearchBarComponent extends React.Component {
     }
 
     onChange (val) {
-        this.props.changeSearchText(val)
+        if(this.props.changeSearchText){
+            this.props.changeSearchText(val)
+        }
     }
 
     handleToSearch(hash) {

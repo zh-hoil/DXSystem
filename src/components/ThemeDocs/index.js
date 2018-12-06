@@ -2,7 +2,9 @@ import React from "react";
 import ThemeDoc from "./themeDoc";
 import { getTargetAttr } from "Src/utils";
 import { List } from "antd-mobile";
-class ThemeCocs extends React.Component {
+import PropTypes from "prop-types";
+import "./index.less";
+class ThemeDocs extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -11,6 +13,9 @@ class ThemeCocs extends React.Component {
         let theme_doc_id = getTargetAttr(e.target, "id");
         if(!theme_doc_id) {
             return 
+        }
+        if(isNaN(parseInt(theme_doc_id))){
+            return
         }
         window.location.hash =  "/themeDetails/" + theme_doc_id
     }
@@ -24,7 +29,6 @@ class ThemeCocs extends React.Component {
                             <List.Item  key={i}>
                                 <ThemeDoc {...doc} />
                             </List.Item>
-                            
                         ))
                     }
                 </List>
@@ -32,4 +36,7 @@ class ThemeCocs extends React.Component {
         )
     }
 }
-export default ThemeCocs;
+ThemeDocs.propsType = {
+    theme_docs: PropTypes.object
+}
+export default ThemeDocs;

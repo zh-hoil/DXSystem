@@ -8,7 +8,7 @@ class Evaluate extends React.Component {
     render() {
         return (
             <div className="evaluate">
-                <span>{this.props.evaluate}%</span>
+                <span>{this.props.evaluate}% </span>
                 好评
             </div>
         );
@@ -18,7 +18,7 @@ class Evaluate extends React.Component {
 Evaluate.defaultProps = {
     evaluate: 0
 }
-Evaluate.propTypes = {
+Evaluate.propsType = {
     evaluate: PropTypes.number.isRequired
 }
 export default Evaluate;
