@@ -2,82 +2,47 @@ import React from "react";
 import ThemeDocs from "Components/ThemeDocs";
 import SearchBar from "Components/SearchBar";
 import "./index.less";
+import { userId, Get, Post } from "Public/js/Ajax";
+
+const NCCSEARCHURL = "/getNCCloudThemeSearch";
 class SearchRusults extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            theme_docs: [
-                {
-                    doc_id: 1,
-                    title: "这里是第一页 2 days ago",
-                    message: "国旅共享服务中心信息化解决方案、解决方案应用价值",
-                    themeDocSort: 1,
-                    imgSrc: "#",
-                    evaluate: 99,
-                    time: "2 days ago"
-                },
-                {
-                    doc_id: 1,
-                    title: "这里是第一页 2 days ago",
-                    message: "国旅共享服务中心信息化解决方案、解决方案应用价值",
-                    themeDocSort: 1,
-                    imgSrc: "#",
-                    evaluate: 99,
-                    time: "2 days ago"
-                },
-                {
-                    doc_id: 1,
-                    title: "这里是第一页 2 days ago",
-                    message: "国旅共享服务中心信息化解决方案、解决方案应用价值",
-                    themeDocSort: 1,
-                    imgSrc: "#",
-                    evaluate: 99,
-                    time: "2 days ago"
-                },
-                {
-                    doc_id: 1,
-                    title: "这里是第一页 2 days ago",
-                    message: "国旅共享服务中心信息化解决方案、解决方案应用价值",
-                    themeDocSort: 1,
-                    imgSrc: "#",
-                    evaluate: 99,
-                    time: "2 days ago"
-                },
-                {
-                    doc_id: 1,
-                    title: "这里是第一页 2 days ago",
-                    message: "国旅共享服务中心信息化解决方案、解决方案应用价值",
-                    themeDocSort: 1,
-                    imgSrc: "#",
-                    evaluate: 99,
-                    time: "2 days ago"
-                },
-                {
-                    doc_id: 1,
-                    title: "这里是第一页 2 days ago",
-                    message: "国旅共享服务中心信息化解决方案、解决方案应用价值",
-                    themeDocSort: 1,
-                    imgSrc: "#",
-                    evaluate: 99,
-                    time: "2 days ago"
-                },
-                {
-                    doc_id: 1,
-                    title: "这里是第一页 2 days ago",
-                    message: "国旅共享服务中心信息化解决方案、解决方案应用价值",
-                    themeDocSort: 1,
-                    imgSrc: "#",
-                    evaluate: 99,
-                    time: "2 days ago"
-                }
-            ]
+            searchBoolean: true,
+            themeList: []
         }
     }
+
+    componentWillMount () {
+        let keyword = this.props.match.params.keyword
+
+
+
+        Get(NCCSEARCHURL, {
+            userId: userId,
+            keyword: keyword
+        }, (res) => {
+            
+            console.log("这里是搜索主题的数据")
+            console.log(res)
+
+            let themeList = res.data;
+
+            this.setState({
+                themeList: themeList
+            })
+
+        }, (err) => {
+            console.log(err)
+        })
+    }
+
     render() {
         return (
             <div className="search-results">
-                <SearchBar searchBoolean={true} />
-                <ThemeDocs theme_docs={this.state.theme_docs} />
+                <SearchBar searchBoolean={this.state.searchBoolean} />
+                <ThemeDocs themeList={this.state.themeList} />
             </div>
         )
     }

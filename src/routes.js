@@ -83,7 +83,8 @@ const routes = [
         component: PraiseDetail
     },
     {
-        path: "/searchRusults",
+        path: "/searchRusults/:keyword",
+        exact: true,
         component: SearchRusults
     }
     

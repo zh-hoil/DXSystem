@@ -3,14 +3,15 @@ import SearchBar from "Components/SearchBar";
 import ThemeList from "./ThemeList";
 import { Drawer, List } from 'antd-mobile';
 import "./index.less";
-import { Ajax } from "Public/js/Ajax";
 class ThemeSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: false,
+            searchBoolean: false
         }
     }
+
     componentDidMount() {
         // axios.get('/getNCCloudThemeField', {
         //     params: {
@@ -48,19 +49,7 @@ class ThemeSearch extends React.Component {
         //     .catch(function (error) {
         //         console.log(error);
         //     });;
-        Ajax.post('/commentTopic', {
-            themeId: '2',
-            userId: '0001AA1000000002W4SU',
-            content: "asdfasdfsd",
-            star: "2",
-            modules: "eg"
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        
     }
     onOpenChange () {
         this.setState({
@@ -83,20 +72,22 @@ class ThemeSearch extends React.Component {
             })}
         </List>);
 
-        return (<div>
-            <Drawer
-                position="right"
-                style={{ minHeight: document.documentElement.clientHeight }}
-                sidebar={sidebar}
-                open={this.state.open}
-                onOpenChange={this.onOpenChange.bind(this)}
-            >
-                <div>
-                    <SearchBar triggleDrawer={this.onOpenChange.bind(this)} searchBoolean={false} />
-                    <ThemeList />
-                </div>
-            </Drawer>
-        </div>);
+        return (
+            <div>
+                <Drawer
+                    position="right"
+                    style={{ minHeight: document.documentElement.clientHeight }}
+                    sidebar={sidebar}
+                    open={this.state.open}
+                    onOpenChange={this.onOpenChange.bind(this)}
+                >
+                    <div>
+                        <SearchBar triggleDrawer={this.onOpenChange.bind(this)} searchBoolean={this.state.searchBoolean} />
+                        <ThemeList />
+                    </div>
+                </Drawer>
+            </div>
+        )
     }
 
 }

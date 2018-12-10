@@ -7,17 +7,27 @@ import "./index.less";
 class ThemeDocs extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            themeId: ""
+        }
     }
 
+
     handleDetails (e) {
-        let theme_doc_id = getTargetAttr(e.target, "id");
-        if(!theme_doc_id) {
+        let themeId = getTargetAttr(e.target, "themeid");
+        
+        if(!themeId) {
             return 
         }
-        if(isNaN(parseInt(theme_doc_id))){
+        if(isNaN(parseInt(themeId))){
             return
         }
-        window.location.hash =  "/themeDetails/" + theme_doc_id
+
+        this.setState({
+            themeId: themeId
+        })
+
+        window.location.hash =  "/themeDetails/" + themeId
     }
 
     render() {
@@ -25,9 +35,9 @@ class ThemeDocs extends React.Component {
             <div className="list">
                 <List onClick={this.handleDetails.bind(this)}>
                     {
-                        this.props.theme_docs.map((doc, i) => (
+                        this.props.themeList.map((theme, i) => (
                             <List.Item  key={i}>
-                                <ThemeDoc {...doc} />
+                                <ThemeDoc {...theme} />
                             </List.Item>
                         ))
                     }
@@ -37,6 +47,6 @@ class ThemeDocs extends React.Component {
     }
 }
 ThemeDocs.propsType = {
-    theme_docs: PropTypes.object
+    themeList: PropTypes.array
 }
 export default ThemeDocs;

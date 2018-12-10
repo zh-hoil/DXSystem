@@ -22,7 +22,6 @@ class HistoryList extends React.Component {
         }
         console.log(historyList)
         this.setState({
-            ...this.state,
             historyList: historyList
         })
     }
@@ -32,6 +31,10 @@ class HistoryList extends React.Component {
         if (!searchText) {
             return
         }
+
+        
+
+        
 
         // 保存该记录
         // ...
@@ -55,7 +58,7 @@ class HistoryList extends React.Component {
         }
 
         //访问搜索接口 并跳转到详情页
-        window.location.hash = "/searchRusults"
+        window.location.hash = "/searchRusults/" + searchText
          
 
 

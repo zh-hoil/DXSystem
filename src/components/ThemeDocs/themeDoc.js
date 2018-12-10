@@ -3,6 +3,7 @@ import "./themeDoc.less";
 import PropTypes from "prop-types";
 import Tag from "Components/Tag";
 import Evaluate from "Components/Evaluate";
+import program from "Assets/images/program.png";
 class ThemeDoc extends React.Component {
     constructor(props) {
         super(props);
@@ -10,24 +11,20 @@ class ThemeDoc extends React.Component {
     render() {
         let theme = this.props
         return (
-            <div id={theme.doc_id} className="theme-doc">
+            <div themeid={theme.themeId} className="theme-doc">
                 <div className="theme-title">
-                    <div  className="icon" >
-                        <img src={theme.imgSrc}  />
+                    <div className="icon" >
+                        <img src={program}  />
                     </div>
                     <div className="title">
                         <div className="title-text">{theme.title}</div>
-                        {theme.themeDocSort?
-                            (<div>
-                                <Tag themeDocSort={theme.themeDocSort} />
-                                <Evaluate evaluate={theme.evaluate}/>
-                            </div>)
-                            :
-                            ""
-                        }
+                        <div>
+                            <Tag type={theme.type} />
+                            <Evaluate evaluate={theme.score}/>
+                        </div>
                     </div>
                 </div>
-                <div className="theme-message">{theme.message}</div>
+                <div className="theme-message">{theme.description}</div>
             </div>
         );
     }

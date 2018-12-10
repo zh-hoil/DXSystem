@@ -1,10 +1,17 @@
 import React from "react";
+import comment from 'Assets/images/comment.png'; 
 import "./index.less";
 class PostComments extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             open: false
+        }
+    }
+
+    componentDidUpdate () {
+        if(this.state.open) {
+            this.autoFocusInst.focus()
         }
     }
 
@@ -41,7 +48,7 @@ class PostComments extends React.Component {
                                     <span className="mark-text">请为该主题打分</span>
                                     <span className="mark-star">⭐⭐⭐⭐⭐</span>
                                 </div>
-                                <textarea className="writting" placeholder="写评论(100字以内)"></textarea>
+                                <textarea ref={ref => this.autoFocusInst = ref} className="writting" placeholder="写评论(100字以内)"></textarea>
                                 <div className="buttons">
                                     <span onClick={this.handleCancel.bind(this)}>取消</span>
                                     <span>|</span>
@@ -53,7 +60,7 @@ class PostComments extends React.Component {
                         (
                             <div className="details-bottom">
                                 <div className="comment-input" onClick={this.handleOpenComment.bind(this)}>写评论</div>
-                                <span className="icon" onClick={this.handlePraiseDetail.bind(this)}></span>
+                                <span className="icon" style={{background: `url(${comment}) no-repeat`, backgroundSize: "25px"}} onClick={this.handlePraiseDetail.bind(this)}></span>
                                 {this.props.comments.length}
                             </div>
                         )

@@ -3,6 +3,7 @@ import Time from "Components/Time";
 import Praise from "Components/Praise";
 import PropTypes from "prop-types";
 import "./index.less";
+import avatar from 'Assets/images/avatar.png'; 
 class Comment extends React.Component {
     constructor(props) {
         super(props);
@@ -12,7 +13,7 @@ class Comment extends React.Component {
         return (
             <div className="comment">
                 <div className="user-avatar">
-                    <img src="#" />
+                    <img src={avatar} />
                 </div>
                 <div className="comment-detail">
                     <div className="user-name">{comment.username}</div>

@@ -19,6 +19,6 @@ Evaluate.defaultProps = {
     evaluate: 0
 }
 Evaluate.propsType = {
-    evaluate: PropTypes.number.isRequired
+    evaluate: PropTypes.string.isRequired
 }
 export default Evaluate;

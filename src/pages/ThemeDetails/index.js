@@ -6,7 +6,9 @@ import Comment from "Components/Comment";
 import Evaluate from "Components/Evaluate";
 import Praise from "Components/Praise";
 import Recommends from "Components/Recommends";
-import PostComments from "../../components/PostComments";
+import PostComments from "Components/PostComments";
+import download from "Assets/images/download.png";
+import more from "Assets/images/more.png";
 
 class ThemeDetails extends React.Component {
     constructor(props) {
@@ -152,7 +154,7 @@ class ThemeDetails extends React.Component {
                                 "暂未提供实施资料"}
                             </div>
                             <div className="data-get" onClick={this.handleDataGet.bind(this)}>
-                                <span className="download-icon"></span>
+                                <span className="download-icon" style={{background: `url(${download}) no-repeat`, backgroundSize: "20px"}}></span>
                                 索取资料
                             </div>
                         </div>
@@ -171,7 +173,7 @@ class ThemeDetails extends React.Component {
                         }
                         <div className="more-comments" onClick={this.handlePraiseDetail.bind(this)}>
                             更多评价
-                            <span className="more-comments-icon"></span>
+                            <span className="more-comments-icon" style={{background: `url(${more}) no-repeat`, backgroundSize: "20px"}}></span>
                         </div>
                     </div>
                     <div className="likes">
