@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./index.less";
-import { formatDate } from "Src/utils";
 class Time extends React.Component {
     constructor(props) {
         super(props);
@@ -10,14 +9,14 @@ class Time extends React.Component {
     render() {
         return (
             <div className="time">
-                {formatDate(this.props.timestamp)}
+                {this.props.time}
             </div>
         );
     }
 }
 
 Time.propsType = {
-    timestamp: PropTypes.number.isRequired
+    time: PropTypes.string.isRequired
 }
 
 export default Time;

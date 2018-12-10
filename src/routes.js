@@ -74,12 +74,13 @@ const routes = [
         component: SearchHistory
     },
     {
-        path: "/themeDetails/:theme_id",
+        path: "/themeDetails/:themeId",
         exact: true,
         component: ThemeDetails
     },
     {
-        path: "/praiseDetail",
+        path: "/praiseDetail/:themeId",
+        exact: true,
         component: PraiseDetail
     },
     {

@@ -9,36 +9,30 @@ class Tag extends React.Component {
         }
     }
 
-    componentWillMount () {
-        switch (this.props.type) {
+    _getColor (type) {
+        switch (type) {
             case "功能特性":
-                this.setState({
-                    color: "blue"
-                })
-                break;
+                return { color: "blue" }
             case "课件文档": 
-                this.setState({
-                    color: "purple"
-                })
-                break;
+                return { color: "purple" }
             default:
-                this.setState({
-                    color: "white"
-                })
+                return { color: "white" }
         }
     }
 
+
+
     render() {
         return (
-            <div style={{color: this.state.color}} className="tag">
+            <div style={this._getColor(this.props.type)} className="tag">
                 {this.props.type}
             </div>
         );
     }
 }
 
-Tag.propsType = {
-    type: PropTypes.string.isRequired
-}
+// Tag.propsType = {
+//     type: PropTypes.string.isRequired
+// }
 
 export default Tag;

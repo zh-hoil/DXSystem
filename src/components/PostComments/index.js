@@ -1,6 +1,9 @@
 import React from "react";
 import comment from 'Assets/images/comment.png'; 
 import "./index.less";
+import { userId, Get, Post } from "Public/js/Ajax";
+
+const COMMENTOPICURL = "/commentTopic";
 class PostComments extends React.Component {
     constructor(props) {
         super(props);
@@ -21,20 +24,45 @@ class PostComments extends React.Component {
 
     handleOpenComment() {
         this.setState({
-            open: !this.state.open
+            open: true
         })
     }
 
     handleCancel () {
         this.setState({
-            open: !this.state.open
+            open: false
         })
     }
 
     handleConfirm () {
-        this.setState({
-            open: !this.state.open
+        //发送评论请求
+        let themeId = this.props.themeId;
+        let content = this.autoFocusInst.value;
+        let star = "5";
+        console.log(themeId);
+        console.log(content)
+        Post(COMMENTOPICURL, {
+            userId: userId,
+            themeId: themeId,
+            content: content,
+            star: star
+        }, (res) => {
+            this.autoFocusInst.value = "";
+            this.setState({
+                open: false
+            })
+
+            window.location.reload()
+
+            console.log("这里是评论成功的数据")
+            console.log(res.message)
+        }, (err) => {
+            console.log(err)
         })
+    
+        
+
+
     }
     
     render() {
@@ -61,7 +89,7 @@ class PostComments extends React.Component {
                             <div className="details-bottom">
                                 <div className="comment-input" onClick={this.handleOpenComment.bind(this)}>写评论</div>
                                 <span className="icon" style={{background: `url(${comment}) no-repeat`, backgroundSize: "25px"}} onClick={this.handlePraiseDetail.bind(this)}></span>
-                                {this.props.comments.length}
+                                {this.props.count}
                             </div>
                         )
                 }
@@ -69,4 +97,5 @@ class PostComments extends React.Component {
         )
     }
 }
+
 export default PostComments;

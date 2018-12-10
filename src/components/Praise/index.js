@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./index.less";
 class Praise extends React.Component {
-    constructor(props, context) {
-        super(props, context);
+    constructor(props) {
+        super(props);
     }
 
     handlePraise() {
@@ -13,12 +13,15 @@ class Praise extends React.Component {
     render() {
         return (
             <div className="praise" onClick={this.handlePraise.bind(this)}>
-                {`👍 ${this.props.praise}`}
+                {(this.props.favorw?"😒":"👍") + " " + this.props.favorwnum}
             </div>
         )
     }
 }
+
 Praise.propsType = {
-    praise: PropTypes.number.isRequired
+    favorw: PropTypes.bool.isRequired,
+    favorwnum: PropTypes.number.isRequired
 }
+
 export default Praise;

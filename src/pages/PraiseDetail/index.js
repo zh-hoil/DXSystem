@@ -31,6 +31,11 @@ class PraiseDetail extends React.Component {
             ]
         }
     }
+
+    componentWillMount () {
+        let themeId = this.props.match.params.themeId;
+        console.log(themeId);
+    }
     render() {
         return (
             <div className="praise-detail">
