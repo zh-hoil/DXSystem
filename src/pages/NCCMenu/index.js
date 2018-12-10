@@ -1,5 +1,6 @@
 import React from "react";
 import MenuList from "Components/MenuList";
+import { updateAppTitle } from "Public/js/JSBridge";
 import home1 from 'Assets/images/home1.png'; // 搜索资料
 import home7 from 'Assets/images/home7.png'; // 我的关注
 import home5 from 'Assets/images/home5.png'; // 排行榜
@@ -17,6 +18,11 @@ class NCCMenu extends React.Component {
     constructor(props, context) {
         super(props, context);
     }
+    
+    componentWillMount() {
+        updateAppTitle("了解NC Cloud");
+    }
+    
     render() {
         return <MenuList className="ncc_menu" menuList={menuList} />;
     }
