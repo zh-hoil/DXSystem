@@ -1,5 +1,6 @@
 import React from "react";
 import MenuList from "Components/MenuList";
+import { updateAppTitle } from "Public/js/JSBridge";
 import home1 from 'Assets/images/home1.png'; // 搜索资料
 import home7 from 'Assets/images/home7.png'; // 我的关注
 import home2 from 'Assets/images/home2.png'; // 产品提案
@@ -23,6 +24,9 @@ const menuList = [
 class NCMenu extends React.Component {
     constructor(props, context) {
         super(props, context);
+    }
+    componentWillMount() {
+        updateAppTitle("了解NC");
     }
     render() {
         return <MenuList className="nc_menu" menuList={menuList} />;
