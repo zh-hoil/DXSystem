@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { updateTitle } from "Store/Home/action";
 import Banner from "Components/Banner";
-import HomeMenu from './HomeMenu';
+import { updateAppTitle } from "Public/js/JSBridge";
+import HomeMenu from "./HomeMenu";
 import banner1 from "Assets/images/banner1.jpg";
 import banner2 from "Assets/images/banner2.jpg";
 import banner3 from "Assets/images/banner3.jpg";
@@ -31,12 +32,10 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
     }
-    componentDidMount() {
-        if(this.props.location.search){
-            
-            window.localStorage.setItem("YY_userInfo",userID);
-        }
+    componentWillMount() {
+        updateAppTitle("NC一线牵");
     }
+    componentDidMount() {}
     render() {
         return (
             <div className="home">
