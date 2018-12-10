@@ -1,7 +1,8 @@
 import React from "react";
-import comment from 'Assets/images/comment.png'; 
+import comment from 'Assets/images/comment.png';
 import "./index.less";
 import { userId, Get, Post } from "Public/js/Ajax";
+import { Toast } from 'antd-mobile';
 
 const COMMENTOPICURL = "/commentTopic";
 class PostComments extends React.Component {
@@ -12,8 +13,8 @@ class PostComments extends React.Component {
         }
     }
 
-    componentDidUpdate () {
-        if(this.state.open) {
+    componentDidUpdate() {
+        if (this.state.open) {
             this.autoFocusInst.focus()
         }
     }
@@ -28,13 +29,19 @@ class PostComments extends React.Component {
         })
     }
 
-    handleCancel () {
+    handleCancel() {
         this.setState({
             open: false
         })
     }
 
-    handleConfirm () {
+    // loadingToast() {
+    //     Toast.loading('正在提交...', 1, () => {
+    //       console.log('Load complete !!!');
+    //     });
+    //   }
+
+    handleConfirm() {
         //发送评论请求
         let themeId = this.props.themeId;
         let content = this.autoFocusInst.value;
@@ -51,20 +58,20 @@ class PostComments extends React.Component {
             this.setState({
                 open: false
             })
+            Toast.success(res.message, 1, () => {
+                //刷新页面以及时显示评论
+                window.location.reload()
+            })
 
-            window.location.reload()
+
 
             console.log("这里是评论成功的数据")
             console.log(res.message)
         }, (err) => {
-            console.log(err)
+            Toast.fail("error")
         })
-    
-        
-
-
     }
-    
+
     render() {
         return (
             <div>
@@ -88,7 +95,7 @@ class PostComments extends React.Component {
                         (
                             <div className="details-bottom">
                                 <div className="comment-input" onClick={this.handleOpenComment.bind(this)}>写评论</div>
-                                <span className="icon" style={{background: `url(${comment}) no-repeat`, backgroundSize: "25px"}} onClick={this.handlePraiseDetail.bind(this)}></span>
+                                <span className="icon" style={{ background: `url(${comment}) no-repeat`, backgroundSize: "25px" }} onClick={this.handlePraiseDetail.bind(this)}></span>
                                 {this.props.count}
                             </div>
                         )

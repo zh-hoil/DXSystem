@@ -1,5 +1,4 @@
 import React from "react";
-import "./themeList.less";
 import Data from "./themeList.json";
 import ThemeDocs from "Components/ThemeDocs";
 import { getTargetAttr, sortBy } from "Src/utils";

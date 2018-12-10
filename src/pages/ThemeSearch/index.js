@@ -73,7 +73,7 @@ class ThemeSearch extends React.Component {
         </List>);
 
         return (
-            <div>
+            <div className="theme-search">
                 <Drawer
                     position="right"
                     style={{ minHeight: document.documentElement.clientHeight }}

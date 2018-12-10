@@ -10,3 +10,68 @@
 .am-list{
     width: 100%;
 }
+
+.theme-search{
+    .themes-wrapper{
+        position: absolute;
+        top: 50px;
+        bottom: 0;
+        width: 100%;
+        .catelog{
+            height: 100%;
+            width: 25%;
+            float: left;
+            li{
+                height: 50px;
+                line-height: 50px;
+                vertical-align: middle;
+                text-align: center;
+                overflow: hidden;
+            }
+            .active{
+                background: #fff;
+            }
+        }
+        .theme-docs{
+            position: relative;
+            float: left;
+            width: 75%;
+            height: 100%;
+            .sortable{
+                position: absolute;
+                top: 0;
+                height: 50px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-bottom: 1px solid lightgray;
+                span{
+                    display: inline-block;
+                    text-align: center;
+                    height: 50px;
+                    line-height: 50px;
+                    vertical-align: middle;
+                }
+                span:nth-child(2){
+                    width: 2%;
+                }
+                span:nth-child(1), span:nth-child(3){
+                    width: 49%;
+                }
+                .active{
+                    color: blue;
+                    border-bottom: 2px solid blue;
+                }
+            }
+            .list{
+                position: absolute;
+                top: 50px;
+                bottom: 0;
+                width: 100%;
+                overflow: auto;
+            }
+    
+        }
+    }
+}

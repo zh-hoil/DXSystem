@@ -3,8 +3,6 @@ import Time from "Components/Time";
 import Praise from "Components/Praise";
 import Stars from "Components/Stars";
 import PropTypes from "prop-types";
-import "./index.less";
-import avatar from 'Assets/images/avatar.png'; 
 class Comment extends React.Component {
     constructor(props) {
         super(props);
@@ -12,17 +10,17 @@ class Comment extends React.Component {
     render() {
         const comment = this.props.comment;
         return (
-            <div className="comment">
+            <div commentid={comment.commentId} className="comment">
                 <div className="user-avatar">
-                    <img src={avatar} />
+                    <img src={comment.portrait} />
                 </div>
                 <div className="comment-detail">
                     <div className="user-name">{comment.userName}</div>
                     <div className="comment-text">{comment.content}</div>
                     <Time time={comment.time} />
                 </div>
-                <Stars count={comment.stars} />
-                <Praise favorw={comment.favorw} favorwnum={comment.favorwnum} />
+                <Stars count={Number(comment.stars)} />
+                <Praise commentId={comment.commentId} favorw={comment.favorw} favorwnum={Number(comment.favorwnum)} />
             </div>
         )
     }

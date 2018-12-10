@@ -1,19 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import recommend from 'Assets/images/recommend.png'; 
+// import recommend from 'Assets/images/recommend.png'; 
 class Recommend extends React.Component {
     constructor(props) {
         super(props);
     }
     render() {
+        let recommend = this.props.recommend
         return (
-            <div id={this.props.recommend.doc_id} className="recommend">
+            <div themeid={recommend.themeId} className="recommend">
                 <div className="recommend-avatar">
                     <img src={recommend} />
                 </div>
                 <div className="recommend-detail">
-                    <div className="recommend-name">{this.props.recommend.title}</div>
-                    <div className="recommend-text">{this.props.recommend.message}</div>
+                    <div className="recommend-name">{recommend.title}</div>
+                    <div className="recommend-text">{recommend.description}</div>
                 </div>
             </div>
         )

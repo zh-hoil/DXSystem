@@ -12,14 +12,11 @@ class Recommends extends React.Component {
     }
 
     handleDetails(e) {
-        let theme_doc_id = getTargetAttr(e.target, "id");
-        if (!theme_doc_id) {
-            return
+        let themeId = getTargetAttr(e.target, "themeid");
+        if(!themeId) {
+            return 
         }
-        if (isNaN(parseInt(theme_doc_id))) {
-            return
-        }
-        window.location.hash = "/themeDetails/" + theme_doc_id
+        window.location.hash =  "/themeDetails/" + themeId
     }
 
     render() {

@@ -2,7 +2,6 @@ import React from "react";
 import { List } from "antd-mobile";
 import { connect } from "react-redux";
 import { getLocalStorage, addLocalStorage } from "Src/utils";
-import "./historyList.less";
 class HistoryList extends React.Component {
     constructor(props) {
         super(props);

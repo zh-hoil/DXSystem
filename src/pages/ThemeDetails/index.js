@@ -2,8 +2,9 @@ import React from "react";
 import "./index.less";
 import Tag from "Components/Tag";
 import Time from "Components/Time";
-import Comment from "Components/Comment";
+import Comments from "Components/Comments";
 import Evaluate from "Components/Evaluate";
+import Like from "Components/Like";
 import Praise from "Components/Praise";
 import Recommends from "Components/Recommends";
 import PostComments from "Components/PostComments";
@@ -13,19 +14,23 @@ import { userId, Get, Post } from "Public/js/Ajax";
 
 const TOPICINFOURL = "/getTopicInfo";
 const TOPICCOMMENTSURL = "/getTopicComment";
+const TOPICFOLLOWURL = "/getTopicFollow";
+const TOPGUESSURL = "/getTopicGuess";
+
 
 
 class ThemeDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            themeId: "",
             open: true,   //控制底部评论框开启或关闭
             title: "",    //标题
             type: "",     //类型
             time: "",     //时间
-            creator: "", //负责人
+            creator: "",  //负责人
             version: "",   //版本
-            status: "",  //状态
+            status: "",    //状态
             follow: false,    //是否喜欢
             favorw: false,    //是否点赞
             favorwnum: 0,     //点赞数
@@ -35,60 +40,24 @@ class ThemeDetails extends React.Component {
                 title: "国家财务共享案例",
                 src: "#"
             },
-            evaluate: "100%",
             comments: {
-                count: 1,
+                count: 0,
                 good: 0,
-                commentlist: [
-                    
-                ]
+                commentlist: []
             },
-            likes: [
-                {
-                    title: "这里是猜你喜欢的标题",
-                    imgSrc: "#",
-                    doc_id: 1,
-                    message: "这里是猜你喜欢的内容"
-                },
-                {
-                    title: "这里是猜你喜欢的标题",
-                    imgSrc: "#",
-                    doc_id: 1,
-                    message: "这里是踩你喜欢的内容"
-                },
-                {
-                    title: "这里是猜你喜欢的标题",
-                    imgSrc: "#",
-                    doc_id: 1,
-                    message: "这里是踩你喜欢的内容"
-                }
-            ],
-            recommends: [
-                {
-                    title: "这里是推荐的标题",
-                    imgSrc: "#",
-                    doc_id: 1,
-                    message: "这里是推荐的内容"
-                },
-                {
-                    title: "这里是推荐的标题",
-                    imgSrc: "#",
-                    doc_id: 1,
-                    message: "这里是推荐的内容"
-                },
-                {
-                    title: "这里是推荐的标题",
-                    imgSrc: "#",
-                    doc_id: 1,
-                    message: "这里是推荐的内容"
-                }
-            ]
+            topicGuess: [],
+            topicFollow: []
         }
     }
     componentWillMount() {
         let themeId = this.props.match.params.themeId;
+        this.setState({
+            themeId
+        })
         this._getTopicData(themeId);
-        this._getComments(themeId)
+        this._getComments(themeId);
+        this._getTopicGuess();
+        this._getTopicFollow(themeId);
     }
 
     //获取主题数据详情
@@ -130,9 +99,38 @@ class ThemeDetails extends React.Component {
         })
     }
 
-    handleFollow() {
-        this.setState({
-            follow: !this.state.follow
+    //获取猜你喜欢数据
+    _getTopicGuess () {
+        Get(TOPGUESSURL, {
+            userId: userId
+        }, (res) => {
+            let topicGuess = res.data;
+            this.setState({
+                topicGuess
+            })
+
+            console.log("这里是猜你喜欢的数据")
+            console.log(res.data)
+        }, (err) => {
+            console.log(err)
+        })
+    }
+
+    //获取推荐数据
+    _getTopicFollow (themeId) {
+        Get(TOPICFOLLOWURL, {
+            userId: userId,
+            themeId: themeId
+        }, (res) => {
+            let topicFollow = res.data;
+            this.setState({
+                topicFollow
+            })
+
+            console.log("这里是关注该话题的人还关注的数据")
+            console.log(res.data)
+        }, (err) => {
+            console.log(err)
         })
     }
 
@@ -145,7 +143,7 @@ class ThemeDetails extends React.Component {
     }
 
     handlePraiseDetail() {
-        window.location.hash = "/praiseDetail/" + this.props.match.params.themeId;
+        window.location.hash = "/praiseDetail/" + this.state.themeId;
     }
 
     render() {
@@ -164,8 +162,8 @@ class ThemeDetails extends React.Component {
                             <div className="detail">状态：<span>{this.state.status}</span></div>
                         </div>
                         <div className="operation">
-                            <span className="like" onClick={this.handleFollow.bind(this)}>{this.state.follow ? "💗" : "🖤"}</span>
-                            <Praise favorw={this.state.favorw} favorwnum={this.state.favorwnum} />
+                            <Like follow={this.state.follow} themeId={this.state.themeId} />
+                            <Praise themeId={this.state.themeId} favorw={this.state.favorw} favorwnum={Number(this.state.favorwnum)} />
                         </div>
                         <div className="message">
                             {this.state.content}
@@ -193,35 +191,31 @@ class ThemeDetails extends React.Component {
 
 
                     </div>
-                    <div className="comments">
+                    <div className="comments-wrapper">
                         <div className="comments-title">
                             评价：
                             <Evaluate evaluate={this.state.comments.good} />
                         </div>
-                        {
-                            this.state.comments.commentlist.map((comment, index) => (
-                                <Comment key={index} comment={comment} />
-                            ))
-                        }
+                        <Comments commentlist={this.state.comments.commentlist} />
                         <div className="more-comments" onClick={this.handlePraiseDetail.bind(this)}>
                             更多评价
                             <span className="more-comments-icon" style={{background: `url(${more}) no-repeat`, backgroundSize: "20px"}}></span>
                         </div>
                     </div>
-                    <div className="likes">
+                    <div className="likes-wrapper">
                         <div className="likes-title">
                             猜你喜欢：
                         </div>
-                        <Recommends recommends={this.state.likes} />
+                        <Recommends recommends={this.state.topicGuess} />
                     </div>
-                    <div className="recommends">
+                    <div className="recommends-wrapper">
                         <div className="recommends-title">
                             关注该话题的人还关注：
                         </div>
-                        <Recommends recommends={this.state.recommends} />
+                        <Recommends recommends={this.state.topicFollow} />
                     </div>
                 </div>
-                <PostComments count={this.state.comments.count} themeId={this.props.match.params.themeId}/>
+                <PostComments count={this.state.comments.count} themeId={this.state.themeId}/>
             </div>
         );
     }

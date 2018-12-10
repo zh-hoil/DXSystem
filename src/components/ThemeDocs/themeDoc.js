@@ -1,5 +1,4 @@
 import React from "react";
-import "./themeDoc.less";
 import PropTypes from "prop-types";
 import Tag from "Components/Tag";
 import Evaluate from "Components/Evaluate";
