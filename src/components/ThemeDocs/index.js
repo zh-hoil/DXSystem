@@ -19,9 +19,6 @@ class ThemeDocs extends React.Component {
         if(!themeId) {
             return 
         }
-        if(isNaN(parseInt(themeId))){
-            return
-        }
 
         this.setState({
             themeId: themeId

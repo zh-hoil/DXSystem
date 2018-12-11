@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import recommendImg from "Assets/images/recommend.png";
 // import recommend from 'Assets/images/recommend.png'; 
 class Recommend extends React.Component {
     constructor(props) {
@@ -10,7 +11,7 @@ class Recommend extends React.Component {
         return (
             <div themeid={recommend.themeId} className="recommend">
                 <div className="recommend-avatar">
-                    <img src={recommend} />
+                    <img src={recommendImg} />
                 </div>
                 <div className="recommend-detail">
                     <div className="recommend-name">{recommend.title}</div>

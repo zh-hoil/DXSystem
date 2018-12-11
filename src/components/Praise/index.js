@@ -51,7 +51,7 @@ class Praise extends React.Component {
             this.setState((preState) => {
                 return {
                     favorw: false,
-                    favorwnum: preState.favorwnum + 1
+                    favorwnum: preState.favorwnum - 1
                 }
             })
         }else{
@@ -67,7 +67,7 @@ class Praise extends React.Component {
     render() {
         return (
             <div className="praise" onClick={this.handlePraise.bind(this)}>
-                {(this.state.favorw?"😒":"👍") + " " + this.state.favorwnum}
+                {(this.state.favorw?"👍":"☞") + " " + this.state.favorwnum}
             </div>
         )
     }
