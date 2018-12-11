@@ -38,7 +38,22 @@ class MenuCon extends React.Component {
 }
 
 const MenuItem = props => {
-    let { title, icon, path } = props;
+    let { title, icon, path, iframe } = props;
+    if (iframe) {
+        return (
+            <a href={path} className="menu-item">
+                <div
+                    style={{
+                        width: "30px",
+                        height: "30px",
+                        background: `url(${icon}) no-repeat center center`,
+                        backgroundSize: "contain"
+                    }}
+                />
+                <span>{title}</span>
+            </a>
+        );
+    }
     return (
         <Link to={path} className="menu-item">
             <div
