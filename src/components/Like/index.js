@@ -11,6 +11,7 @@ class Like extends React.Component {
         this.state = {
             ...this.props
         }
+        console.log(this.props)
     }
 
     handleFollow() {

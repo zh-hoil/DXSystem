@@ -3,6 +3,7 @@ import "./index.less";
 import PropTypes from "prop-types";
 import { SearchBar } from 'antd-mobile';
 import { changeSearchText } from 'Store/SearchHistory/action';
+import { updateData } from "Store/ThemeSearch/action";
 import { connect } from "react-redux";
 
 class SearchBarComponent extends React.Component {
@@ -31,8 +32,8 @@ class SearchBarComponent extends React.Component {
 
     handleBack (hash) {
         if(!this.props.searchBoolean) {
-            if(this.props.triggleDrawer){
-                this.props.triggleDrawer(true)
+            if(this.props.updateData){
+                this.props.updateData({ open: true })
             }
             return
         }
@@ -107,10 +108,10 @@ class SearchBarComponent extends React.Component {
 
 
 SearchBarComponent = connect(
-    (state) => {
-        console.log(state)
-        return { searchText: state.historyData.searchText}
-    },
-    {changeSearchText}
+    (state) => ({ 
+        searchText: state.historyData.searchText,
+        open:  state.themeSearchData.open
+    }),
+    {changeSearchText, updateData}
 )(SearchBarComponent);
 export default SearchBarComponent;

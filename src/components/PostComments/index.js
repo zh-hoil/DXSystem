@@ -1,5 +1,6 @@
 import React from "react";
 import comment from 'Assets/images/comment.png';
+import Grade from "./grade"
 import "./index.less";
 import { userId, Get, Post } from "Public/js/Ajax";
 import { Toast } from 'antd-mobile';
@@ -9,7 +10,8 @@ class PostComments extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
+            open: false, //是否打开评论弹窗
+            grade: "0"   //评价分数/星级
         }
     }
 
@@ -17,6 +19,12 @@ class PostComments extends React.Component {
         if (this.state.open) {
             this.autoFocusInst.focus()
         }
+    }
+
+    getGrade (grade) {
+        this.setState({
+            grade: String(grade)
+        })
     }
 
     handlePraiseDetail() {
@@ -35,19 +43,21 @@ class PostComments extends React.Component {
         })
     }
 
-    // loadingToast() {
-    //     Toast.loading('正在提交...', 1, () => {
-    //       console.log('Load complete !!!');
-    //     });
-    //   }
-
     handleConfirm() {
         //发送评论请求
         let themeId = this.props.themeId;
         let content = this.autoFocusInst.value;
-        let star = "5";
-        console.log(themeId);
-        console.log(content)
+        let star = this.state.grade;
+        if(!content) {
+            Toast.info("请输入评论内容!", 1);
+            return 
+        }
+
+        if(star <= 0) {
+            Toast.info("请打分!", 1);
+            return 
+        }
+        
         Post(COMMENTOPICURL, {
             userId: userId,
             themeId: themeId,
@@ -62,9 +72,6 @@ class PostComments extends React.Component {
                 //刷新页面以及时显示评论
                 window.location.reload()
             })
-
-
-
             console.log("这里是评论成功的数据")
             console.log(res.message)
         }, (err) => {
@@ -81,7 +88,9 @@ class PostComments extends React.Component {
                             <div className="post-comment">
                                 <div className="mark">
                                     <span className="mark-text">请为该主题打分</span>
-                                    <span className="mark-star">⭐⭐⭐⭐⭐</span>
+                                    <span className="mark-star">
+                                        <Grade triggerGrade={this.getGrade.bind(this)}/>
+                                    </span>
                                 </div>
                                 <textarea ref={ref => this.autoFocusInst = ref} className="writting" placeholder="写评论(100字以内)"></textarea>
                                 <div className="buttons">

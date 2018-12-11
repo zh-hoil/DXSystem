@@ -1,17 +1,21 @@
 import * as themeSearch from "./action-type";
 import renameActionType from "Store/renameActionType";
-renameActionType(page1, "Page1");
+renameActionType(themeSearch, "themeSearch");
 
 let defaultState = {
-    open: false
+    open: false,
+    themeFieldId: "",
+    themeFields: [],
+    themeList: []
 };
 // 数据
 export const themeSearchData = (state = defaultState, action = {}) => {
+
     switch (action.type) {
         case themeSearch.CLEARDATA:
             return { ...state, ...defaultState };
         case themeSearch.UPDATE:
-            return { ...state, ...{ title: action.data } };
+            return { ...state, ...action.data };
         default:
             return state;
     }
