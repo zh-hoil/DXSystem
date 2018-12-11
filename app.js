@@ -4,14 +4,19 @@ import { Provider } from "react-redux";
 import "./src/public/js/InitBridge.js";
 import store from "./src/store";
 import Routes from "./src/routes";
+import { GetQuery } from "./src/utils";
+import "Assets/js/mobile-util.js";
 import "Assets/css/normalize.css";
+import "Assets/iconfont/iconfont.css";
 import "Public/css/public.less";
 class App extends React.Component {
     constructor(props, context) {
         super(props, context);
     }
     componentWillMount() {
-        // InitBridge();
+        if(GetQuery(window.location.hash).token){
+            localStorage.setItem("YY_userInfo",JSON.stringify(GetQuery(window.location.hash).token))
+        }
     }
     render() {
         return (
