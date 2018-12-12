@@ -27,17 +27,16 @@ class HomeMenu extends React.Component {
         if (iframe) {
             return (
                 <a href={path} key={index} className="menu-item">
-                    <div className="menu-icon">
+                    <div className="home_menu-icon">
                         <i className={`iconfont ${icon}`} />
                     </div>
-
                     <span>{title}</span>
                 </a>
             );
         }
         return (
             <Link key={index} to={path} className="menu-item">
-                <div className="menu-icon">
+                <div className="home_menu-icon">
                     <i className={`iconfont ${icon}`} />
                 </div>
                 <span>{title}</span>

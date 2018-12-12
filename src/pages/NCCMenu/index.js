@@ -1,17 +1,13 @@
 import React from "react";
 import MenuList from "Components/MenuList";
 import { updateAppTitle } from "Public/js/JSBridge";
-import home1 from 'Assets/images/home1.png'; // 搜索资料
-import home7 from 'Assets/images/home7.png'; // 我的关注
-import home5 from 'Assets/images/home5.png'; // 排行榜
-import home6 from 'Assets/images/home6.png'; // 图表统计
 import './index.less';
 
 const menuList = [
-    { title: "搜索资料", path: "/themeSearch", icon: home1 },
-    { title: "我的关注", path: "/", icon: home7 },
-    { title: "排行榜", path: "/", icon: home5 },
-    { title: "图表统计", path: "/", icon: home6 }
+    { title: "搜索资料", path: "/themeSearch", icon: "icon-sousuoziliao" },
+    { title: "我的关注", path: "/", icon: "icon-guanzhu1" },
+    { title: "排行榜", path: "/", icon: "icon-paihangbang" },
+    { title: "图表统计", path: "/", icon: "icon-tubiaotongji" }
 ];
 
 class NCCMenu extends React.Component {
