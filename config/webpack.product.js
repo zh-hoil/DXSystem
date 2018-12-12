@@ -4,7 +4,7 @@ const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const cleanPlugin = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-module.exports = (dirname) => {
+module.exports = dirname => {
     console.log("production >>>>>>>>>>>>>>>>>>>>>>>>>>>");
     return merge(common(dirname), {
         mode: "production",
@@ -24,7 +24,10 @@ module.exports = (dirname) => {
         },
         devtool: "eval",
         plugins: [
-            new cleanPlugin(["dist"]),
+            new cleanPlugin(["dist"], {
+                root: dirname,
+                verbose: true
+            }),
             new UglifyJSPlugin(),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
