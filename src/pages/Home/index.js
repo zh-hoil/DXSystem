@@ -7,8 +7,7 @@ import Banner from "Components/Banner";
 import { updateAppTitle } from "Public/js/JSBridge";
 import HomeMenu from "./HomeMenu";
 import banner1 from "Assets/images/banner1.jpg";
-import banner2 from "Assets/images/banner2.jpg";
-import banner3 from "Assets/images/banner3.jpg";
+import banner2 from "Assets/images/banner2.png";
 import "./index.less";
 
 const List = [
@@ -21,11 +20,6 @@ const List = [
         path: banner2,
         name: "img2",
         id: "2"
-    },
-    {
-        path: banner3,
-        name: "img3",
-        id: "3"
     }
 ];
 class Home extends React.Component {
