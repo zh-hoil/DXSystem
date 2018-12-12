@@ -39,7 +39,7 @@
                 padding: 0 24px;
                 display: flex;
                 align-items: center;
-                justify-content: flex-start;
+                justify-content: space-between;
                 flex-direction: row;
                 margin-bottom: 40px;
                 &:first-child {
@@ -49,17 +49,26 @@
                     margin-left: 20px;
                     font-size: 28px;
                 }
-                .home_menu-icon {
-                    width: 76px;
-                    height: 76px;
-                    border-radius: 50%;
-                    text-align: center;
-                    line-height: 76px;
-                    box-shadow: 0px 0px 20px 0px #ccc;
-                    .iconfont {
-                        font-size: 48px;
-                        color: #fff;
-                        text-shadow: 0px 0px 20px 0px #ccc;
+                .icon-more {
+                    font-size: 35px;
+                    color: #ccc;
+                    justify-self: flex-end;
+                }
+                .home_menu_item {
+                    display: flex;
+                    align-items: center;
+                    .home_menu-icon {
+                        width: 76px;
+                        height: 76px;
+                        border-radius: 50%;
+                        text-align: center;
+                        line-height: 76px;
+                        box-shadow: 0px 0px 20px 0px #ccc;
+                        .iconfont {
+                            font-size: 48px;
+                            color: #fff;
+                            text-shadow: 0px 0px 20px 0px #ccc;
+                        }
                     }
                 }
                 &:nth-child(1) .home_menu-icon {
