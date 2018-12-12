@@ -1,6 +1,7 @@
 import React from "react";
 import Swiper from "swiper";
 import "swiper/dist/css/swiper.min.css";
+import Welcome from "Assets/images/welcome.gif";
 import "./index.less";
 class Banner extends React.Component {
     constructor(props, context) {
@@ -28,7 +29,9 @@ class Banner extends React.Component {
         return (
             <div className="swiper-container">
                 <div className="swiper-wrapper">
-                    {this.props.banerList.map(item => {
+                    {this.props.banerList.map((item, index) => {
+                        if (index === 0) {
+                        }
                         return (
                             <div
                                 key={item.id}
@@ -40,7 +43,11 @@ class Banner extends React.Component {
                                     }) no-repeat center center`,
                                     backgroundSize: "100% 100%"
                                 }}
-                            />
+                            >
+                                {index === 0 ? (
+                                    <img src={Welcome} width="100%" />
+                                ) : null}
+                            </div>
                         );
                     })}
                 </div>
