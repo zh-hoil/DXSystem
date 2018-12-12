@@ -54,6 +54,11 @@ const QuickGuide = Loadable({
     loading: Loading
 });
 
+const MyAttention = Loadable({
+    loader: () => import("Pages/MyAttention"),
+    loading: Loading
+});
+
 const routes = [
     {
         path: "/",
@@ -102,6 +107,10 @@ const routes = [
     {
         path: "/quickguide",
         component: QuickGuide
+    },
+    {
+        path: "/myattention",
+        component: MyAttention
     }
 ];
 const RouteWithSubRoutes = route => (

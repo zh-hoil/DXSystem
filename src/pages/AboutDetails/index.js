@@ -1,5 +1,8 @@
 import React from "react";
 import "./index.less";
+/**
+ * 关于详情页
+ */
 class AboutDetails extends React.Component {
     constructor(props) {
         super(props);
