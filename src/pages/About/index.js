@@ -6,7 +6,7 @@ import './index.less';
  * 关于NC 一线牵 二级菜单页面
  */
 const menuList = [
-    { title: "关于NC一线牵", path: "/themeSearch", icon: "icon-sousuoziliao" },
+    { title: "关于NC一线牵", path: "/aboutdetails", icon: "icon-sousuoziliao" },
     { title: "快速指南", path: "/quickguide", icon: "icon-guanzhu1" },
 ];
 

@@ -44,6 +44,11 @@ const About = Loadable({
     loading: Loading
 });
 
+const AboutDetails = Loadable({
+    loader: () => import("Pages/AboutDetails"),
+    loading: Loading
+});
+
 const QuickGuide = Loadable({
     loader: () => import("Pages/QuickGuide"),
     loading: Loading
@@ -89,6 +94,10 @@ const routes = [
     {
         path: "/about",
         component: About
+    },
+    {
+        path: "/aboutdetails",
+        component: AboutDetails
     },
     {
         path: "/quickguide",
