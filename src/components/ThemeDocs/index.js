@@ -4,6 +4,8 @@ import { getTargetAttr } from "Src/utils";
 import { List } from "antd-mobile";
 import PropTypes from "prop-types";
 import "./index.less";
+import { connect } from "react-redux";
+import { updateData } from "Store/ThemeDetails/action";
 class ThemeDocs extends React.Component {
     constructor(props) {
         super(props);
@@ -23,8 +25,11 @@ class ThemeDocs extends React.Component {
         this.setState({
             themeId: themeId
         })
-
-        window.location.hash =  "/themeDetails/" + themeId
+        if(this.props.updateData) {
+            this.props.updateData({themeId: themeId})
+        }
+        
+       window.location.hash =  "/themeDetails/" + themeId
     }
 
     render() {
@@ -46,4 +51,10 @@ class ThemeDocs extends React.Component {
 ThemeDocs.propsType = {
     themeList: PropTypes.array
 }
+
+ThemeDocs = connect((state) => ({
+    themeId: state.themeDetailsData.themeId
+}),
+    { updateData }
+)(ThemeDocs)
 export default ThemeDocs;

@@ -16,6 +16,12 @@ class Praise extends React.Component {
         }
     }
 
+    componentWillReceiveProps (props){
+        this.setState({
+            ...props
+        })
+    }
+
     handlePraise() {
         let url = "";
         let data = {};
@@ -40,24 +46,24 @@ class Praise extends React.Component {
             this._success()
 
             console.log("这里是点赞成功的数据")
-            console.log(res.message)
+            console.log(res)
         }, (err) => {
             Toast.fail("error")
         })
     }
 
     _success() {
-        if(this.state.favorw) {
+        if(this.state.favorw === "true") {
             this.setState((preState) => {
                 return {
-                    favorw: false,
+                    favorw: "false",
                     favorwnum: preState.favorwnum - 1
                 }
             })
         }else{
             this.setState((preState) => {
                 return {
-                    favorw: true,
+                    favorw: "true",
                     favorwnum: preState.favorwnum + 1
                 }
             })
@@ -67,15 +73,15 @@ class Praise extends React.Component {
     render() {
         return (
             <div className="praise" onClick={this.handlePraise.bind(this)}>
-                {(this.state.favorw?"👍":"☞") + " " + this.state.favorwnum}
+                {(this.state.favorw === "true" ? "👍":"☞") + " " + this.state.favorwnum}
             </div>
         )
     }
 }
 
 Praise.propsType = {
-    favorw: PropTypes.bool.isRequired,
-    favorwnum: PropTypes.number.isRequired,
+    favorw: PropTypes.string.isRequired,
+    favorwnum: PropTypes.string.isRequired,
     themeId: PropTypes.string,
     commentId: PropTypes.string
 }

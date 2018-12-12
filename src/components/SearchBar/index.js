@@ -5,6 +5,7 @@ import { SearchBar } from 'antd-mobile';
 import { changeSearchText } from 'Store/SearchHistory/action';
 import { updateData } from "Store/ThemeSearch/action";
 import { connect } from "react-redux";
+import "./index.less";
 
 class SearchBarComponent extends React.Component {
     constructor(props) {
@@ -44,7 +45,7 @@ class SearchBarComponent extends React.Component {
         const searchHistory = "/searchHistory";
         const themeSearch = "/themeSearch";
         return (
-            <div>
+            <div className="search-wrapper">
                 <SearchBar
                     ref={ref => this.autoFocusInst = ref}
                     onFocus={this.handleToSearch.bind(this, searchHistory)}

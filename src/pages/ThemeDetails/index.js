@@ -11,6 +11,8 @@ import PostComments from "Components/PostComments";
 import download from "Assets/images/download.png";
 import more from "Assets/images/more.png";
 import { userId, Get, Post } from "Public/js/Ajax";
+import { connect } from "react-redux";
+import { updateData } from "Store/ThemeDetails/action";
 
 const TOPICINFOURL = "/getTopicInfo";
 const TOPICCOMMENTSURL = "/getTopicComment";
@@ -50,10 +52,25 @@ class ThemeDetails extends React.Component {
         }
     }
     componentWillMount() {
+        console.log(this.props)
         let themeId = this.props.match.params.themeId;
         this.setState({
             themeId
         })
+        this._getTopicData(themeId);
+        this._getComments(themeId);
+        this._getTopicGuess();
+        this._getTopicFollow(themeId);
+    }
+
+    componentWillReceiveProps (props){
+        // console.log(">>>>>>>>>");
+        // console.log(this.props)
+        
+        // this.setState({
+        //     themeId
+        // })
+        let themeId = this.props.themeId;
         this._getTopicData(themeId);
         this._getComments(themeId);
         this._getTopicGuess();
@@ -220,4 +237,10 @@ class ThemeDetails extends React.Component {
         );
     }
 }
+
+ThemeDetails = connect((state) => ({
+    themeId: state.themeDetailsData.themeId
+}),
+    { updateData }
+)(ThemeDetails)
 export default ThemeDetails;

@@ -11,7 +11,12 @@ class Like extends React.Component {
         this.state = {
             ...this.props
         }
-        console.log(this.props)
+    }
+
+    componentWillReceiveProps (props){
+        this.setState({
+            ...props
+        })
     }
 
     handleFollow() {
@@ -22,9 +27,16 @@ class Like extends React.Component {
         }, (res) => {
             Toast.success(res.message);
 
-            this.setState({
-                follow: !this.state.follow
-            })
+            if(this.state.follow === "true") {
+                this.setState({
+                    follow: "false"
+                })
+            }else{
+                this.setState({
+                    follow: "true"
+                })
+            }
+            
 
             console.log("这里是喜欢成功的数据")
             console.log(res.message)
@@ -39,12 +51,12 @@ class Like extends React.Component {
     render() {
         return (
             <div className="like" onClick={this.handleFollow.bind(this)}>
-                {this.state.follow ? "💗" : "🖤"}
+                {this.state.follow === "true" ? "💗" : "🖤"}
             </div>
         )
     }
 }
 Like.propsType ={
-    follow: PropTypes.bool.isRequired
+    follow: PropTypes.string.isRequired
 }
 export default Like;

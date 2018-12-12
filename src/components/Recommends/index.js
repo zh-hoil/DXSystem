@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Recommend from "./recommend.js";
 import { getTargetAttr } from "Src/utils";
 import "./index.less";
+import { connect } from "react-redux";
+import { updateData } from "Store/ThemeDetails/action";
 class Recommends extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +18,11 @@ class Recommends extends React.Component {
         if(!themeId) {
             return 
         }
-        window.location.hash =  "/themeDetails/" + themeId
+        if(this.props.updateData) {
+            this.props.updateData({themeId: themeId})  
+        }
+        window.location.hash =  "/themeDetails/" + themeId;
+        window.location.replace(window.location.href);
     }
 
     render() {
@@ -35,4 +41,9 @@ class Recommends extends React.Component {
 Recommends.propsType = {
     recommends: PropTypes.array.isRequired
 }
+Recommends = connect((state) => ({
+    themeId: state.themeDetailsData.themeId
+}),
+    { updateData }
+)(Recommends)
 export default Recommends;
