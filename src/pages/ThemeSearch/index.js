@@ -55,7 +55,7 @@ class ThemeSearch extends React.Component {
     //     console.log(props)
     // }
 
-    _getThemeFields () {
+    _getThemeFields() {
         Get(THEMEFIELDURL, {
             userId: userId
         }, (res) => {
@@ -63,7 +63,7 @@ class ThemeSearch extends React.Component {
             let themeFieldId = themeFields[0].id;
 
 
-            if(this.props.updateData) {
+            if (this.props.updateData) {
                 this.props.updateData({ themeFieldId, themeFields })
             }
 
@@ -77,32 +77,32 @@ class ThemeSearch extends React.Component {
     }
 
     onOpenChange() {
-        if(this.props.open) {
-            if(this.state.page > 0) {
+        if (this.props.open) {
+            if (this.state.page > 0) {
                 this.setState({
                     page: 0
                     //再设置其他数据
                 })
-                
-            }else{
+
+            } else {
                 //关闭弹窗
                 if (this.props.updateData) {
                     this.props.updateData({ open: !this.props.open })
                 }
             }
         }
-        
+
     }
 
     handleFilter() {
-        if(this.props.open) {
-            if(this.state.page > 0) {
+        if (this.props.open) {
+            if (this.state.page > 0) {
                 this.setState({
                     page: 0
                     //再设置其他数据
                 })
-                
-            }else{
+
+            } else {
                 //关闭弹窗
                 if (this.props.updateData) {
                     this.props.updateData({ open: !this.props.open })
@@ -133,12 +133,26 @@ class ThemeSearch extends React.Component {
         console.log(value, index)
     }
 
-
-
     handlePage(page) {
         this.setState({
             page: page
         })
+    }
+
+    //点击搜索框执行的操作
+    handleSearch() {
+        const searchHistory = "/searchHistory";
+        if (this.state.searchBoolean) {
+            return
+        }
+        window.location.hash = searchHistory
+    }
+
+    //筛选按钮执行的函数
+    handleSearchBack() {
+        if (this.props.updateData) {
+            this.props.updateData({ open: true })
+        }
     }
 
     render() {
@@ -193,7 +207,7 @@ class ThemeSearch extends React.Component {
                         <List>
                             {
                                 tabs.map((item, i) => {
-                                    if (i === 0) return 
+                                    if (i === 0) return
                                     return (
                                         <List.Item key={i} onClick={this.handlePage.bind(this, i)}>{item.title}</List.Item>
                                     )
@@ -276,7 +290,10 @@ class ThemeSearch extends React.Component {
                     onOpenChange={this.onOpenChange.bind(this)}
                 >
                     <div>
-                        <SearchBar searchBoolean={this.state.searchBoolean} />
+                        <SearchBar searchBoolean={this.state.searchBoolean}
+                            handleSearch={this.handleSearch.bind(this)}
+                            handleSearchBack={this.handleSearchBack.bind(this)}
+                        />
                         <ThemeList themeFields={this.props.themeFields} themeFieldId={this.props.themeFieldId} />
                     </div>
                 </Drawer>
@@ -284,11 +301,10 @@ class ThemeSearch extends React.Component {
         )
     }
 }
-
 ThemeSearch = connect((state) => ({
     open: state.themeSearchData.open,
     themeFieldId: state.themeSearchData.themeFieldId,
-    themeFields: state.themeSearchData.themeFields
+    themeFields: state.themeSearchData.themeFields,
 }),
     { updateData }
 )(ThemeSearch)

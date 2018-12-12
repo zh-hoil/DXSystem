@@ -14,11 +14,13 @@ import { userId, Get, Post } from "Public/js/Ajax";
 import { getTargetAttr } from "Src/utils";
 import { Toast } from "antd-mobile";
 
-const LIKETOPICURL = "/likeTopic"; //主题点赞接口
-const TOPICINFOURL = "/getTopicInfo";
-const TOPICCOMMENTSURL = "/getTopicComment";
-const TOPICFOLLOWURL = "/getTopicFollow";
-const TOPGUESSURL = "/getTopicGuess";
+const GOODTOPICURL = "/goodTopic";     //主题点赞接口
+const GOODCOMMENTURL = "/goodComment"; //评论点赞接口
+const LIKETOPICURL = "/likeTopic";     //主题收藏接口
+const TOPICINFOURL = "/getTopicInfo";  //主题数据获取接口
+const TOPICCOMMENTSURL = "/getTopicComment";  //评论数据获取接口
+const TOPICFOLLOWURL = "/getTopicFollow";  //关注数据获取接口
+const TOPGUESSURL = "/getTopicGuess";     //猜你喜欢数据获取接口
 
 
 
@@ -59,7 +61,7 @@ class ThemeDetails extends React.Component {
         this._getTopicFollow(themeId);
     }
 
-    componentWillReceiveProps (props){
+    componentWillReceiveProps(props) {
         let themeId = props.match.params.themeId;
         this._getTopicData(themeId);
         this._getComments(themeId);
@@ -68,7 +70,7 @@ class ThemeDetails extends React.Component {
     }
 
     //获取主题数据详情
-    _getTopicData (themeId) {
+    _getTopicData(themeId) {
         Get(TOPICINFOURL, {
             userId: userId,
             themeId: themeId
@@ -86,7 +88,7 @@ class ThemeDetails extends React.Component {
     }
 
     //获取主题评论（3条）
-    _getComments (themeId) {
+    _getComments(themeId) {
         let count = 3;
         Get(TOPICCOMMENTSURL, {
             userId: userId,
@@ -95,7 +97,7 @@ class ThemeDetails extends React.Component {
         }, (res) => {
             let comments = res.data;
             this.setState({
-                comments: {...comments}
+                comments: { ...comments }
             })
             console.log(this.state)
 
@@ -107,7 +109,7 @@ class ThemeDetails extends React.Component {
     }
 
     //获取猜你喜欢数据
-    _getTopicGuess () {
+    _getTopicGuess() {
         Get(TOPGUESSURL, {
             userId: userId
         }, (res) => {
@@ -124,7 +126,7 @@ class ThemeDetails extends React.Component {
     }
 
     //获取推荐数据
-    _getTopicFollow (themeId) {
+    _getTopicFollow(themeId) {
         Get(TOPICFOLLOWURL, {
             userId: userId,
             themeId: themeId
@@ -149,20 +151,24 @@ class ThemeDetails extends React.Component {
         }
     }
 
+    //跳转到评论详情页
     handlePraiseDetail() {
         window.location.hash = "/praiseDetail/" + this.state.themeId;
     }
-    // 列表点击事件
+
+    // 跳转到推荐主题详情页
     handleDetails = (e) => {
         let themeId = getTargetAttr(e.target, "themeid");
-        if(!themeId) {
-            return 
+        if (!themeId) {
+            return
         }
         // if(this.props.updateData) {
         //     this.props.updateData({themeId: themeId})  
         // }
         window.location.hash = "/themeDetails/" + themeId;
     }
+
+    //收藏操作
     handleFollow = () => {
         Post(LIKETOPICURL, {
             userId: userId,
@@ -184,6 +190,63 @@ class ThemeDetails extends React.Component {
             Toast.fail("error")
         })
     }
+
+    //点赞操作
+    handlePraise() {
+        Post(GOODTOPICURL, {
+            userId: userId,
+            themeId: this.props.match.params.themeId
+        }, (res) => {
+            Toast.success(res.message);
+            this._themePraise()
+            console.log("这里是点赞成功的数据")
+            console.log(res)
+        }, (err) => {
+            Toast.fail("error")
+        })
+    }
+
+    _themePraise() {
+        if (this.state.favorw === "true") {
+            this.setState((preState) => {
+                return {
+                    favorw: "false",
+                    favorwnum: preState.favorwnum - 1
+                }
+            })
+        } else {
+            this.setState((preState) => {
+                return {
+                    favorw: "true",
+                    favorwnum: preState.favorwnum + 1
+                }
+            })
+        }
+    }
+
+    // _commentPraise(commentId) {
+    //     for (let i in this.state.comments.commentlist) {
+    //         if (this.state.comments.commentlist[i].commentId === commentId) {
+    //             console.log("找到了");
+    //             console.log(i)
+    //             this.state.comments.commentlist[i].favorw = "true";
+    //             ++this.state.comments.commentlist[i].favorwnum;
+
+    //             let commentlist = [...this.state.comments.commentlist];
+    //             console.log(commentlist)
+    //             console.log(this.state.comments.commentlist)
+    //             this.setState({
+    //                 comments: {
+    //                     ...this.state.comments,
+    //                     commentlist: [ ...commentlist ]
+    //                 }
+    //             })
+    //             console.log(this.state.comments)
+    //             return
+    //         }
+    //     }
+    // }
+
     render() {
         return (
             <div className="details-wrapper">
@@ -200,8 +263,8 @@ class ThemeDetails extends React.Component {
                             <div className="detail">状态：<span>{this.state.status}</span></div>
                         </div>
                         <div className="operation">
-                            <Like onClick={this.handleFollow} follow={this.state.follow}/>
-                            <Praise themeId={this.state.themeId} favorw={this.state.favorw} favorwnum={Number(this.state.favorwnum)} />
+                            <Like onClick={this.handleFollow} follow={this.state.follow} />
+                            <Praise themeId={this.props.match.params.themeId} favorw={this.state.favorw} favorwnum={Number(this.state.favorwnum)} onClick={this.handlePraise.bind(this)} />
                         </div>
                         <div className="message">
                             {this.state.content}
@@ -222,7 +285,7 @@ class ThemeDetails extends React.Component {
                                 "暂未提供实施资料"}
                             </div>
                             <div className="data-get" onClick={this.handleDataGet.bind(this)}>
-                                <span className="download-icon" style={{background: `url(${download}) no-repeat`, backgroundSize: "20px"}}></span>
+                                <span className="download-icon" style={{ background: `url(${download}) no-repeat`, backgroundSize: "20px" }}></span>
                                 索取资料
                             </div>
                         </div>
@@ -237,7 +300,7 @@ class ThemeDetails extends React.Component {
                         <Comments commentlist={this.state.comments.commentlist} />
                         <div className="more-comments" onClick={this.handlePraiseDetail.bind(this)}>
                             更多评价
-                            <span className="more-comments-icon" style={{background: `url(${more}) no-repeat`, backgroundSize: "20px"}}></span>
+                            <span className="more-comments-icon" style={{ background: `url(${more}) no-repeat`, backgroundSize: "20px" }}></span>
                         </div>
                     </div>
                     <div className="likes-wrapper">
@@ -253,7 +316,7 @@ class ThemeDetails extends React.Component {
                         <Recommends onClick={this.handleDetails} recommends={this.state.topicFollow} />
                     </div>
                 </div>
-                <PostComments count={this.state.comments.count} themeId={this.state.themeId}/>
+                <PostComments count={this.state.comments.count} themeId={this.state.themeId} />
             </div>
         );
     }

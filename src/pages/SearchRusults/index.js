@@ -38,10 +38,25 @@ class SearchRusults extends React.Component {
         })
     }
 
+    handleSearchBack() {
+        const themeSearch = "/themeSearch";
+        window.location.hash = themeSearch;
+    }
+
+    handleSearchChange(val) {
+        if (this.props.changeSearchText) {
+            this.props.changeSearchText(val)
+        }
+    }
+
     render() {
         return (
             <div className="search-results">
-                <SearchBar searchBoolean={this.state.searchBoolean} />
+                <SearchBar 
+                    searchBoolean={this.state.searchBoolean} 
+                    handleSearchBack={this.handleSearchBack.bind(this)}
+                    handleSearchChange={this.handleSearchChange.bind(this)}
+                />
                 <ThemeDocs themeList={this.state.themeList} />
             </div>
         )

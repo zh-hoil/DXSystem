@@ -102,6 +102,8 @@ class ThemeList extends React.Component {
         window.location.hash = "/themeDetails/" + themeId;
     }
 
+    
+
     render() {
         return (
             <div className="themes-wrapper">

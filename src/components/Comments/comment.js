@@ -3,10 +3,52 @@ import Time from "Components/Time";
 import Praise from "Components/Praise";
 import Stars from "Components/Stars";
 import PropTypes from "prop-types";
+import { userId, Get, Post } from "Public/js/Ajax";
+import { Toast } from "antd-mobile";
+
+const GOODCOMMENTURL = "/goodComment"; //评论点赞接口
 class Comment extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            favorw: props.comment.favorw,
+            favorwnum: props.comment.favorwnum
+        }
     }
+
+    //点赞操作
+    handlePraise() {
+        Post(GOODCOMMENTURL, {
+            userId: userId,
+            commentId: this.props.comment.commentId
+        }, (res) => {
+            Toast.success(res.message);
+            this._commentPraise()
+            console.log("这里是点赞成功的数据")
+            console.log(res)
+        }, (err) => {
+            Toast.fail("error")
+        })
+    }
+
+    _commentPraise() {
+        if (this.state.favorw === "true") {
+            this.setState((preState) => {
+                return {
+                    favorw: "false",
+                    favorwnum: preState.favorwnum - 1
+                }
+            })
+        } else {
+            this.setState((preState) => {
+                return {
+                    favorw: "true",
+                    favorwnum: preState.favorwnum + 1
+                }
+            })
+        }
+    }
+
     render() {
         const comment = this.props.comment;
         return (
@@ -20,7 +62,7 @@ class Comment extends React.Component {
                     <Time time={comment.time} />
                 </div>
                 <Stars count={Number(comment.stars)} />
-                <Praise commentId={comment.commentId} favorw={comment.favorw} favorwnum={Number(comment.favorwnum)} />
+                <Praise commentId={comment.commentId} favorw={this.state.favorw} favorwnum={Number(this.state.favorwnum)} onClick={this.handlePraise.bind(this)} />
             </div>
         )
     }

@@ -5,6 +5,11 @@ import "./index.less";
 class Comments extends React.Component {
     constructor(props) {
         super(props);
+        
+    }
+
+    componentDidMount () {
+        console.log(this.props)
     }
 
 

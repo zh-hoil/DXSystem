@@ -1,6 +1,5 @@
 import React from "react";
 import ThemeDoc from "./themeDoc";
-import { getTargetAttr } from "Src/utils";
 import { List } from "antd-mobile";
 import PropTypes from "prop-types";
 import "./index.less";
