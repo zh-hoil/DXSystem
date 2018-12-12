@@ -2,7 +2,9 @@ import React from "react";
 import MenuList from "Components/MenuList";
 import { updateAppTitle } from "Public/js/JSBridge";
 import './index.less';
-
+/**
+ * NCC 二级菜单页面
+ */
 const menuList = [
     { title: "搜索资料", path: "/themeSearch", icon: "icon-sousuoziliao" },
     { title: "我的关注", path: "/", icon: "icon-guanzhu1" },

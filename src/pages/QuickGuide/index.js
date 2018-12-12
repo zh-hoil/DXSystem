@@ -2,7 +2,9 @@ import React from "react";
 import SimpleListMenu from "Components/SimpleListMenu";
 import { updateAppTitle } from "Public/js/JSBridge";
 import "./index.less";
-
+/**
+ * 快速指南页面
+ */
 const menuList = [
     {
         title: "注册与登录",

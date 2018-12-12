@@ -10,6 +10,9 @@ import home6 from "Assets/images/home6.png"; // 图表统计
 import home8 from "Assets/images/home8.png"; // 账户申请
 import home9 from "Assets/images/home9.png"; // 开发资料
 import "./index.less";
+/**
+ * NC 二级菜单页面  暂未使用
+ */
 const menuList = [
     { title: "搜索资料", path: "/NC_yxq0517/index.html#searchPageView", icon: home1, iframe: true },
     { title: "我的关注", path: "/NC_yxq0517/index.html", icon: home7, iframe: true },
