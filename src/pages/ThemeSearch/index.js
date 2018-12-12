@@ -7,7 +7,7 @@ import { userId, Get, Post } from "Public/js/Ajax";
 import { connect } from "react-redux";
 import { updateData } from "Store/ThemeSearch/action";
 
-// const THEMEFIELDURL = "/getNCCloudThemeField";
+const THEMEFIELDURL = "/getNCCloudThemeField";
 
 const RadioItem = Radio.RadioItem;
 const CheckboxItem = Checkbox.CheckboxItem;
@@ -47,7 +47,7 @@ class ThemeSearch extends React.Component {
     }
 
     componentWillMount() {
-        // this._getThemeFields()
+        this._getThemeFields()
 
     }
 
@@ -55,26 +55,26 @@ class ThemeSearch extends React.Component {
     //     console.log(props)
     // }
 
-    // _getThemeFields () {
-    //     Get(THEMEFIELDURL, {
-    //         userId: userId
-    //     }, (res) => {
-    //         let themeFields = res.data;
-    //         let themeFieldId = themeFields[0].id;
+    _getThemeFields () {
+        Get(THEMEFIELDURL, {
+            userId: userId
+        }, (res) => {
+            let themeFields = res.data;
+            let themeFieldId = themeFields[0].id;
 
 
-    //         if(this.props.updateData) {
-    //             this.props.updateData({ themeFieldId, themeFields })
-    //         }
+            if(this.props.updateData) {
+                this.props.updateData({ themeFieldId, themeFields })
+            }
 
-    //         // this._getThemeList(themeFieldId, themeFields, this.state.label)
+            // this._getThemeList(themeFieldId, themeFields, this.state.label)
 
-    //         console.log("这里是获取主题域的数据")
-    //         console.log(res)
-    //     }, (err) => {
-    //         console.log(err)
-    //     })
-    // }
+            console.log("这里是获取主题域的数据")
+            console.log(res)
+        }, (err) => {
+            console.log(err)
+        })
+    }
 
     onOpenChange() {
         if(this.props.open) {
@@ -277,7 +277,7 @@ class ThemeSearch extends React.Component {
                 >
                     <div>
                         <SearchBar searchBoolean={this.state.searchBoolean} />
-                        <ThemeList themeFields={this.state.themeFields} />
+                        <ThemeList themeFields={this.props.themeFields} themeFieldId={this.props.themeFieldId} />
                     </div>
                 </Drawer>
             </div>

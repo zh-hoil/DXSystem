@@ -19,7 +19,6 @@ class HistoryList extends React.Component {
         if(!historyList) {
             historyList = ["暂无历史纪录..."]
         }
-        console.log(historyList)
         this.setState({
             historyList: historyList
         })

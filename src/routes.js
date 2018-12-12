@@ -82,7 +82,7 @@ const routes = [
         component: SearchHistory
     },
     {
-        path: "/themeDetails",
+        path: "/themeDetails/:themeId",
         component: ThemeDetails
     },
     {

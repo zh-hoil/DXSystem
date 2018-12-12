@@ -2,63 +2,61 @@ import React from "react";
 // import Data from "./themeList.json";
 import ThemeDocs from "Components/ThemeDocs";
 import { getTargetAttr, sortBy } from "Src/utils";
-import { connect } from "react-redux";
-import { updateData } from "Store/ThemeSearch/action";
 import { userId, Get, Post } from "Public/js/Ajax";
 
-const THEMEFIELDURL = "/getNCCloudThemeField";
 const THEMELISTURL = "/getNCCloudThemeList";
 
 class ThemeList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            themeFields: [],
+            themeList: [],
+            themeFieldId: "",
             label: 1, //1 按好评排序 0 按时间排序
         }
     }
 
-    componentDidMount () {
-        this._getThemeFields()
+    componentWillMount () {
+
     }
 
-    _getThemeFields () {
-        Get(THEMEFIELDURL, {
-            userId: userId
-        }, (res) => {
-            let themeFields = res.data;
-            let themeFieldId = themeFields[0].id;
-
-
-            if(this.props.updateData) {
-                this.props.updateData({ themeFieldId, themeFields })
+    componentWillReceiveProps (nextProps) {
+        let themeFields = nextProps.themeFields;
+        let themeFieldId = nextProps.themeFieldId;
+        this.setState((preState) => {
+            return {
+                themeFields: themeFields,
+                themeFieldId: themeFieldId
             }
-
-            this._getThemeList(themeFieldId, themeFields, this.state.label)
-            
-            console.log("这里是获取主题域的数据")
-            console.log(res)
-        }, (err) => {
-            console.log(err)
         })
+        this._getThemeList(themeFieldId, themeFields, this.state.label)
     }
-    
 
+    //获取主题域详细文档数据
     _getThemeList (themeFieldId, themeFields, label) {
         Get(THEMELISTURL, {
             userId: userId,
             fieldId: themeFieldId,
             label: label
         }, (res) => {
+            console.log("这里是获取主题域详细文档的数据")
+            console.log(res)
+
             let themeList = res.data;
-            if(this.props.updateData) {
-                this.props.updateData({
-                    themeFieldId: themeFieldId,
+
+            if(themeFields) {
+                this.setState({
                     themeFields: themeFields,
+                    themeFieldId: themeFieldId,
+                    themeList: themeList
+                })
+            }else{
+                this.setState({
+                    themeFieldId: themeFieldId,
                     themeList: themeList
                 })
             }
-            console.log("这里是获取主题域详细文档的数据")
-            console.log(res)
             
         }, (err) => {
             console.log(err)
@@ -72,38 +70,46 @@ class ThemeList extends React.Component {
         if (!currentFieldId) {
             return
         }
-        if (currentFieldId == this.props.themeFieldId) {
+        if (currentFieldId == this.state.themeFieldId) {
             //无变化
             return
         }
 
-        this._getThemeList(currentFieldId, this.props.themeFields, this.state.label)
+        this._getThemeList(currentFieldId, this.state.themeFields, this.state.label)
     }
 
-    handleSort(label) {
-        if (label === undefined) {
+    handleSort(key) {
+        if (key === undefined) {
             return
         }
-        if (label === this.state.label) {
+        if (key === this.state.label) {
             return
         }
         // this._getThemeList(this.state.themeFieldId)
         this.setState({
-            label: label
+            label: key
         })
         
-        this._getThemeList(this.props.themeFieldId, this.props.themeFields, label)
+        this._getThemeList(this.state.themeFieldId, this.state.themeFields, key)
+    }
+
+    handleDetails = (e) => {
+        let themeId = getTargetAttr(e.target, "themeid");
+
+        if (!themeId) {
+            return;
+        }
+        window.location.hash = "/themeDetails/" + themeId;
     }
 
     render() {
-        console.log(this.props)
         return (
             <div className="themes-wrapper">
                 <div className="catelog">
                     <ul onClick={this.handleSelectField.bind(this)}>
                         {
-                            this.props.themeFields.map((field, index) => (
-                                <li key={index} fieldid={field.id} className={field.id == this.props.themeFieldId ? "active" : ""}>{field.field}</li>
+                            this.state.themeFields.map((field, index) => (
+                                <li key={index} fieldid={field.id} className={field.id == this.state.themeFieldId ? "active" : ""}>{field.field}</li>
                             ))
                         }
                     </ul>
@@ -114,18 +120,10 @@ class ThemeList extends React.Component {
                         <span>|</span>
                         <span className={this.state.label == 0 ? "active" : ""} onClick={this.handleSort.bind(this, 0)}>时间</span>
                     </div>
-                    <ThemeDocs themeList={this.props.themeList} />
+                    <ThemeDocs themeList={this.state.themeList} onClick={this.handleDetails} />
                 </div>
             </div>
         );
     }
 }
-
-ThemeList = connect((state) => ({
-    themeFieldId: state.themeSearchData.themeFieldId,
-    themeFields: state.themeSearchData.themeFields,
-    themeList: state.themeSearchData.themeList
-}), 
-{updateData})(ThemeList)
-
 export default ThemeList;

@@ -11,9 +11,10 @@ import PostComments from "Components/PostComments";
 import download from "Assets/images/download.png";
 import more from "Assets/images/more.png";
 import { userId, Get, Post } from "Public/js/Ajax";
-import { connect } from "react-redux";
-import { updateData } from "Store/ThemeDetails/action";
 import { getTargetAttr } from "Src/utils";
+import { Toast } from "antd-mobile";
+
+const LIKETOPICURL = "/likeTopic"; //主题点赞接口
 const TOPICINFOURL = "/getTopicInfo";
 const TOPICCOMMENTSURL = "/getTopicComment";
 const TOPICFOLLOWURL = "/getTopicFollow";
@@ -32,8 +33,8 @@ class ThemeDetails extends React.Component {
             creator: "",  //负责人
             version: "",   //版本
             status: "",    //状态
-            follow: false,    //是否喜欢
-            favorw: false,    //是否点赞
+            follow: "false",    //是否喜欢
+            favorw: "false",    //是否点赞
             favorwnum: 0,     //点赞数
             content: "",
             salematerial: null,
@@ -51,8 +52,7 @@ class ThemeDetails extends React.Component {
         }
     }
     componentWillMount() {
-        console.log(this.props)
-        let themeId = this.props.themeId;
+        let themeId = this.props.match.params.themeId;
         this._getTopicData(themeId);
         this._getComments(themeId);
         this._getTopicGuess();
@@ -60,7 +60,7 @@ class ThemeDetails extends React.Component {
     }
 
     componentWillReceiveProps (props){
-        let themeId = props.themeId;
+        let themeId = props.match.params.themeId;
         this._getTopicData(themeId);
         this._getComments(themeId);
         this._getTopicGuess();
@@ -153,14 +153,36 @@ class ThemeDetails extends React.Component {
         window.location.hash = "/praiseDetail/" + this.state.themeId;
     }
     // 列表点击事件
-    handleDetails=(e)=> {
+    handleDetails = (e) => {
         let themeId = getTargetAttr(e.target, "themeid");
         if(!themeId) {
             return 
         }
-        if(this.props.updateData) {
-            this.props.updateData({themeId: themeId})  
-        }
+        // if(this.props.updateData) {
+        //     this.props.updateData({themeId: themeId})  
+        // }
+        window.location.hash = "/themeDetails/" + themeId;
+    }
+    handleFollow = () => {
+        Post(LIKETOPICURL, {
+            userId: userId,
+            themeId: this.props.themeId
+        }, (res) => {
+            Toast.success(res.message);
+            if (this.state.follow === "true") {
+                this.setState({
+                    follow: "false"
+                })
+            } else {
+                this.setState({
+                    follow: "true"
+                })
+            }
+            console.log("这里是喜欢成功的数据")
+            console.log(res.message)
+        }, (err) => {
+            Toast.fail("error")
+        })
     }
     render() {
         return (
@@ -178,7 +200,7 @@ class ThemeDetails extends React.Component {
                             <div className="detail">状态：<span>{this.state.status}</span></div>
                         </div>
                         <div className="operation">
-                            <Like follow={this.state.follow} themeId={this.state.themeId} />
+                            <Like onClick={this.handleFollow} follow={this.state.follow}/>
                             <Praise themeId={this.state.themeId} favorw={this.state.favorw} favorwnum={Number(this.state.favorwnum)} />
                         </div>
                         <div className="message">
@@ -236,10 +258,4 @@ class ThemeDetails extends React.Component {
         );
     }
 }
-
-ThemeDetails = connect((state) => ({
-    themeId: state.themeDetailsData.themeId
-}),
-    { updateData }
-)(ThemeDetails)
 export default ThemeDetails;
