@@ -13,7 +13,7 @@ import more from "Assets/images/more.png";
 import { userId, Get, Post } from "Public/js/Ajax";
 import { connect } from "react-redux";
 import { updateData } from "Store/ThemeDetails/action";
-
+import { getTargetAttr } from "Src/utils";
 const TOPICINFOURL = "/getTopicInfo";
 const TOPICCOMMENTSURL = "/getTopicComment";
 const TOPICFOLLOWURL = "/getTopicFollow";
@@ -25,7 +25,6 @@ class ThemeDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            themeId: "",
             open: true,   //控制底部评论框开启或关闭
             title: "",    //标题
             type: "",     //类型
@@ -53,10 +52,7 @@ class ThemeDetails extends React.Component {
     }
     componentWillMount() {
         console.log(this.props)
-        let themeId = this.props.match.params.themeId;
-        this.setState({
-            themeId
-        })
+        let themeId = this.props.themeId;
         this._getTopicData(themeId);
         this._getComments(themeId);
         this._getTopicGuess();
@@ -64,13 +60,7 @@ class ThemeDetails extends React.Component {
     }
 
     componentWillReceiveProps (props){
-        // console.log(">>>>>>>>>");
-        // console.log(this.props)
-        
-        // this.setState({
-        //     themeId
-        // })
-        let themeId = this.props.themeId;
+        let themeId = props.themeId;
         this._getTopicData(themeId);
         this._getComments(themeId);
         this._getTopicGuess();
@@ -162,7 +152,16 @@ class ThemeDetails extends React.Component {
     handlePraiseDetail() {
         window.location.hash = "/praiseDetail/" + this.state.themeId;
     }
-
+    // 列表点击事件
+    handleDetails=(e)=> {
+        let themeId = getTargetAttr(e.target, "themeid");
+        if(!themeId) {
+            return 
+        }
+        if(this.props.updateData) {
+            this.props.updateData({themeId: themeId})  
+        }
+    }
     render() {
         return (
             <div className="details-wrapper">
@@ -223,13 +222,13 @@ class ThemeDetails extends React.Component {
                         <div className="likes-title">
                             猜你喜欢：
                         </div>
-                        <Recommends recommends={this.state.topicGuess} />
+                        <Recommends onClick={this.handleDetails} recommends={this.state.topicGuess} />
                     </div>
                     <div className="recommends-wrapper">
                         <div className="recommends-title">
                             关注该话题的人还关注：
                         </div>
-                        <Recommends recommends={this.state.topicFollow} />
+                        <Recommends onClick={this.handleDetails} recommends={this.state.topicFollow} />
                     </div>
                 </div>
                 <PostComments count={this.state.comments.count} themeId={this.state.themeId}/>

@@ -11,50 +11,47 @@ class ThemeDocs extends React.Component {
         super(props);
         this.state = {
             themeId: ""
-        }
+        };
     }
 
-
-    handleDetails (e) {
+    handleDetails(e) {
         let themeId = getTargetAttr(e.target, "themeid");
-        
-        if(!themeId) {
-            return 
+
+        if (!themeId) {
+            return;
         }
 
-        this.setState({
-            themeId: themeId
-        })
-        if(this.props.updateData) {
-            this.props.updateData({themeId: themeId})
+        // this.setState({
+        //     themeId: themeId
+        // })
+        if (this.props.updateData) {
+            this.props.updateData({ themeId: themeId });
         }
-        
-       window.location.hash =  "/themeDetails/" + themeId
+        window.location.hash = "/themeDetails";
     }
 
     render() {
         return (
             <div className="list">
                 <List onClick={this.handleDetails.bind(this)}>
-                    {
-                        this.props.themeList.map((theme, i) => (
-                            <List.Item  key={i}>
-                                <ThemeDoc {...theme} />
-                            </List.Item>
-                        ))
-                    }
+                    {this.props.themeList.map((theme, i) => (
+                        <List.Item key={i}>
+                            <ThemeDoc {...theme} />
+                        </List.Item>
+                    ))}
                 </List>
             </div>
-        )
+        );
     }
 }
 ThemeDocs.propsType = {
     themeList: PropTypes.array
-}
+};
 
-ThemeDocs = connect((state) => ({
-    themeId: state.themeDetailsData.themeId
-}),
+ThemeDocs = connect(
+    state => ({
+        themeId: state.themeDetailsData.themeId
+    }),
     { updateData }
-)(ThemeDocs)
+)(ThemeDocs);
 export default ThemeDocs;

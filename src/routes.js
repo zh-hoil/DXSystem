@@ -82,18 +82,15 @@ const routes = [
         component: SearchHistory
     },
     {
-        path: "/themeDetails/:themeId",
-        exact: true,
+        path: "/themeDetails",
         component: ThemeDetails
     },
     {
         path: "/praiseDetail/:themeId",
-        exact: true,
         component: PraiseDetail
     },
     {
         path: "/searchRusults/:keyword",
-        exact: true,
         component: SearchRusults
     },
     {
