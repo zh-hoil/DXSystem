@@ -14,8 +14,8 @@ const menuList = [
         icon: "icon-nc",
         iframe: true
     },
-    { title: "我的关注", path: "/", icon: "icon-guanzhu" },
-    { title: "关于 NC 一线牵", path: "/", icon: "icon-guanyunc" }
+    { title: "我的关注", path: "/myattention", icon: "icon-guanzhu" },
+    { title: "关于 NC 一线牵", path: "/about", icon: "icon-guanyunc" }
 ];
 
 class HomeMenu extends React.Component {
@@ -27,20 +27,25 @@ class HomeMenu extends React.Component {
         if (iframe) {
             return (
                 <a href={path} key={index} className="menu-item">
-                    <div className="menu-icon">
-                        <i className={`iconfont ${icon}`} />
+                    <div className="home_menu_item">
+                        <div className="home_menu-icon">
+                            <i className={`iconfont ${icon}`} />
+                        </div>
+                        <span>{title}</span>
                     </div>
-
-                    <span>{title}</span>
+                    <i className="iconfont icon-more" />
                 </a>
             );
         }
         return (
             <Link key={index} to={path} className="menu-item">
-                <div className="menu-icon">
-                    <i className={`iconfont ${icon}`} />
-                </div>
-                <span>{title}</span>
+                <div className="home_menu_item">
+                        <div className="home_menu-icon">
+                            <i className={`iconfont ${icon}`} />
+                        </div>
+                        <span>{title}</span>
+                    </div>
+                <i className="iconfont icon-more" />
             </Link>
         );
     };

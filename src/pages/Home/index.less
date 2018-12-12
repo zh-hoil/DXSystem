@@ -34,42 +34,56 @@
             width: 100%;
             .menu-item {
                 height: 108px;
-                font-size: 28px;
                 box-shadow: 0px 0px 20px 0px #ccc;
+                border-radius: 8px;
                 padding: 0 24px;
-                justify-content: flex-start;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
                 flex-direction: row;
-                color: #111111;
-                text-decoration-line: none;
+                margin-bottom: 40px;
+                &:first-child {
+                    margin-top: 40px;
+                }
                 span {
                     margin-left: 20px;
+                    font-size: 28px;
                 }
-                .menu-icon {
-                    width: 76px;
-                    height: 76px;
-                    border-radius: 50%;
-                    text-align: center;
-                    line-height: 76px;
-                    box-shadow: 0px 0px 20px 0px #ccc;
-                    .iconfont {
-                        font-size: 48px;
-                        color: #fff;
-                        text-shadow: 0px 0px 20px 0px #ccc;
+                .icon-more {
+                    font-size: 35px;
+                    color: #ccc;
+                    justify-self: flex-end;
+                }
+                .home_menu_item {
+                    display: flex;
+                    align-items: center;
+                    .home_menu-icon {
+                        width: 76px;
+                        height: 76px;
+                        border-radius: 50%;
+                        text-align: center;
+                        line-height: 76px;
+                        box-shadow: 0px 0px 20px 0px #ccc;
+                        .iconfont {
+                            font-size: 48px;
+                            color: #fff;
+                            text-shadow: 0px 0px 20px 0px #ccc;
+                        }
                     }
                 }
-                &:nth-child(1) .menu-icon {
+                &:nth-child(1) .home_menu-icon {
                     background: #5c99ff;
                 }
-                &:nth-child(2) .menu-icon {
+                &:nth-child(2) .home_menu-icon {
                     background: #fe665e;
                 }
-                &:nth-child(3) .menu-icon {
+                &:nth-child(3) .home_menu-icon {
                     background: #7178fc;
                 }
-                &:nth-child(4) .menu-icon {
+                &:nth-child(4) .home_menu-icon {
                     background: #33dab2;
                 }
-                &:nth-child(5) .menu-icon {
+                &:nth-child(5) .home_menu-icon {
                     background: #fcaf32;
                 }
             }

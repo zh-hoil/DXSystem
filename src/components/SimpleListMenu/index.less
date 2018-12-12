@@ -1,0 +1,62 @@
+.simple_list_menu {
+    height: 100%;
+    width: 100%;
+    padding: 30px;
+    .list_item {
+        height: 108px;
+        box-shadow: 0px 0px 20px 0px #ccc;
+        border-radius: 8px;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+        margin-bottom: 40px;
+        text-decoration-line: none;
+        color: #111111;
+        &:first-child {
+            margin-top: 40px;
+        }
+        span {
+            margin-left: 20px;
+            font-size: 28px;
+        }
+        .list_item_left {
+            display: flex;
+            align-items: center;
+            .list_item_icon {
+                width: 76px;
+                height: 76px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 76px;
+                box-shadow: 0px 0px 20px 0px #ccc;
+                .iconfont {
+                    font-size: 48px;
+                    color: #fff;
+                    text-shadow: 0px 0px 20px 0px #ccc;
+                }
+            }
+        }
+        .icon-more {
+            font-size: 35px;
+            color: #ccc;
+            justify-self: flex-end;
+        }
+        &:nth-child(1) .list_item_icon {
+            background: #5c99ff;
+        }
+        &:nth-child(2) .list_item_icon {
+            background: #fe665e;
+        }
+        &:nth-child(3) .list_item_icon {
+            background: #7178fc;
+        }
+        &:nth-child(4) .list_item_icon {
+            background: #33dab2;
+        }
+        &:nth-child(5) .list_item_icon {
+            background: #fcaf32;
+        }
+    }
+}

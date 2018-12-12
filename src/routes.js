@@ -4,11 +4,6 @@ import Loadable from "react-loadable";
 import Loading from "Components/Loading";
 import Home from "Pages/Home";
 
-const Page1 = Loadable({
-    loader: () => import("Pages/Page1"),
-    loading: Loading
-});
-
 const NCMenu = Loadable({
     loader: () => import("Pages/NCMenu"),
     loading: Loading
@@ -44,18 +39,31 @@ const SearchRusults = Loadable({
     loading: Loading
 });
 
+const About = Loadable({
+    loader: () => import("Pages/About"),
+    loading: Loading
+});
 
+const AboutDetails = Loadable({
+    loader: () => import("Pages/AboutDetails"),
+    loading: Loading
+});
 
+const QuickGuide = Loadable({
+    loader: () => import("Pages/QuickGuide"),
+    loading: Loading
+});
+
+const MyAttention = Loadable({
+    loader: () => import("Pages/MyAttention"),
+    loading: Loading
+});
 
 const routes = [
     {
         path: "/",
         exact: true,
         component: Home
-    },
-    {
-        path: "/page1",
-        component: Page1
     },
     {
         path: "/nc",
@@ -87,8 +95,23 @@ const routes = [
         path: "/searchRusults/:keyword",
         exact: true,
         component: SearchRusults
+    },
+    {
+        path: "/about",
+        component: About
+    },
+    {
+        path: "/aboutdetails",
+        component: AboutDetails
+    },
+    {
+        path: "/quickguide",
+        component: QuickGuide
+    },
+    {
+        path: "/myattention",
+        component: MyAttention
     }
-    
 ];
 const RouteWithSubRoutes = route => (
     <Route

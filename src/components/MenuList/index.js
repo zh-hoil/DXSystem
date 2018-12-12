@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "Assets/iconfont/iconfont.js";
+import SvgCom from "Components/SvgCom";
 import "./index.less";
 class MenuList extends React.Component {
     constructor(props, context) {
@@ -42,29 +44,19 @@ const MenuItem = props => {
     if (iframe) {
         return (
             <a href={path} className="menu-item">
-                <div
-                    style={{
-                        width: "30px",
-                        height: "30px",
-                        background: `url(${icon}) no-repeat center center`,
-                        backgroundSize: "contain"
-                    }}
-                />
                 <span>{title}</span>
+                <div className="menu-icon">
+                    <SvgCom width="66" height="66" xlinkHref={icon} />
+                </div>
             </a>
         );
     }
     return (
         <Link to={path} className="menu-item">
-            <div
-                style={{
-                    width: "30px",
-                    height: "30px",
-                    background: `url(${icon}) no-repeat center center`,
-                    backgroundSize: "contain"
-                }}
-            />
             <span>{title}</span>
+            <div className="menu-icon">
+                <SvgCom width="66" height="66" xlinkHref={icon} />
+            </div>
         </Link>
     );
 };
