@@ -10,31 +10,32 @@ class ThemeList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            themeFields: [],
+            ...props,
             themeList: [],
-            themeFieldId: "",
             label: 1, //1 按好评排序 0 按时间排序
         }
     }
 
     componentWillMount () {
-
+        console.log(this.state)
     }
 
     componentWillReceiveProps (nextProps) {
+        console.log(nextProps)
         let themeFields = nextProps.themeFields;
         let themeFieldId = nextProps.themeFieldId;
-        this.setState((preState) => {
-            return {
-                themeFields: themeFields,
-                themeFieldId: themeFieldId
-            }
+        let filter = nextProps.filter;
+        this.setState({
+                themeFields,
+                themeFieldId,
+                filter
         })
         this._getThemeList(themeFieldId, themeFields, this.state.label)
     }
 
     //获取主题域详细文档数据
     _getThemeList (themeFieldId, themeFields, label) {
+        console.log(this.state)
         Get(THEMELISTURL, {
             userId: userId,
             fieldId: themeFieldId,

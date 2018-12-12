@@ -11,14 +11,40 @@ const THEMEFIELDURL = "/getNCCloudThemeField";
 
 const RadioItem = Radio.RadioItem;
 const CheckboxItem = Checkbox.CheckboxItem;
+const version = [
+    { value: "6.5", checked: true },
+    { value: "6.33", checked: true },
+    { value: "6.32", checked: true },
+    { value: "6.31", checked: true },
+    { value: "6.3", checked: true },
+    { value: "6.1", checked: true },
+    { value: "5.7", checked: true },
+    { value: "其他版本", checked: true }
+];
+const type = [
+    { value: "功能特性", checked: true },
+    { value: "应用方案", checked: true },
+    { value: "最佳实践", checked: true },
+    { value: "竞争分析", checked: true },
+    { value: "培训课件", checked: true },
+    { value: "移动app", checked: true },
+    { value: "微信应用", checked: true },
+];
+const status = [
+    { value: "正式版", checked: true },
+    { value: "傅桦斑", checked: true },
+    { value: "在研", checked: true },
+    { value: "预研", checked: true }
+];
 class ThemeSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             searchBoolean: false,
             themeFieldId: "",
+            filter: "",
             page: 0,
-            versions: [
+            version: [
                 { value: "6.5", checked: true },
                 { value: "6.33", checked: true },
                 { value: "6.32", checked: true },
@@ -28,7 +54,7 @@ class ThemeSearch extends React.Component {
                 { value: "5.7", checked: true },
                 { value: "其他版本", checked: true }
             ],
-            types: [
+            type: [
                 { value: "功能特性", checked: true },
                 { value: "应用方案", checked: true },
                 { value: "最佳实践", checked: true },
@@ -76,12 +102,33 @@ class ThemeSearch extends React.Component {
         })
     }
 
+    _backState(page) {
+        switch (page) {
+            case 2:
+                this.setState({
+                    version: [ ...version ]
+                })
+                break;
+            case 3:
+                this.setState({
+                    type: [ ...type]
+                })
+                break;
+            case 4:
+                this.setState({
+                    status: [ ...status  ]
+                })
+                break;
+        }
+    }
+
     onOpenChange() {
         if (this.props.open) {
             if (this.state.page > 0) {
+                this._backState(this.state.page)
                 this.setState({
                     page: 0
-                    //再设置其他数据
+                    //恢复默认数据
                 })
 
             } else {
@@ -94,7 +141,23 @@ class ThemeSearch extends React.Component {
 
     }
 
+    _getFilterKeys () {
+        let arrs = ["version", "type", "status"];
+        let keys = [];
+        for(let arr of arrs) {
+            let str = "";
+            for(let item of this.state[arr]) {
+                if(item.checked){
+                    str = str + item.value + "," 
+                }
+            }
+            keys.push(arr + "=" + str.substring(0, str.length-1))
+        }
+        return keys.join("&")
+    }
+
     handleFilter() {
+        let keys = {};
         if (this.props.open) {
             if (this.state.page > 0) {
                 this.setState({
@@ -107,6 +170,13 @@ class ThemeSearch extends React.Component {
                 if (this.props.updateData) {
                     this.props.updateData({ open: !this.props.open })
                 }
+
+                let filter = this._getFilterKeys();
+                console.log(filter)
+                this.setState({
+                    filter
+                })
+                //发送网络请求
             }
         }
     }
@@ -122,14 +192,32 @@ class ThemeSearch extends React.Component {
 
 
     onVersionChange(value, index) {
+        this.state.version[index].checked = !this.state.version[index].checked
+        this.setState({
+            version: [
+                ...this.state.version
+            ]
+        })
         console.log(value, index)
     }
 
     onTypeChange(value, index) {
+        this.state.type[index].checked = !this.state.type[index].checked
+        this.setState({
+            type: [
+                ...this.state.type
+            ]
+        })
         console.log(value, index)
     }
 
     onStatusChange(value, index) {
+        this.state.status[index].checked = !this.state.status[index].checked
+        this.setState({
+            status: [
+                ...this.state.status
+            ]
+        })
         console.log(value, index)
     }
 
@@ -160,7 +248,7 @@ class ThemeSearch extends React.Component {
         //     { value: 0, label: 'doctor' },
         //     { value: 1, label: 'bachelor' },
         // ]
-        // const versions = [
+        // const version = [
         //     { value: "6.5", checked: true },
         //     { value: "6.33", checked: true },
         //     { value: "6.32", checked: true },
@@ -170,7 +258,7 @@ class ThemeSearch extends React.Component {
         //     { value: "5.7", checked: true },
         //     { value: "其他版本", checked: true }
         // ];
-        // const types = [
+        // const type = [
         //     { value: "功能特性", checked: true },
         //     { value: "应用方案", checked: true },
         //     { value: "最佳实践", checked: true },
@@ -209,7 +297,7 @@ class ThemeSearch extends React.Component {
                                 tabs.map((item, i) => {
                                     if (i === 0) return
                                     return (
-                                        <List.Item key={i} onClick={this.handlePage.bind(this, i)}>{item.title}</List.Item>
+                                        <List.Item key={i} onClick={this.handlePage.bind(this, i)}>{item.title} <span style={{float: "right"}}>{">"}</span></List.Item>
                                     )
                                 })
                             }
@@ -225,14 +313,14 @@ class ThemeSearch extends React.Component {
                         </List>
                     </div>
                     <div style={{ height: '100%', backgroundColor: '#fff' }}>
-                        {this.state.versions.map((i, index) => (
+                        {this.state.version.map((i, index) => (
                             <CheckboxItem key={i.value} checked={i.checked} onClick={() => this.onVersionChange(i.value, index)}>
                                 {i.value}
                             </CheckboxItem>
                         ))}
                     </div>
                     <div style={{ height: '100%', backgroundColor: '#fff' }}>
-                        {this.state.types.map((i, index) => (
+                        {this.state.type.map((i, index) => (
                             <CheckboxItem key={i.value} checked={i.checked} onClick={() => this.onTypeChange(i.value, index)}>
                                 {i.value}
                             </CheckboxItem>
@@ -257,14 +345,14 @@ class ThemeSearch extends React.Component {
                             </List>
                         </Accordion.Panel>
                         <Accordion.Panel header="版本" className="version">
-                            {versions.map(i => (
+                            {version.map(i => (
                                 <CheckboxItem key={i.value} checked={i.checked} onChange={() => this.onVersionChange(i.value)}>
                                     {i.label}
                                 </CheckboxItem>
                             ))}
                         </Accordion.Panel>
                         <Accordion.Panel header="主题类型" className="type">
-                            {types.map(i => (
+                            {type.map(i => (
                                 <CheckboxItem key={i.value} checked={i.checked} onChange={() => this.onTypeChange(i.value)}>
                                     {i.label}
                                 </CheckboxItem>
@@ -294,7 +382,7 @@ class ThemeSearch extends React.Component {
                             handleSearch={this.handleSearch.bind(this)}
                             handleSearchBack={this.handleSearchBack.bind(this)}
                         />
-                        <ThemeList themeFields={this.props.themeFields} themeFieldId={this.props.themeFieldId} />
+                        <ThemeList themeFields={this.props.themeFields} themeFieldId={this.props.themeFieldId} filter={this.state.filter}  />
                     </div>
                 </Drawer>
             </div>
