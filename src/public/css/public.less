@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
@@ -6,6 +6,8 @@ html,
 body {
     height: 100%;
     width: 100%;
+    overflow: auto; /* 用于 android4+，或其他设备 */
+    -webkit-overflow-scrolling: touch; /* 用于 ios5+ */
 }
 #app {
     height: 100%;
@@ -13,12 +15,12 @@ body {
     display: flex;
 }
 .icon {
-    width: 1em; height: 1em;
+    width: 1em;
+    height: 1em;
     vertical-align: -0.15em;
     fill: currentColor;
     overflow: hidden;
- }
-ul{
+}
+ul {
     list-style: none;
 }
-
