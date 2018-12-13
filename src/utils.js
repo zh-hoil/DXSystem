@@ -97,3 +97,11 @@ export const GetQuery = query => {
     }
     return theRequest;
 };
+
+//判断某数组里是否有某元素
+export function hasItemInArr (arr, item) {
+    if(arr.indexOf(item) > -1) {
+        return true
+    }
+    return false
+}
