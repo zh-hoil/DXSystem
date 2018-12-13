@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import "./index.less";
 
 const ThemeDocs = props => (
-    <div className="list">
+    <div className="theme-docs">
         <List onClick={props.onClick}>
             {props.themeList.map((theme, i) => (
                 <List.Item key={i}>

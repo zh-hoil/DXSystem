@@ -1,7 +1,7 @@
 import React from "react";
 // import Data from "./themeList.json";
 import ThemeDocs from "Components/ThemeDocs";
-import { getTargetAttr, sortBy } from "Src/utils";
+import { getTargetAttr } from "Src/utils";
 import { userId, Get, Post } from "Public/js/Ajax";
 
 const THEMELISTURL = "/getNCCloudThemeList";
@@ -16,26 +16,33 @@ class ThemeList extends React.Component {
         }
     }
 
-    componentWillMount () {
-        console.log(this.state)
+    componentWillMount() {
+        this.setState({
+            ...this.props
+        })
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         console.log(nextProps)
         let themeFields = nextProps.themeFields;
         let themeFieldId = nextProps.themeFieldId;
         let filter = nextProps.filter;
-        this.setState({
-                themeFields,
-                themeFieldId,
-                filter
-        })
-        this._getThemeList(themeFieldId, themeFields, this.state.label)
+        this._getThemeList(themeFieldId, themeFields, this.state.label, filter)
     }
 
     //获取主题域详细文档数据
-    _getThemeList (themeFieldId, themeFields, label) {
-        console.log(this.state)
+    _getThemeList(themeFieldId, themeFields, label, filter) {
+        // let version = "";
+        // let type = "";
+        // let status = "";
+        let filterArr = filter.split("&");
+        let version = filterArr[0];
+        let type = filterArr[1];
+        let status = filterArr[2]
+
+        console.log(version)
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+
         Get(THEMELISTURL, {
             userId: userId,
             fieldId: themeFieldId,
@@ -46,19 +53,23 @@ class ThemeList extends React.Component {
 
             let themeList = res.data;
 
-            if(themeFields) {
+            if (themeFields) {
                 this.setState({
                     themeFields: themeFields,
                     themeFieldId: themeFieldId,
-                    themeList: themeList
+                    themeList: themeList,
+                    filter: filter
                 })
-            }else{
+            } else {
                 this.setState({
                     themeFieldId: themeFieldId,
-                    themeList: themeList
+                    themeList: themeList,
+                    filter: filter
                 })
             }
-            
+
+            console.log(this.state)
+
         }, (err) => {
             console.log(err)
         })
@@ -76,22 +87,22 @@ class ThemeList extends React.Component {
             return
         }
 
-        this._getThemeList(currentFieldId, this.state.themeFields, this.state.label)
+        this._getThemeList(currentFieldId, this.state.themeFields, this.state.label, this.state.filter)
     }
 
-    handleSort(key) {
-        if (key === undefined) {
+    handleSort(label) {
+        if (label === undefined) {
             return
         }
-        if (key === this.state.label) {
+        if (label === this.state.label) {
             return
         }
         // this._getThemeList(this.state.themeFieldId)
         this.setState({
-            label: key
+            label: label
         })
-        
-        this._getThemeList(this.state.themeFieldId, this.state.themeFields, key)
+
+        this._getThemeList(this.state.themeFieldId, this.state.themeFields, label, this.state.filter);
     }
 
     handleDetails = (e) => {
@@ -103,7 +114,7 @@ class ThemeList extends React.Component {
         window.location.hash = "/themeDetails/" + themeId;
     }
 
-    
+
 
     render() {
         return (
@@ -117,7 +128,7 @@ class ThemeList extends React.Component {
                         }
                     </ul>
                 </div>
-                <div className="theme-docs">
+                <div className="theme-docs-wrapper">
                     <div className="sortable">
                         <span className={this.state.label == 1 ? "active" : ""} onClick={this.handleSort.bind(this, 1)}>好评</span>
                         <span>|</span>

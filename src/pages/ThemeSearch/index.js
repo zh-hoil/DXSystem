@@ -41,8 +41,10 @@ class ThemeSearch extends React.Component {
         super(props);
         this.state = {
             searchBoolean: false,
-            themeFieldId: "",
-            filter: "",
+            // themeFieldId: "",
+            filter: `version=6.5,6.33,6.32,6.31,6.3,6.1,5.7,其他版本
+                    &type=功…方案,最佳实践,竞争分析,培训课件,移动app,微信应用
+                    &status=正式版,傅桦斑,在研,预研`,
             page: 0,
             version: [
                 { value: "6.5", checked: true },
@@ -106,17 +108,17 @@ class ThemeSearch extends React.Component {
         switch (page) {
             case 2:
                 this.setState({
-                    version: [ ...version ]
+                    version: [...version]
                 })
                 break;
             case 3:
                 this.setState({
-                    type: [ ...type]
+                    type: [...type]
                 })
                 break;
             case 4:
                 this.setState({
-                    status: [ ...status  ]
+                    status: [...status]
                 })
                 break;
         }
@@ -141,23 +143,22 @@ class ThemeSearch extends React.Component {
 
     }
 
-    _getFilterKeys () {
+    _getFilterKeys() {
         let arrs = ["version", "type", "status"];
         let keys = [];
-        for(let arr of arrs) {
+        for (let arr of arrs) {
             let str = "";
-            for(let item of this.state[arr]) {
-                if(item.checked){
-                    str = str + item.value + "," 
+            for (let item of this.state[arr]) {
+                if (item.checked) {
+                    str = str + item.value + ","
                 }
             }
-            keys.push(arr + "=" + str.substring(0, str.length-1))
+            keys.push(arr + "=" + str.substring(0, str.length - 1))
         }
         return keys.join("&")
     }
 
     handleFilter() {
-        let keys = {};
         if (this.props.open) {
             if (this.state.page > 0) {
                 this.setState({
@@ -168,15 +169,16 @@ class ThemeSearch extends React.Component {
             } else {
                 //关闭弹窗
                 if (this.props.updateData) {
-                    this.props.updateData({ open: !this.props.open })
+                    this.props.updateData({ open: !this.props.open, themeFieldId: this.state.themeFieldId })
+
                 }
 
                 let filter = this._getFilterKeys();
-                console.log(filter)
                 this.setState({
                     filter
                 })
-                //发送网络请求
+                //更新列表
+
             }
         }
     }
@@ -281,7 +283,7 @@ class ThemeSearch extends React.Component {
             { title: "状态" }
         ]
         const sidebar = (
-            <div style={{ width: "100%", height: "100%" }}>
+            <div className="sidebar-wrapper">
                 <div className="drawer-top">
                     <span className="drawer-top-operation" onClick={this.onOpenChange.bind(this)}>返回</span>
                     <span className="drawer-top-title">筛选</span>
@@ -297,7 +299,7 @@ class ThemeSearch extends React.Component {
                                 tabs.map((item, i) => {
                                     if (i === 0) return
                                     return (
-                                        <List.Item key={i} onClick={this.handlePage.bind(this, i)}>{item.title} <span style={{float: "right"}}>{">"}</span></List.Item>
+                                        <List.Item key={i} onClick={this.handlePage.bind(this, i)}>{item.title} <span style={{ float: "right" }}>{">"}</span></List.Item>
                                     )
                                 })
                             }
@@ -313,25 +315,31 @@ class ThemeSearch extends React.Component {
                         </List>
                     </div>
                     <div style={{ height: '100%', backgroundColor: '#fff' }}>
-                        {this.state.version.map((i, index) => (
-                            <CheckboxItem key={i.value} checked={i.checked} onClick={() => this.onVersionChange(i.value, index)}>
-                                {i.value}
-                            </CheckboxItem>
-                        ))}
+                        <List>
+                            {this.state.version.map((i, index) => (
+                                <CheckboxItem key={i.value} checked={i.checked} onClick={() => this.onVersionChange(i.value, index)}>
+                                    {i.value}
+                                </CheckboxItem>
+                            ))}
+                        </List>
                     </div>
                     <div style={{ height: '100%', backgroundColor: '#fff' }}>
-                        {this.state.type.map((i, index) => (
-                            <CheckboxItem key={i.value} checked={i.checked} onClick={() => this.onTypeChange(i.value, index)}>
-                                {i.value}
-                            </CheckboxItem>
-                        ))}
+                        <List>
+                            {this.state.type.map((i, index) => (
+                                <CheckboxItem key={i.value} checked={i.checked} onClick={() => this.onTypeChange(i.value, index)}>
+                                    {i.value}
+                                </CheckboxItem>
+                            ))}
+                        </List>
                     </div>
                     <div style={{ height: '100%', backgroundColor: '#fff' }}>
-                        {this.state.status.map((i, index) => (
-                            <CheckboxItem key={i.value} checked={i.checked} onClick={() => this.onStatusChange(i.value, index)}>
-                                {i.value}
-                            </CheckboxItem>
-                        ))}
+                        <List>
+                            {this.state.status.map((i, index) => (
+                                <CheckboxItem key={i.value} checked={i.checked} onClick={() => this.onStatusChange(i.value, index)}>
+                                    {i.value}
+                                </CheckboxItem>
+                            ))}
+                        </List>
                     </div>
                 </Tabs>
                 {/* <Accordion className="theme-accordion" >
@@ -377,13 +385,12 @@ class ThemeSearch extends React.Component {
                     open={this.props.open}
                     onOpenChange={this.onOpenChange.bind(this)}
                 >
-                    <div>
-                        <SearchBar searchBoolean={this.state.searchBoolean}
-                            handleSearch={this.handleSearch.bind(this)}
-                            handleSearchBack={this.handleSearchBack.bind(this)}
-                        />
-                        <ThemeList themeFields={this.props.themeFields} themeFieldId={this.props.themeFieldId} filter={this.state.filter}  />
-                    </div>
+                    <SearchBar searchBoolean={this.state.searchBoolean}
+                        handleSearch={this.handleSearch.bind(this)}
+                        handleSearchBack={this.handleSearchBack.bind(this)}
+                    />
+                    <ThemeList themeFields={this.props.themeFields} themeFieldId={this.props.themeFieldId} filter={this.state.filter} />
+
                 </Drawer>
             </div>
         )

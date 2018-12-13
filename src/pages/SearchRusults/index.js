@@ -2,7 +2,8 @@ import React from "react";
 import ThemeDocs from "Components/ThemeDocs";
 import SearchBar from "Components/SearchBar";
 import "./index.less";
-import { userId, Get, Post } from "Public/js/Ajax";
+import { userId, Get } from "Public/js/Ajax";
+import { getTargetAttr } from "Src/utils";
 
 const NCCSEARCHURL = "/getNCCloudThemeSearch";
 class SearchRusults extends React.Component {
@@ -49,6 +50,15 @@ class SearchRusults extends React.Component {
         }
     }
 
+    handleDetails = (e) => {
+        let themeId = getTargetAttr(e.target, "themeid");
+
+        if (!themeId) {
+            return;
+        }
+        window.location.hash = "/themeDetails/" + themeId;
+    }
+
     render() {
         return (
             <div className="search-results">
@@ -57,7 +67,10 @@ class SearchRusults extends React.Component {
                     handleSearchBack={this.handleSearchBack.bind(this)}
                     handleSearchChange={this.handleSearchChange.bind(this)}
                 />
-                <ThemeDocs themeList={this.state.themeList} />
+                <div className="theme-docs-wrapper">
+                    <ThemeDocs themeList={this.state.themeList} onClick={this.handleDetails}/>
+                </div>
+                
             </div>
         )
     }

@@ -10,7 +10,6 @@ class SearchBarComponent extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
         if(this.props.searchBoolean){
             this.autoFocusInst.focus();
         }
@@ -20,6 +19,7 @@ class SearchBarComponent extends React.Component {
         return (
             <div className="search-wrapper">
                 <SearchBar
+                    style={{height: "100px"}}
                     ref={ref => this.autoFocusInst = ref}
                     onFocus={() => { if(!this.props.handleSearch) return; this.props.handleSearch() }}
                     showCancelButton
