@@ -1,14 +1,32 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Toast } from "antd-mobile";
 import Tag from "Components/Tag";
 import Time from "Components/Time";
 import Like from "Components/Like";
 import Praise from "Components/Praise";
+import { Post } from "Public/js/Ajax";
+const GOODTOPICURL = "/goodTopic"; //主题点赞接口
 class ThemeDescribe extends React.Component {
     constructor(props) {
         super(props);
     }
+    //点赞操作
+    handlePraise = () => {
+        Post(
+            GOODTOPICURL,
+            {
+                themeId: this.props.themeId
+            },
+            res => {
+                Toast.success(res.message, 0.5, () => {
+                    this.props.onPraise();
+                });
+            }
+        );
+    };
+
     render() {
         let {
             title,
@@ -17,7 +35,7 @@ class ThemeDescribe extends React.Component {
             time,
             version,
             status,
-            handleFollow,
+            follow,
             favorw,
             favorwnum
         } = this.props.detailsData;
@@ -48,8 +66,8 @@ class ThemeDescribe extends React.Component {
                         </div>
                         <div className="operation">
                             <Like
-                                onClick={this.handleFollow}
-                                follow={handleFollow}
+                                onClick={this.props.onFollow}
+                                follow={follow}
                             />
                             <Praise
                                 themeId={this.props.themeId}

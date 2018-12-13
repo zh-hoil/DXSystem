@@ -1,8 +1,10 @@
 import React from "react";
+import { Toast } from "antd-mobile";
 import FileAccess from "./FileAccess";
 import ThemeDescribe from "./ThemeDescribe";
-import { userId, Get } from "Public/js/Ajax";
+import { userId, Get, Post } from "Public/js/Ajax";
 const TOPICINFOURL = "/getTopicInfo"; //主题数据获取接口
+const LIKETOPICURL = "/likeTopic"; //主题收藏接口
 class ThemeDetailsContainer extends React.Component {
     constructor(props) {
         super(props);
@@ -31,7 +33,6 @@ class ThemeDetailsContainer extends React.Component {
                 themeId: themeId
             },
             ({ data }) => {
-                console.log("主题详情的数据", data);
                 let { content, salematerial, studymaterial } = data;
                 salematerial = this.stringToFileObject(salematerial, "sale");
                 studymaterial = this.stringToFileObject(studymaterial, "study");
@@ -67,6 +68,55 @@ class ThemeDetailsContainer extends React.Component {
             };
         });
     };
+    // 点赞和取消点赞
+    themePraise = () => {
+        let { favorw, favorwnum } = this.state.detailsData;
+        if (favorw === "true") {
+            this.setState({
+                detailsData: {
+                    ...this.state.detailsData,
+                    favorw: "false",
+                    favorwnum: favorwnum - 1
+                }
+            });
+        } else {
+            this.setState({
+                detailsData: {
+                    ...this.state.detailsData,
+                    favorw: "true",
+                    favorwnum: favorwnum + 1
+                }
+            });
+        }
+    };
+    //收藏操作
+    handleFollow = () => {
+        let follow = this.state.detailsData.follow;
+        Post(
+            LIKETOPICURL,
+            {
+                themeId: this.props.themeId
+            },
+            res => {
+                Toast.success(res.message, 0.5);
+                if (follow === "true") {
+                    this.setState({
+                        detailsData: {
+                            ...this.state.detailsData,
+                            follow: "false"
+                        }
+                    });
+                } else {
+                    this.setState({
+                        detailsData: {
+                            ...this.state.detailsData,
+                            follow: "true"
+                        }
+                    });
+                }
+            }
+        );
+    };
     componentDidMount() {
         this.getTopicData(this.props.themeId);
     }
@@ -79,7 +129,11 @@ class ThemeDetailsContainer extends React.Component {
         let { detailsData, salematerial, studymaterial, content } = this.state;
         return (
             <div className="theme-details">
-                <ThemeDescribe detailsData={detailsData} />
+                <ThemeDescribe
+                    detailsData={detailsData}
+                    onPraise={this.themePraise}
+                    onFollow={this.handleFollow}
+                />
                 <div className="message">{content}</div>
                 <FileAccess
                     salematerialData={salematerial}

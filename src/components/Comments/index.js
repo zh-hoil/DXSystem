@@ -7,12 +7,9 @@ class Comments extends React.Component {
         super(props);
         
     }
-
     componentDidMount () {
         console.log(this.props)
     }
-
-
     render() {
         return (
             <div className="comments">

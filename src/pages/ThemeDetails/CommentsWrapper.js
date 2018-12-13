@@ -33,20 +33,27 @@ class CommentsWrapper extends React.Component {
     componentDidMount() {
         this.getComments(this.props.themeId);
     }
+    componentWillReceiveProps(props) {
+        if (this.props.themeId != props.themeId) {
+            this.getComments(props.themeId);
+        }
+    }
     render() {
-        let { good, commentlist } = this.props;
+        let { good, commentlist, count } = this.props;
+        console.log(count -0);
+        
         return (
             <div className="comments-wrapper">
                 <div className="comments-title">
                     评价：
                     <Evaluate evaluate={good} />
                 </div>
-                {good < 1 ? (
+                {count < 1 ? (
                     <span className="comments-empty">暂无评论</span>
                 ) : (
                     <div>
                         <Comments commentlist={commentlist} />
-                        {good > 3 ? (
+                        {count > 3 ? (
                             <div
                                 className="more-comments"
                                 onClick={this.handlePraiseDetail}
@@ -70,6 +77,7 @@ class CommentsWrapper extends React.Component {
 CommentsWrapper.propTypes = {
     themeId: PropTypes.string.isRequired,
     good: PropTypes.string.isRequired,
+    count: PropTypes.string.isRequired,
     commentlist: PropTypes.array.isRequired,
     updateComments: PropTypes.func.isRequired
 };
@@ -77,7 +85,8 @@ export default connect(
     store => ({
         themeId: store.themeDetailsData.themeId,
         commentlist: store.themeDetailsData.commentlist,
-        good: store.themeDetailsData.good
+        good: store.themeDetailsData.good,
+        count: store.themeDetailsData.count
     }),
     { updateComments }
 )(CommentsWrapper);

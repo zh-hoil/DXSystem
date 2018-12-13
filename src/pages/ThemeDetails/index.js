@@ -8,13 +8,11 @@ import CommentsWrapper from "./CommentsWrapper";
 import { updateThemeID } from "Store/ThemeDetails/action";
 import { userId, Get, Post } from "Public/js/Ajax";
 import { getTargetAttr } from "Src/utils";
-import { Toast } from "antd-mobile";
 
 import "./index.less";
 
-const GOODTOPICURL = "/goodTopic"; //主题点赞接口
 const GOODCOMMENTURL = "/goodComment"; //评论点赞接口
-const LIKETOPICURL = "/likeTopic"; //主题收藏接口
+
 const TOPICCOMMENTSURL = "/getTopicComment"; //评论数据获取接口
 const TOPICFOLLOWURL = "/getTopicFollow"; //关注数据获取接口
 const TOPGUESSURL = "/getTopicGuess"; //猜你喜欢数据获取接口
@@ -91,65 +89,6 @@ class ThemeDetails extends React.Component {
         window.location.hash = "/themeDetails/" + themeId;
     };
 
-    //收藏操作
-    handleFollow = () => {
-        Post(
-            LIKETOPICURL,
-            {
-                userId: userId,
-                themeId: this.props.themeId
-            },
-            res => {
-                Toast.success(res.message);
-                if (this.state.follow === "true") {
-                    this.setState({
-                        follow: "false"
-                    });
-                } else {
-                    this.setState({
-                        follow: "true"
-                    });
-                }
-                console.log("这里是喜欢成功的数据");
-                console.log(res.message);
-            },
-            err => {
-                Toast.fail("error");
-            }
-        );
-    };
-
-    //点赞操作
-    handlePraise = () => {
-        Post(
-            GOODTOPICURL,
-            {
-                userId: userId,
-                themeId: this.props.match.params.themeId
-            },
-            res => {
-                Toast.success(res.message, 0.3, this.themePraise);
-            }
-        );
-    };
-    // 点赞和取消点赞
-    themePraise = () => {
-        if (this.state.favorw === "true") {
-            this.setState(preState => {
-                return {
-                    favorw: "false",
-                    favorwnum: preState.favorwnum - 1
-                };
-            });
-        } else {
-            this.setState(preState => {
-                return {
-                    favorw: "true",
-                    favorwnum: preState.favorwnum + 1
-                };
-            });
-        }
-    };
     render() {
         let { topicGuess, topicFollow } = this.state;
         return (
