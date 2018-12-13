@@ -3,16 +3,32 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Toast } from "antd-mobile";
 import QuickComments from "Components/QuickComments";
-import { Post } from "Public/js/Ajax";
+import { updateComments } from "Store/ThemeDetails/action";
+import { Get, Post } from "Public/js/Ajax";
 import "./index.less";
 
 const COMMENTOPICURL = "/commentTopic";
+const TOPICCOMMENTSURL = "/getTopicComment"; //评论数据获取接口
 class PostComments extends React.Component {
     constructor(props) {
         super(props);
     }
     handlePraiseDetail = () => {
         window.location.hash = "/praiseDetail/" + this.props.themeId;
+    };
+    //获取主题评论（3条）
+    getComments = themeId => {
+        let count = 3;
+        Get(
+            TOPICCOMMENTSURL,
+            {
+                themeId: themeId,
+                count: count
+            },
+            ({ data: comments }) => {
+                this.props.updateComments(comments);
+            }
+        );
     };
     handleConfirm = (data, closeFun) => {
         //发送评论请求
@@ -27,13 +43,13 @@ class PostComments extends React.Component {
             },
             res => {
                 Toast.success(res.message, 0.5, () => {
-                    closeFun()
+                    closeFun();
+                    this.getComments(themeId);
                 });
-                console.log("评论成功的数据", res);
             }
         );
     };
-    
+
     render() {
         return (
             <QuickComments
@@ -54,5 +70,5 @@ export default connect(
         themeId: store.themeDetailsData.themeId,
         count: store.themeDetailsData.count
     }),
-    {}
+    {updateComments}
 )(PostComments);

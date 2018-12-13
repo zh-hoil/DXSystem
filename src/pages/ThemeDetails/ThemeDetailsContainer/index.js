@@ -71,8 +71,6 @@ class ThemeDetailsContainer extends React.Component {
         this.getTopicData(this.props.themeId);
     }
     componentWillReceiveProps(props) {
-        console.log("+++++++",props.themeId != this.props.themeId);
-        
         if (props.themeId != this.props.themeId) {
             this.getTopicData(props.themeId);
         }
