@@ -1,5 +1,4 @@
 import React from "react";
-import download from "Assets/images/download.png";
 /**
  * 获取相关资料文件组件
  */

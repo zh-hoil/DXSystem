@@ -1,7 +1,6 @@
 import React from "react";
 import Grade from "./grade";
 import { Toast } from "antd-mobile";
-import comment from "Assets/images/comment.png";
 import "./index.less";
 class QuickComments extends React.Component {
     constructor(props) {
