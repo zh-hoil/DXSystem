@@ -31,6 +31,9 @@ export const userId = getLocalStorage("YY_userInfo")
     : "0001AA1000000002W4SU";
 export function Post(url, data, resolve, reject) {
     url = baseURL + url;
+    if (!data.userId) {
+        data.userId = userId;
+    }
     Ajax.post(url, data)
         .then(function(response) {
             if (response.status === 200) {
@@ -46,6 +49,9 @@ export function Post(url, data, resolve, reject) {
 
 export function Get(url, data, resolve, reject) {
     url = baseURL + url;
+    if (!data.userId) {
+        data.userId = userId;
+    }
     Ajax.get(url, {
         params: data
     })
