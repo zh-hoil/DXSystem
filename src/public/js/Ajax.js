@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getLocalStorage } from "./../../utils";
-
+const baseURL = "http://10.11.115.74:5050/fiwechat";
 const Ajax = axios.create({
     transformRequest: [
         function(data) {
@@ -26,12 +26,11 @@ const Ajax = axios.create({
 //     modules: "eg"
 // }
 
-export const userId =
-    getLocalStorage("YY_userInfo")
-        ? getLocalStorage("YY_userInfo")
-        : "0001AA1000000002W4SU";
-
+export const userId = getLocalStorage("YY_userInfo")
+    ? getLocalStorage("YY_userInfo")
+    : "0001AA1000000002W4SU";
 export function Post(url, data, resolve, reject) {
+    url = baseURL + url;
     Ajax.post(url, data)
         .then(function(response) {
             if (response.status === 200) {
@@ -46,6 +45,7 @@ export function Post(url, data, resolve, reject) {
 }
 
 export function Get(url, data, resolve, reject) {
+    url = baseURL + url;
     Ajax.get(url, {
         params: data
     })
