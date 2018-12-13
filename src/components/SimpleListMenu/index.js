@@ -12,7 +12,7 @@ const SimpleListMenu = props => {
                             </div>
                             <span>{item.title}</span>
                         </div>
-                        <i className="iconfont icon-more" />
+                        <i className="iconfont icon-enter" />
                     </a>
                 );
             })}
