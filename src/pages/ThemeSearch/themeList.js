@@ -46,7 +46,10 @@ class ThemeList extends React.Component {
         Get(THEMELISTURL, {
             userId: userId,
             fieldId: themeFieldId,
-            label: label
+            label: label,
+            version: version,
+            type: type, 
+            status: status
         }, (res) => {
             console.log("这里是获取主题域详细文档的数据")
             console.log(res)
