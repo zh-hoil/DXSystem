@@ -60,11 +60,7 @@ class QuickComments extends React.Component {
                     </div>
                     <div className="comment_icon">
                         <span
-                            className="icon"
-                            style={{
-                                background: `url(${comment}) no-repeat`,
-                                backgroundSize: "50px"
-                            }}
+                            className="iconfont icon-xiaoxi"
                             onClick={this.handlePraiseDetail}
                         />
                         <span>{this.props.commentsCount}</span>
