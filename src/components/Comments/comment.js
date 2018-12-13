@@ -3,7 +3,7 @@ import Time from "Components/Time";
 import Praise from "Components/Praise";
 import Stars from "Components/Stars";
 import PropTypes from "prop-types";
-import { userId, Get, Post } from "Public/js/Ajax";
+import { Post } from "Public/js/Ajax";
 import { Toast } from "antd-mobile";
 
 const GOODCOMMENTURL = "/goodComment"; //评论点赞接口
@@ -26,9 +26,6 @@ class Comment extends React.Component {
             res => {
                 Toast.success(res.message, 0.5);
                 this._commentPraise();
-            },
-            err => {
-                Toast.fail("error");
             }
         );
     }
@@ -45,7 +42,7 @@ class Comment extends React.Component {
             this.setState(preState => {
                 return {
                     favorw: "true",
-                    favorwnum: preState.favorwnum + 1
+                    favorwnum: preState.favorwnum - 0 + 1
                 };
             });
         }

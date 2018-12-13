@@ -49,12 +49,6 @@ class ThemeDetails extends React.Component {
                 this.setState({
                     topicGuess
                 });
-
-                console.log("这里是猜你喜欢的数据");
-                console.log(res.data);
-            },
-            err => {
-                console.log(err);
             }
         );
     }
@@ -71,12 +65,6 @@ class ThemeDetails extends React.Component {
                 this.setState({
                     topicFollow
                 });
-
-                console.log("这里是关注该话题的人还关注的数据");
-                console.log(res.data);
-            },
-            err => {
-                console.log(err);
             }
         );
     }

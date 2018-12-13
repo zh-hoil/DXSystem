@@ -84,7 +84,7 @@ class ThemeDetailsContainer extends React.Component {
                 detailsData: {
                     ...this.state.detailsData,
                     favorw: "true",
-                    favorwnum: favorwnum + 1
+                    favorwnum: favorwnum - 0 + 1
                 }
             });
         }
