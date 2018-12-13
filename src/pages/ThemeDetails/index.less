@@ -19,31 +19,40 @@
             }
             .remarks {
                 padding: 20px 0;
-                .tag {
-                    display: inline;
-                    padding: 6px;
-                    font-size: 22px;
-                    border-radius: 10px;
-                }
-                .time {
-                    display: inline;
-                    font-size: 24px;
-                    margin-left: 20px;
+                .detail_info {
+                    .tag {
+                        display: inline;
+                        padding: 6px;
+                        font-size: 22px;
+                        border-radius: 10px;
+                    }
+                    .time {
+                        display: inline;
+                        font-size: 24px;
+                        margin-left: 20px;
+                    }
                 }
                 .detail {
-                    display: block;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
                     margin-top: 24px;
-                    font-size: 26px;
-                    color: #34383b;
-                    span {
-                        color: #acb0bb;
+                    .detail_item {
+                        font-size: 26px;
+                        label {
+                            color: #34383b;
+                            &::after {
+                                content: ":";
+                                margin: 0 6px;
+                            }
+                        }
+                        span {
+                            color: #acb0bb;
+                        }
                     }
                 }
             }
             .operation {
-                position: absolute;
-                top: 100px;
-                right: 10px;
                 .like,
                 .praise {
                     display: inline-block;
