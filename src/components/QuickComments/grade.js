@@ -25,7 +25,7 @@ class Grade extends React.Component {
                 {
                     stars.map((i, index) => (
                         <span key={index} onClick={()=>{this.handlePraise(index)}}>
-                            {index<=this.state.grade?"⭐":"✩"}
+                            {index<=this.state.grade?<i className="selected iconfont icon-xingxing" />:<i className="unselected iconfont icon-xingxing" />}
                         </span>
                     ))
                 }

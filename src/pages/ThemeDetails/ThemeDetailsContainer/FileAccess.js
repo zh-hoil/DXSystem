@@ -29,11 +29,7 @@ class FileAccess extends React.Component {
                 />
                 <div className="data-get" onClick={this.handleDataGet}>
                     <span
-                        className="download-icon"
-                        style={{
-                            background: `url(${download}) no-repeat`,
-                            backgroundSize: "40px"
-                        }}
+                        className="iconfont icon-statusiconpendingdownload"
                     />
                     索取资料
                 </div>
