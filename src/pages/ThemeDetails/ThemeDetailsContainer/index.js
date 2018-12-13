@@ -35,8 +35,6 @@ class ThemeDetailsContainer extends React.Component {
                 let { content, salematerial, studymaterial } = data;
                 salematerial = this.stringToFileObject(salematerial, "sale");
                 studymaterial = this.stringToFileObject(studymaterial, "study");
-                console.log(salematerial,);
-                
                 this.setState({
                     detailsData: data,
                     content,
@@ -60,7 +58,10 @@ class ThemeDetailsContainer extends React.Component {
         return fileStr.map(item => {
             return {
                 title: item,
-                src: `${window.RootURL}/fileDownload?userId=${userId}&themeId=${
+                // src: `${window.RootURL}/fileDownload?userId=${userId}&themeId=${
+                //     this.props.themeId
+                // }&fileName=${item}&fileType=${fileType}`
+                src: `http://172.20.6.119:8901/fiwechat/fileDownload?userId=${userId}&themeId=${
                     this.props.themeId
                 }&fileName=${item}&fileType=${fileType}`
             };
@@ -69,8 +70,12 @@ class ThemeDetailsContainer extends React.Component {
     componentDidMount() {
         this.getTopicData(this.props.themeId);
     }
-    componentWillReceiveProps() {
-        this.getTopicData(this.props.themeId);
+    componentWillReceiveProps(props) {
+        console.log("+++++++",props.themeId != this.props.themeId);
+        
+        if (props.themeId != this.props.themeId) {
+            this.getTopicData(props.themeId);
+        }
     }
     render() {
         let { detailsData, salematerial, studymaterial, content } = this.state;

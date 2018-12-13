@@ -128,18 +128,12 @@ class ThemeDetails extends React.Component {
                 themeId: this.props.match.params.themeId
             },
             res => {
-                Toast.success(res.message);
-                this._themePraise();
-                console.log("这里是点赞成功的数据");
-                console.log(res);
-            },
-            err => {
-                Toast.fail("error");
+                Toast.success(res.message, 0.3, this.themePraise);
             }
         );
     };
-
-    _themePraise() {
+    // 点赞和取消点赞
+    themePraise = () => {
         if (this.state.favorw === "true") {
             this.setState(preState => {
                 return {
@@ -155,9 +149,9 @@ class ThemeDetails extends React.Component {
                 };
             });
         }
-    }
+    };
     render() {
-        let { comments, topicGuess, topicFollow, themeId } = this.state;
+        let { topicGuess, topicFollow } = this.state;
         return (
             <div className="details-wrapper">
                 <div className="details-top">

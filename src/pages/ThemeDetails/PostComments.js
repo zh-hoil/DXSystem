@@ -26,16 +26,18 @@ class PostComments extends React.Component {
                 star: star
             },
             res => {
-                Toast.success(res.message, 1, closeFun);
+                Toast.success(res.message, 0.5, () => {
+                    closeFun()
+                });
                 console.log("评论成功的数据", res);
             }
         );
     };
-
+    
     render() {
         return (
             <QuickComments
-                commentsCount={this.props.commentsCount}
+                commentsCount={this.props.count}
                 onOk={this.handleConfirm}
                 openToPraiseDetail={this.handlePraiseDetail}
             />
@@ -45,12 +47,12 @@ class PostComments extends React.Component {
 
 PostComments.propTypes = {
     themeId: PropTypes.string.isRequired,
-    commentsCount: PropTypes.string.isRequired
+    count: PropTypes.string.isRequired
 };
 export default connect(
     store => ({
         themeId: store.themeDetailsData.themeId,
-        commentsCount: store.themeDetailsData.commentsCount
+        count: store.themeDetailsData.count
     }),
     {}
 )(PostComments);

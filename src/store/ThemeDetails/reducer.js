@@ -4,15 +4,17 @@ renameActionType(ThemeDetails, "ThemeDetails");
 
 let defaultState = {
     themeId: "",
-    commentsCount: "0"
+    count: "0",
+    commentlist:[],
+    good:"0"
 };
 // 数据
 export const themeDetailsData = (state = defaultState, action = {}) => {
     switch (action.type) {
         case ThemeDetails.UPDATETHEMEID:
             return { ...state, themeId: action.data };
-        case ThemeDetails.UPDATECOMMENTSCOUNT:
-            return { ...state, commentsCount: action.data };
+        case ThemeDetails.UPDATECOMMENTS:
+            return { ...state, ...action.data };
         default:
             return state;
     }

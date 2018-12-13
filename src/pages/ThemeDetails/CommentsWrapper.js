@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Comments from "Components/Comments";
 import Evaluate from "Components/Evaluate";
-import { updateCommentsCount } from "Store/ThemeDetails/action";
+import { updateComments } from "Store/ThemeDetails/action";
 import more from "Assets/images/more.png";
 import { Get } from "Public/js/Ajax";
 
@@ -11,10 +11,6 @@ const TOPICCOMMENTSURL = "/getTopicComment"; //评论数据获取接口
 class CommentsWrapper extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            good: 0,
-            commentlist: []
-        };
     }
     //跳转到评论详情页
     handlePraiseDetail = () => {
@@ -30,21 +26,15 @@ class CommentsWrapper extends React.Component {
                 count: count
             },
             ({ data: comments }) => {
-                this.props.updateCommentsCount(comments.count);
-                this.setState({ ...comments });
-                console.log("评论详情的数据", comments);
-            },
-            err => {
-                console.log(err);
+                this.props.updateComments(comments);
             }
         );
     };
     componentDidMount() {
         this.getComments(this.props.themeId);
     }
-
     render() {
-        let { good, commentlist } = this.state;
+        let { good, commentlist } = this.props;
         return (
             <div className="comments-wrapper">
                 <div className="comments-title">
@@ -78,11 +68,16 @@ class CommentsWrapper extends React.Component {
     }
 }
 CommentsWrapper.propTypes = {
-    themeId: PropTypes.string.isRequired
+    themeId: PropTypes.string.isRequired,
+    good: PropTypes.string.isRequired,
+    commentlist: PropTypes.array.isRequired,
+    updateComments: PropTypes.func.isRequired
 };
 export default connect(
     store => ({
-        themeId: store.themeDetailsData.themeId
+        themeId: store.themeDetailsData.themeId,
+        commentlist: store.themeDetailsData.commentlist,
+        good: store.themeDetailsData.good
     }),
-    { updateCommentsCount }
+    { updateComments }
 )(CommentsWrapper);

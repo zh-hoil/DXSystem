@@ -49,7 +49,7 @@ class PraiseDetail extends React.Component {
                 star: star
             },
             res => {
-                Toast.success(res.message, 1, () => {
+                Toast.success(res.message, 0.5, () => {
                     closeFun(), this.getComments(themeId);
                 });
                 console.log("评论成功的数据", res);
