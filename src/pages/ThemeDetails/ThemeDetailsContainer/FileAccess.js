@@ -14,17 +14,17 @@ class FileAccess extends React.Component {
         }
     };
     render() {
-        let {salematerialData,studymaterialData} = this.props;
+        let { salematerialData, studymaterialData } = this.props;
         return (
             <div className="file_access">
                 <FileHref
                     title="销售资料"
-                    fileObj={salematerialData}
+                    fileArray={salematerialData}
                     emptyMsg="暂未提供销售资料"
                 />
                 <FileHref
                     title="实施资料"
-                    fileObj={studymaterialData}
+                    fileArray={studymaterialData}
                     emptyMsg="暂未提供实施资料"
                 />
                 <div className="data-get" onClick={this.handleDataGet}>
@@ -45,16 +45,22 @@ class FileAccess extends React.Component {
 /**
  * 资源列表
  * @param {String} title 标题
- * @param {Object} fileObj 文件信息
+ * @param {Object} fileArray 文件信息
  * @param {String} emptyMsg  无数据 内容
  */
 const FileHref = props => {
-    let { title, fileObj, emptyMsg } = props;
+    let { title, fileArray, emptyMsg } = props;
     // 文件路径，文件标题
     let fileHrefDom = emptyMsg;
-    if (fileObj) {
-        let { src: fileHref, title: fileTitle } = fileObj;
-        fileHrefDom = <a href={fileHref}>{fileTitle}</a>;
+    if (fileArray && fileArray.length > 0) {
+        fileHrefDom = fileArray.map((item, index) => {
+            let { src: fileHref, title: fileTitle } = item;
+            return (
+                <a key={index} href={fileHref}>
+                    {fileTitle}
+                </a>
+            );
+        });
     }
     return (
         <div className="file-href">

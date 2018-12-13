@@ -9,7 +9,7 @@ class Grade extends React.Component {
         }
     }
 
-    handlePraise (grade) {
+    handlePraise= (grade)=> {
         if(this.props.triggerGrade) {
             this.props.triggerGrade(grade + 1)
         }
@@ -24,7 +24,7 @@ class Grade extends React.Component {
             <div className="grade">
                 {
                     stars.map((i, index) => (
-                        <span key={index} onClick={this.handlePraise.bind(this, index)}>
+                        <span key={index} onClick={()=>{this.handlePraise(index)}}>
                             {index<=this.state.grade?"⭐":"✩"}
                         </span>
                     ))

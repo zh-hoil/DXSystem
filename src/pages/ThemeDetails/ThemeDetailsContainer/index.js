@@ -1,7 +1,7 @@
 import React from "react";
 import FileAccess from "./FileAccess";
 import ThemeDescribe from "./ThemeDescribe";
-import { Get } from "Public/js/Ajax";
+import { userId, Get } from "Public/js/Ajax";
 const TOPICINFOURL = "/getTopicInfo"; //主题数据获取接口
 class ThemeDetailsContainer extends React.Component {
     constructor(props) {
@@ -33,6 +33,10 @@ class ThemeDetailsContainer extends React.Component {
             ({ data }) => {
                 console.log("主题详情的数据", data);
                 let { content, salematerial, studymaterial } = data;
+                salematerial = this.stringToFileObject(salematerial, "sale");
+                studymaterial = this.stringToFileObject(studymaterial, "study");
+                console.log(salematerial,);
+                
                 this.setState({
                     detailsData: data,
                     content,
@@ -45,10 +49,27 @@ class ThemeDetailsContainer extends React.Component {
             }
         );
     };
+    /**
+     * 将后台返回的资料名处理成 资料名称和 资料下载地址对象
+     */
+    stringToFileObject = (fileStr, fileType) => {
+        if (fileStr.length === 0) {
+            return null;
+        }
+        fileStr = fileStr.split(",");
+        return fileStr.map(item => {
+            return {
+                title: item,
+                src: `${window.RootURL}/fileDownload?userId=${userId}&themeId=${
+                    this.props.themeId
+                }&fileName=${item}&fileType=${fileType}`
+            };
+        });
+    };
     componentDidMount() {
         this.getTopicData(this.props.themeId);
     }
-    componentWillReceiveProps(){
+    componentWillReceiveProps() {
         this.getTopicData(this.props.themeId);
     }
     render() {

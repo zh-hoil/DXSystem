@@ -26,5 +26,7 @@ class App extends React.Component {
         );
     }
 }
+// 后台服务地址
+window.RootURL = "http://10.11.115.74:5050/fiwechat";
 
 ReactDOM.render(<App />, document.querySelector("#app"));
