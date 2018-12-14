@@ -1,4 +1,6 @@
 import React from "react";
+import { Toast } from "antd-mobile";
+import { Get } from "Public/js/Ajax";
 /**
  * 获取相关资料文件组件
  */
@@ -10,6 +12,15 @@ class FileAccess extends React.Component {
         let confirm = window.confirm("确定将资料发送到您邮箱？");
         if (confirm) {
             //发送网络请求
+            Get(
+                "/updateApplicationCnt",
+                {
+                    pk_application: this.props.themeId
+                },
+                ({ message }) => {
+                    Toast.success(message, 1);
+                }
+            );
         }
     };
     render() {
@@ -27,9 +38,7 @@ class FileAccess extends React.Component {
                     emptyMsg="暂未提供实施资料"
                 />
                 <div className="data-get" onClick={this.handleDataGet}>
-                    <span
-                        className="iconfont icon-statusiconpendingdownload"
-                    />
+                    <span className="iconfont icon-statusiconpendingdownload" />
                     索取资料
                 </div>
             </div>
