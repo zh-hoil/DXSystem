@@ -133,9 +133,8 @@ class ThemeList extends React.Component {
                 </div>
                 <div className="theme-docs-wrapper">
                     <div className="sortable">
-                        <span className={this.state.label == 1 ? "active" : ""} onClick={this.handleSort.bind(this, 1)}>好评</span>
-                        <span>|</span>
-                        <span className={this.state.label == 0 ? "active" : ""} onClick={this.handleSort.bind(this, 0)}>时间</span>
+                        <span className={`tab ${this.state.label == 1 ? "active" : ""}`} onClick={this.handleSort.bind(this, 1)}>好评</span>
+                        <span className={`tab ${this.state.label == 0 ? "active" : ""}`} onClick={this.handleSort.bind(this, 0)}>时间</span>
                     </div>
                     <ThemeDocs themeList={this.state.themeList} onClick={this.handleDetails} />
                 </div>
