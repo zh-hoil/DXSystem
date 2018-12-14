@@ -136,6 +136,7 @@ class ThemeDetailsContainer extends React.Component {
                 />
                 <div className="message">{content}</div>
                 <FileAccess
+                    themeId={this.props.themeId}
                     salematerialData={salematerial}
                     studymaterialData={studymaterial}
                 />
