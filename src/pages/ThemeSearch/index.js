@@ -51,32 +51,9 @@ class ThemeSearch extends React.Component {
     }
 
     componentWillMount() {
-        this._getThemeFields();
         this._getThemeVersion();
     }
 
-    //获取主题域数据
-    _getThemeFields() {
-        Get(
-            THEMEFIELDURL,
-            {
-                userId: userId
-            },
-            res => {
-                let themeFields = res.data;
-                let themeFieldId = themeFields[0].id;
-                this.setState({
-                    themeFieldId
-                });
-                if (this.props.updateData) {
-                    this.props.updateData({ themeFieldId, themeFields });
-                }
-            },
-            err => {
-                console.log(err);
-            }
-        );
-    }
 
     //获取版本数据
     _getThemeVersion() {
@@ -360,8 +337,6 @@ class ThemeSearch extends React.Component {
                         handleSearchBack={this.handleSearchBack.bind(this)}
                     />
                     <ThemeList
-                        themeFields={this.props.themeFields}
-                        themeFieldId={this.props.themeFieldId}
                         filter={this.state.filter}
                     />
                 </Drawer>
