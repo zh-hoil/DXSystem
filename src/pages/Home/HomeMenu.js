@@ -14,7 +14,7 @@ const menuList = [
         icon: "icon-nc",
         iframe: true
     },
-    { title: "我的关注", path: "/myattention", icon: "icon-guanzhu" },
+    // { title: "我的关注", path: "/myattention", icon: "icon-guanzhu" },
     { title: "关于 NC 一线牵", path: "/about", icon: "icon-guanyunc" }
 ];
 
