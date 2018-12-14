@@ -59,10 +59,8 @@ class ThemeDetailsContainer extends React.Component {
         return fileStr.map(item => {
             return {
                 title: item,
-                // src: `${window.RootURL}/fileDownload?userId=${userId}&themeId=${
-                //     this.props.themeId
-                // }&fileName=${item}&fileType=${fileType}`
-                src: `http://172.20.6.119:8901/fiwechat/fileDownload?userId=${userId}&themeId=${
+                // 只有正式环境才可用
+                src: `${window.RootURL}/fileDownload?userId=${userId}&themeId=${
                     this.props.themeId
                 }&fileName=${item}&fileType=${fileType}`
             };

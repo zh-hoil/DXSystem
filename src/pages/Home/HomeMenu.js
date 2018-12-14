@@ -4,7 +4,7 @@ import MenuList from "Components/MenuList";
 import { getLocalStorage } from "./../../utils";
 
 const menuList = [
-    { title: "公告", path: "/", icon: "icon-gonggao" },
+    // { title: "公告", path: "/", icon: "icon-gonggao" },
     { title: "了解 NC Cloud", path: "/ncc", icon: "icon-nccloud" },
     {
         title: "了解 NC",
@@ -14,7 +14,7 @@ const menuList = [
         icon: "icon-nc",
         iframe: true
     },
-    { title: "我的关注", path: "/myattention", icon: "icon-guanzhu" },
+    // { title: "我的关注", path: "/myattention", icon: "icon-guanzhu" },
     { title: "关于 NC 一线牵", path: "/about", icon: "icon-guanyunc" }
 ];
 
