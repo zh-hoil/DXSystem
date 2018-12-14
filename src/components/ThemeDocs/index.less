@@ -2,14 +2,18 @@
     width: 100%;
     overflow: auto;
     .am-list-item{
+        padding-left: 0;
         .am-list-content{
+            padding: 24px 30px;
+            &::after{
+                background-color: #000000;
+            }
             .theme-doc{
                 width: 100%;
                 // border-bottom: 1px solid rgb(233, 232, 232);
                 .theme-title{
                     display: flex;
                     height: 60px;
-                    display: flex;
                     align-items: center;
                     margin-bottom: 10px;
                     .icon{
@@ -33,12 +37,19 @@
                             font-size: 28px;
                             font-weight: 400;
                         }
-                        .tag{
-                            font-size: 22px;
+                        .title-tag{
+                            display: flex;
+                            justify-content: space-between;
+                            .tag{
+                                flex: 100px 0 0;
+                                font-size: 22px;
+                            }
+                            .evaluate{
+                                flex: 100px 0 0;
+                                font-size: 26px;
+                            }
                         }
-                        .evaluate{
-                            font-size: 26px;
-                        }
+                        
                     }
                 }
                 .theme-message{

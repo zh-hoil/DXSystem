@@ -17,7 +17,7 @@ class ThemeDoc extends React.Component {
                     </div>
                     <div className="title">
                         <div className="title-text">{theme.title}</div>
-                        <div>
+                        <div className="title-tag">
                             <Tag type={theme.type} />
                             <Evaluate evaluate={theme.score}/>
                         </div>

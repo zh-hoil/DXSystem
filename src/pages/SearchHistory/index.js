@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.less";
-import SearchBarComponent from "Components/SearchBar";
+import SearchBar from "Components/SearchBar";
 import HistoryList from "./historyList";
 import { connect } from "react-redux";
 import { clearData, changeSearchText } from "Store/SearchHistory/action";
@@ -33,7 +33,7 @@ class SearchHistory extends React.Component {
     render() {
         return (
             <div className="search-history">
-                <SearchBarComponent 
+                <SearchBar 
                     searchBoolean={this.state.searchBoolean} 
                     handleSearchBack={this.handleSearchBack.bind(this)}
                     handleSearchChange={this.handleSearchChange.bind(this)}
