@@ -123,10 +123,13 @@
                 .am-tabs-content-wrap {
                     .am-list {
                         .am-list-item {
-                            padding: 17px 25px;
-                            border-bottom: 1px solid rgb(233, 232, 232);
+                            padding: 0;
+                            // border-bottom: 1px solid rgb(233, 232, 232);
                             .am-list-line {
-                                padding: 0;
+                                padding: 17px 25px;
+                                &::after{
+                                    background: #ddd;
+                                }
                                 .am-list-content {
                                     font-size: 32px;
                                 }
