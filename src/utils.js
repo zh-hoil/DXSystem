@@ -51,7 +51,6 @@ export function addLocalStorage(key, value) {
 export function getLocalStorage(key) {
     let value = localStorage.getItem(key);
     if (!value) {
-        console.log("没有纪录呢")
         return
     }
     return JSON.parse(value)

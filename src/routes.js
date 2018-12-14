@@ -34,11 +34,6 @@ const PraiseDetail = Loadable({
     loading: Loading
 });
 
-const SearchRusults = Loadable({
-    loader: () => import("Pages/SearchRusults"),
-    loading: Loading
-});
-
 const About = Loadable({
     loader: () => import("Pages/About"),
     loading: Loading
@@ -88,10 +83,6 @@ const routes = [
     {
         path: "/praiseDetail/:themeId",
         component: PraiseDetail
-    },
-    {
-        path: "/searchRusults/:keyword",
-        component: SearchRusults
     },
     {
         path: "/about",
