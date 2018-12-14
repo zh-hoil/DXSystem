@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
+import { updateComments } from "Store/ThemeDetails/action";
+import { Get } from "Public/js/Ajax";
 import PropTypes from "prop-types";
 import Comments from "Components/Comments";
 import Evaluate from "Components/Evaluate";
-import { updateComments } from "Store/ThemeDetails/action";
 import more from "Assets/images/more.png";
-import { Get } from "Public/js/Ajax";
 
 const TOPICCOMMENTSURL = "/getTopicComment"; //评论数据获取接口
 class CommentsWrapper extends React.Component {

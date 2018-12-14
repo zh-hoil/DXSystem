@@ -1,14 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { Toast } from "antd-mobile";
-import QuickComments from "Components/QuickComments";
 import { updateComments } from "Store/ThemeDetails/action";
+import { Toast } from "antd-mobile";
 import { Get, Post } from "Public/js/Ajax";
-import "./index.less";
+import PropTypes from "prop-types";
+import QuickComments from "Components/QuickComments";
 
-const COMMENTOPICURL = "/commentTopic";
-const TOPICCOMMENTSURL = "/getTopicComment"; //评论数据获取接口
+const COMMENTOPICURL = "/commentTopic";      //评论数据获取接口
+const TOPICCOMMENTSURL = "/getTopicComment"; //主题详情数据获取接口
+
 class PostComments extends React.Component {
     constructor(props) {
         super(props);

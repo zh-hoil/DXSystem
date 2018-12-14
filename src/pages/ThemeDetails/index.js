@@ -11,9 +11,6 @@ import { getTargetAttr } from "Src/utils";
 
 import "./index.less";
 
-const GOODCOMMENTURL = "/goodComment"; //评论点赞接口
-
-const TOPICCOMMENTSURL = "/getTopicComment"; //评论数据获取接口
 const TOPICFOLLOWURL = "/getTopicFollow"; //关注数据获取接口
 const TOPGUESSURL = "/getTopicGuess"; //猜你喜欢数据获取接口
 
@@ -22,8 +19,8 @@ class ThemeDetails extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            topicGuess: [],
-            topicFollow: []
+            topicGuess: [],     //猜你喜欢数据
+            topicFollow: []     //其他关注数据
         };
     }
     componentWillMount() {

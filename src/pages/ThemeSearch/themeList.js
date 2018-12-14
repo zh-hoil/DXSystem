@@ -1,11 +1,10 @@
 import React from "react";
-// import Data from "./themeList.json";
+import { connect } from "react-redux";
+import { updateData } from "Store/ThemeSearch/action";
+import { Toast } from "antd-mobile";
 import ThemeDocs from "Components/ThemeDocs";
 import { getTargetAttr } from "Src/utils";
-import { userId, Get, Post } from "Public/js/Ajax";
-import { connect } from "react-redux";
-import { Drawer, Tabs, Radio, Checkbox, List } from "antd-mobile";
-import { updateData } from "Store/ThemeSearch/action";
+import { userId, Get } from "Public/js/Ajax";
 
 const THEMELISTURL = "/getNCCloudThemeList";
 const THEMEFIELDURL = "/getNCCloudThemeField";
@@ -14,8 +13,8 @@ class ThemeList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            themeList: [],
-            label: 1 //1 按好评排序 0 按时间排序
+            themeList: [], //存放每次获取到的主题列表
+            label: 1       //1 按好评排序 0 按时间排序
         };
     }
 
@@ -39,7 +38,7 @@ class ThemeList extends React.Component {
                 this._getThemeList(this.props.themeFieldId, this.props.themeFields, this.state.label, this.props.filter)
             },
             err => {
-                console.log(err);
+                Toast.info("网络错误", 1)
             }
         );
     }
@@ -80,7 +79,9 @@ class ThemeList extends React.Component {
                 this.setState({
                     themeList: themeList,
                 });
-                
+            },
+            err => {
+                Toast.info("网络错误", 1)
             }
         );
     }
@@ -180,6 +181,7 @@ class ThemeList extends React.Component {
 ThemeList = connect(
     state => ({
         open: state.themeSearchData.open,
+        filter: state.themeSearchData.filter,
         themeFieldId: state.themeSearchData.themeFieldId,
         themeFields: state.themeSearchData.themeFields
     }),

@@ -10,18 +10,18 @@ class ThemeDetailsContainer extends React.Component {
         super(props);
         this.state = {
             detailsData: {
-                title: "", //标题
-                type: "", //类型
-                time: "", //时间
-                creator: "", //负责人
-                version: "", //版本
-                status: "", //状态
+                title: "",      //标题
+                type: "",       //类型
+                time: "",       //时间
+                creator: "",    //负责人
+                version: "",    //版本
+                status: "",     //状态
                 follow: "false", //是否喜欢
                 favorw: "false", //是否点赞
-                favorwnum: 0 //点赞数
+                favorwnum: 0    //点赞数
             },
-            salematerial: null,
-            studymaterial: null,
+            salematerial: null, //销售资料
+            studymaterial: null,//学习资料
             content: ""
         };
     }

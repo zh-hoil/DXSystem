@@ -81,23 +81,19 @@ class SearchHistory extends React.Component {
         if (!keyword || !(getLocalStorage("history"))) {
             return
         }
-        
-        
         //执行搜索操作
         Get(NCCSEARCHURL, {
             userId: userId,
             keyword: keyword
         }, (res) => {
             
-            console.log("这里是搜索主题的数据")
-            console.log(res)
 
             let themeList = res.data;
 
             this.setState({
                 themeList
             })
-        this.handleTab()
+            this.handleTab()
 
         }, (err) => {
             console.log(err)
