@@ -3,92 +3,65 @@ import React from "react";
 import ThemeDocs from "Components/ThemeDocs";
 import { getTargetAttr } from "Src/utils";
 import { userId, Get, Post } from "Public/js/Ajax";
-import { connect } from "react-redux";
-import { updateData } from "Store/ThemeSearch/action";
 
 const THEMELISTURL = "/getNCCloudThemeList";
-const THEMEFIELDURL = "/getNCCloudThemeField";
 
 class ThemeList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            ...props,
             themeList: [],
             label: 1 //1 按好评排序 0 按时间排序
         };
     }
 
     componentWillMount() {
-        // this.setState({
-        //     ...this.props
-        // });
-        this._getThemeFields()
+        this.setState({
+            ...this.props
+        });
     }
 
     componentWillReceiveProps(nextProps) {
-        // console.log(nextProps);
-        // let themeFields = nextProps.themeFields;
-        // let themeFieldId = nextProps.themeFieldId;
-        // let filter = nextProps.filter;
-        // this._getThemeList(themeFieldId, themeFields, this.state.label, filter);
-        // this._initData()
-        // this._getThemeList(this.props.themeFieldId, this.props.themeFields, this.state.label, this.props.filter);
-    }
-
-    // _initData () {
-    //     this._getThemeFields()
-    // }
-
-    _getThemeFields() {
-        Get(THEMEFIELDURL, {
-            userId: userId
-        }, (res) => {
-            let themeFields = res.data;
-            let themeFieldId = themeFields[0].id;
-
-
-            if (this.props.updateData) {
-                this.props.updateData({ themeFieldId, themeFields })
-            }
-
-            this._getThemeList(this.props.themeFieldId, this.props.themeFields, this.state.label, this.props.filter);
-            
-        }, (err) => {
-            console.log(err)
-        })
+        console.log(nextProps);
+        let themeFields = nextProps.themeFields;
+        let themeFieldId = nextProps.themeFieldId;
+        let filter = nextProps.filter;
+        this._getThemeList(themeFieldId, themeFields, this.state.label, filter);
     }
 
     //获取主题域详细文档数据
     _getThemeList(themeFieldId, themeFields, label, filter) {
-        let data = {
-            userId: userId,
-            fieldId: themeFieldId,
-            label: label
-        }
-        let version = "";
-        let type = "";
-        let status = ""
-        if(filter) {
-            let filterArr = filter.split("&");
-            let version = filterArr[0];
-            let type = filterArr[1];
-            let status = filterArr[2];
-            data = {
-                ...data,
-                version,
-                type, 
-                status
-            }
-        }
+        let filterArr = filter.split("&");
+        let version = filterArr[0];
+        let type = filterArr[1];
+        let status = filterArr[2];
         Get(
             THEMELISTURL,
-            data,
+            {
+                userId: userId,
+                fieldId: themeFieldId,
+                label: label,
+                version: version,
+                type: type,
+                status: status
+            },
             res => {
                 let themeList = res.data;
-                this.setState({
-                    themeList: themeList,
-                    filter: filter
-                })
+                if (themeFields) {
+                    this.setState({
+                        themeFields: themeFields,
+                        themeFieldId: themeFieldId,
+                        themeList: themeList,
+                        filter: filter
+                    });
+                } else {
+                    this.setState({
+                        themeFieldId: themeFieldId,
+                        themeList: themeList,
+                        filter: filter
+                    });
+                }
             }
         );
     }
@@ -102,22 +75,19 @@ class ThemeList extends React.Component {
             //无变化
             return;
         }
-        if(this.props.updateData) {
-            this.props.updateData({themeFieldId: currentFieldId})
-        }
         this._getThemeList(
-            this.props.themeFieldId,
-            this.props.themeFields,
+            currentFieldId,
+            this.state.themeFields,
             this.state.label,
-            this.props.filter
+            this.state.filter
         );
     }
 
     handleSort(label) {
-        if (label == undefined) {
+        if (label === undefined) {
             return;
         }
-        if (label == this.state.label) {
+        if (label === this.state.label) {
             return;
         }
         // this._getThemeList(this.state.themeFieldId)
@@ -126,10 +96,10 @@ class ThemeList extends React.Component {
         });
 
         this._getThemeList(
-            this.props.themeFieldId,
-            this.props.themeFields,
+            this.state.themeFieldId,
+            this.state.themeFields,
             label,
-            this.props.filter
+            this.state.filter
         );
     }
 
@@ -145,12 +115,12 @@ class ThemeList extends React.Component {
             <div className="themes-wrapper">
                 <div className="catelog">
                     <ul onClick={this.handleSelectField.bind(this)}>
-                        {this.props.themeFields.map((field, index) => (
+                        {this.state.themeFields.map((field, index) => (
                             <li
                                 key={index}
                                 fieldid={field.id}
                                 className={
-                                    field.id == this.props.themeFieldId
+                                    field.id == this.state.themeFieldId
                                         ? "active"
                                         : ""
                                 }
@@ -188,11 +158,4 @@ class ThemeList extends React.Component {
         );
     }
 }
-ThemeList = connect((state) => ({
-    open: state.themeSearchData.open,
-    themeFieldId: state.themeSearchData.themeFieldId,
-    themeFields: state.themeSearchData.themeFields,
-}),
-    { updateData }
-)(ThemeList)
 export default ThemeList;
