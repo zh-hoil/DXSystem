@@ -28,7 +28,7 @@ class ThemeSearch extends React.Component {
         super(props);
         this.state = {
             searchBoolean: false,
-            // themeFieldId: "",
+            themeFieldId: "",
             filter: "",
             page: 0,
             version: [],
@@ -61,7 +61,9 @@ class ThemeSearch extends React.Component {
         }, (res) => {
             let themeFields = res.data;
             let themeFieldId = themeFields[0].id;
-
+            this.setState({
+                themeFieldId
+            })
 
             if (this.props.updateData) {
                 this.props.updateData({ themeFieldId, themeFields })
@@ -250,7 +252,7 @@ class ThemeSearch extends React.Component {
                     <div style={{ height: '100%', backgroundColor: '#fff' }}>
                         <List>
                             {this.props.themeFields.map(i => (
-                                <RadioItem key={i.id} checked={this.state.themeFieldId === i.id} onClick={() => this.onFieldChange(i.id)}>
+                                <RadioItem key={i.id} checked={this.props.themeFieldId === i.id} onClick={() => this.onFieldChange(i.id)}>
                                     {i.field}
                                 </RadioItem>
                             ))}
