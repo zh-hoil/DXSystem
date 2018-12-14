@@ -114,29 +114,46 @@
                 }
                 .am-tabs-content-wrap {
                     .am-list {
-                        .am-list-item {
+                        .tabs_list_item {
                             padding: 0;
-                            // border-bottom: 1px solid rgb(233, 232, 232);
                             .am-list-line {
                                 padding: 17px 25px;
-                                &::after{
+                                &::after {
                                     background: #ddd;
                                 }
                                 .am-list-content {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    align-items: center;
                                     font-size: 32px;
+                                    .iconfont {
+                                        font-size: 32px;
+                                    }
                                 }
                             }
-                            .am-checkbox {
-                                width: 100%;
-                                height: 100%;
-                                .checkbox {
-                                    width: 100%;
-                                    height: 100%;
+                        }
+                        .filtrate_list_item {
+                            padding: 0;
+                            .am-list-line {
+                                padding: 17px 25px;
+                                &::after {
+                                    background: #ddd;
                                 }
-                                .am-checkbox-inner {
-                                    margin-top: 18px;
-                                    width: 32px;
-                                    height: 32px;
+                            }
+                            .am-list-content {
+                                font-size: 28px;
+                            }
+                            .am-radio {
+                                height: 100%;
+                                .am-radio-inner {
+                                    width: 30px;
+                                    height: 30px;
+                                    right: 30px;
+                                    top: 30px;
+                                    &:after {
+                                        width: 14px;
+                                        height: 28px;
+                                    }
                                 }
                             }
                         }
