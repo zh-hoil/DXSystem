@@ -3,7 +3,7 @@ import SearchBar from "Components/SearchBar";
 import ThemeList from "./ThemeList";
 import { Drawer, Tabs, Radio, Checkbox, List } from 'antd-mobile';
 import "./index.less";
-import { userId, Get, Post } from "Public/js/Ajax";
+import { userId, Get } from "Public/js/Ajax";
 import { connect } from "react-redux";
 import { updateData } from "Store/ThemeSearch/action";
 import { hasItemInArr } from "Src/utils";

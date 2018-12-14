@@ -1,10 +1,11 @@
 import React from "react";
 import { Toast } from "antd-mobile";
-import { Get } from "Public/js/Ajax";
+import { userId, Post } from "Public/js/Ajax";
 /**
  * 获取相关资料文件组件
  */
-class FileAccess extends React.Component {
+const GETINFORMATIONURL = "/getInformation  "; //索取资料接口
+ class FileAccess extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -12,13 +13,14 @@ class FileAccess extends React.Component {
         let confirm = window.confirm("确定将资料发送到您邮箱？");
         if (confirm) {
             //发送网络请求
-            Get(
-                "/updateApplicationCnt",
+            Post(
+                GETINFORMATIONURL,
                 {
-                    pk_application: this.props.themeId
+                    userId: userId,
+                    themeId: this.props.themeId
                 },
                 ({ message }) => {
-                    Toast.success(message, 1);
+                    Toast.info(message, 1);
                 }
             );
         }
