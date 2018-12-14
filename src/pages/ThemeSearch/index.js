@@ -43,7 +43,7 @@ class ThemeSearch extends React.Component {
             ],
             status: [
                 { status: "正式版" },
-                { status: "傅桦斑" },
+                { status: "孵化版" },
                 { status: "在研" },
                 { status: "预研" }
             ]
@@ -55,6 +55,7 @@ class ThemeSearch extends React.Component {
         this._getThemeVersion()
     }
 
+    //获取主题域数据
     _getThemeFields() {
         Get(THEMEFIELDURL, {
             userId: userId
@@ -64,7 +65,6 @@ class ThemeSearch extends React.Component {
             this.setState({
                 themeFieldId
             })
-
             if (this.props.updateData) {
                 this.props.updateData({ themeFieldId, themeFields })
             }
@@ -73,6 +73,7 @@ class ThemeSearch extends React.Component {
         })
     }
 
+    //获取版本数据
     _getThemeVersion() {
         Get(THEMEFIELDVERDSIONURL, {
             userId: userId
@@ -86,8 +87,14 @@ class ThemeSearch extends React.Component {
         })
     }
 
+    //重置数据
     _backState(page) {
         switch (page) {
+            case 1:
+                this.setState({
+                    themeFieldId: this.props.themeFieldId
+                })
+                break;
             case 2:
                 filterVersion = [];
                 break;
@@ -100,6 +107,7 @@ class ThemeSearch extends React.Component {
         }
     }
 
+    //取消按钮事件
     onOpenChange() {
         if (this.props.open) {
             if (this.state.page > 0) {
@@ -118,6 +126,7 @@ class ThemeSearch extends React.Component {
 
     }
 
+    //获取某数组字符串
     _getArrString (arr) {
         if (arr.length) {
             let str = "";
@@ -128,6 +137,7 @@ class ThemeSearch extends React.Component {
         }
     }
 
+    //获取筛选字符串
     _getFilterKeys() {
         let keys = [];
         if(this._getArrString(filterVersion)){
@@ -147,6 +157,7 @@ class ThemeSearch extends React.Component {
         
     }
 
+    //确定按钮
     handleFilter() {
         if (this.props.open) {
             if (this.state.page > 0) {
@@ -169,13 +180,14 @@ class ThemeSearch extends React.Component {
         }
     }
 
+    //主题域选择
     onFieldChange(themeFieldId) {
         this.setState({
             themeFieldId
         })
     }
 
-
+    //版本选择
     onVersionChange(version) {
         if (hasItemInArr(filterVersion, version)) {
             let index = filterVersion.indexOf(version)
@@ -185,6 +197,7 @@ class ThemeSearch extends React.Component {
         }
     }
 
+    //类型选择
     onTypeChange(type) {
         if (hasItemInArr(filterType, type)) {
             let index = filterType.indexOf(type)
@@ -194,6 +207,7 @@ class ThemeSearch extends React.Component {
         }
     }
 
+    //状态选择
     onStatusChange(status) {
         if (hasItemInArr(filterStatus, status)) {
             let index = filterStatus.indexOf(status)
@@ -203,6 +217,7 @@ class ThemeSearch extends React.Component {
         }
     }
 
+    //切换页面
     handlePage(page) {
         this.setState({
             page: page
@@ -252,7 +267,7 @@ class ThemeSearch extends React.Component {
                     <div style={{ height: '100%', backgroundColor: '#fff' }}>
                         <List>
                             {this.props.themeFields.map(i => (
-                                <RadioItem key={i.id} checked={this.props.themeFieldId === i.id} onClick={() => this.onFieldChange(i.id)}>
+                                <RadioItem key={i.id} checked={this.state.themeFieldId === i.id} onClick={() => this.onFieldChange(i.id)}>
                                     {i.field}
                                 </RadioItem>
                             ))}
