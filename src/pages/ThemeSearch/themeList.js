@@ -153,7 +153,7 @@ class ThemeList extends React.Component {
                                 }`}
                             onClick={this.handleSort.bind(this, 0)}
                         >
-                            时间
+                            发布时间
                         </span>
                     </div>
                     <ThemeDocs
