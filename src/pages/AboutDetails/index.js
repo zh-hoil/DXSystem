@@ -15,7 +15,7 @@ class AboutDetails extends React.Component {
                     <div className="circle">
                         <div className="text">nc</div>
                     </div>
-                    <div className="title_content">NC一线牵 V3.0</div>
+                    <div className="title_content">NC一线牵 V5.0</div>
                 </div>
                 <div className="about_bottom">
                     <div className="bottom_content">
