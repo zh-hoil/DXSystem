@@ -4,7 +4,7 @@ renameActionType(themeSearch, "themeSearch");
 
 let defaultState = {
     open: false,
-    filter: "",
+    filter: null,
     themeFieldId: "",
     themeFields: []
 };

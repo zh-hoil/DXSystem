@@ -25,9 +25,7 @@ class ThemeList extends React.Component {
 
     componentWillReceiveProps(newProps) {
         let oldProps = this.props;
-        console.log(oldProps)
-        console.log(newProps)
-        if ((JSON.stringify(newProps.filter) !== JSON.stringify(oldProps.filter) && !newProps.filter) 
+        if ((JSON.stringify(newProps.filter) !== JSON.stringify(oldProps.filter) && newProps.filter) 
             || newProps.themeFieldId !== oldProps.themeFieldId) {
             this._getThemeList(newProps.themeFieldId, newProps.themeFields, this.state.label, newProps.filter)
         }
@@ -64,17 +62,9 @@ class ThemeList extends React.Component {
         }
         console.log(filter)
         if (filter) {
-            console.log(filter)
-            // let version = filterArr[0];
-            // let type = filterArr[1];
-            // let status = filterArr[2];
-            // console.log(filter, filterArr)
-            return
             data = {
                 ...data,
-                version: version,
-                type: type,
-                status: status
+                ...filter
             }
         }
         Get(
