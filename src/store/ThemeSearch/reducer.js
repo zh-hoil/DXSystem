@@ -6,8 +6,7 @@ let defaultState = {
     open: false,
     filter: "",
     themeFieldId: "",
-    themeFields: [],
-    themeList: []
+    themeFields: []
 };
 // 数据
 export const themeSearchData = (state = defaultState, action = {}) => {

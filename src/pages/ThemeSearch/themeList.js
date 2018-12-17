@@ -13,6 +13,7 @@ class ThemeList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            page: 0,
             themeList: [], //存放每次获取到的主题列表
             label: 1       //1 按好评排序 0 按时间排序
         };
@@ -21,6 +22,17 @@ class ThemeList extends React.Component {
     componentWillMount() {
         this._getThemeFields();
     }
+
+    componentWillReceiveProps(newProps) {
+        let oldProps = this.props;
+        console.log(oldProps)
+        console.log(newProps)
+        if ((JSON.stringify(newProps.filter) !== JSON.stringify(oldProps.filter) && !newProps.filter) 
+            || newProps.themeFieldId !== oldProps.themeFieldId) {
+            this._getThemeList(newProps.themeFieldId, newProps.themeFields, this.state.label, newProps.filter)
+        }
+     }
+
 
     //获取主题域数据
     _getThemeFields() {
@@ -35,7 +47,6 @@ class ThemeList extends React.Component {
                 if (this.props.updateData) {
                     this.props.updateData({ themeFieldId, themeFields });
                 }
-                this._getThemeList(this.props.themeFieldId, this.props.themeFields, this.state.label, this.props.filter)
             },
             err => {
                 Toast.info("网络错误", 1)
@@ -43,13 +54,6 @@ class ThemeList extends React.Component {
         );
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     console.log(nextProps);
-    //     let themeFields = nextProps.themeFields;
-    //     let themeFieldId = nextProps.themeFieldId;
-    //     let filter = nextProps.filter;
-    //     this._getThemeList(themeFieldId, themeFields, this.state.label, filter);
-    // }
 
     //获取主题域详细文档数据
     _getThemeList(themeFieldId, themeFields, label, filter) {
@@ -58,24 +62,26 @@ class ThemeList extends React.Component {
             fieldId: themeFieldId,
             label: label
         }
-        if(filter){
-            let filterArr = filter.split("&");
-            let version = filterArr[0];
-            let type = filterArr[1];
-            let status = filterArr[2];
+        console.log(filter)
+        if (filter) {
+            console.log(filter)
+            // let version = filterArr[0];
+            // let type = filterArr[1];
+            // let status = filterArr[2];
+            // console.log(filter, filterArr)
+            return
             data = {
                 ...data,
                 version: version,
                 type: type,
                 status: status
-
             }
         }
         Get(
             THEMELISTURL,
             data,
             res => {
-                let themeList = res.data;   
+                let themeList = res.data;
                 this.setState({
                     themeList: themeList,
                 });
@@ -86,6 +92,7 @@ class ThemeList extends React.Component {
         );
     }
 
+    //点击左侧领域加载列表数据
     handleSelectField(e) {
         let currentFieldId = getTargetAttr(e.target, "fieldid");
         if (!currentFieldId) {
@@ -95,14 +102,13 @@ class ThemeList extends React.Component {
             //无变化
             return;
         }
-        this._getThemeList(
-            this.props.themeFieldId,
-            this.props.themeFields,
-            this.state.label,
-            this.props.filter
-        );
+        //更新themeFieldId
+        if (this.props.updateData) {
+            this.props.updateData({ themeFieldId: currentFieldId })
+        }
     }
 
+    //切换排序方式
     handleSort(label) {
         if (label == undefined) {
             return;
@@ -113,13 +119,6 @@ class ThemeList extends React.Component {
         this.setState({
             label: label
         });
-
-        this._getThemeList(
-            this.props.themeFieldId,
-            this.props.themeFields,
-            label,
-            this.props.filter
-        );
     }
 
     handleDetails = e => {
@@ -154,7 +153,7 @@ class ThemeList extends React.Component {
                         <span
                             className={`tab ${
                                 this.state.label == 1 ? "active" : ""
-                            }`}
+                                }`}
                             onClick={this.handleSort.bind(this, 1)}
                         >
                             好评
@@ -162,7 +161,7 @@ class ThemeList extends React.Component {
                         <span
                             className={`tab ${
                                 this.state.label == 0 ? "active" : ""
-                            }`}
+                                }`}
                             onClick={this.handleSort.bind(this, 0)}
                         >
                             时间

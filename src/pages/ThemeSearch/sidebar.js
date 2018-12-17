@@ -103,6 +103,34 @@ class Sidebar extends React.Component {
         }
     }
 
+    //确定按钮
+    handleFilter() {
+        if (this.props.open) {
+            if (this.state.page > 0) {
+                this.setState({
+                    page: 0
+                    //再设置其他数据
+                });
+            } else {
+                //关闭弹窗
+                if (this.props.updateData) {
+                    this.props.updateData({
+                        open: !this.props.open
+                    });
+                    if(this.state.themeFieldId) {
+                        this.props.updateData({
+                            themeFieldId: this.state.themeFieldId})
+                    }
+                }
+
+                let filter = this._getFilterKeys();
+                if (this.props.updateData) {
+                    this.props.updateData({ filter })
+                }
+            }
+        }
+    }
+
     //获取某数组字符串
     _getArrString(arr) {
         if (arr.length) {
@@ -123,43 +151,20 @@ class Sidebar extends React.Component {
         filterStatus = this.state.status.filter((item) => item.checked).map((item) => item.status);
 
         if (this._getArrString(filterVersion)) {
-            keys.push(this._getArrString(filterVersion));
+            keys.push({version: this._getArrString(filterVersion)});
         }
         if (this._getArrString(filterType)) {
-            keys.push(this._getArrString(filterType));
+            keys.push({type: this._getArrString(filterType)});
         }
         if (this._getArrString(filterStatus)) {
-            keys.push(this._getArrString(filterStatus));
+            keys.push({status: this._getArrString(filterStatus)});
         }
         if (keys.length) {
-            return keys.join("&");
+            return keys
         }
-        return "";
+        return null;
     }
 
-    //确定按钮
-    handleFilter() {
-        if (this.props.open) {
-            if (this.state.page > 0) {
-                this.setState({
-                    page: 0
-                    //再设置其他数据
-                });
-            } else {
-                //关闭弹窗
-                if (this.props.updateData) {
-                    this.props.updateData({
-                        open: !this.props.open,
-                        themeFieldId: this.state.themeFieldId
-                    });
-                }
-                let filter = this._getFilterKeys();
-                if (this.props.updateData) {
-                    this.props.updateData({ filter })
-                }
-            }
-        }
-    }
 
     //主题域选择
     onFieldChange(themeFieldId) {
