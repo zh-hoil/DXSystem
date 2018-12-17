@@ -20,7 +20,6 @@ class ThemeList extends React.Component {
 
     componentWillMount() {
         this._getThemeFields();
-        console.log("chognjiazai")
     }
 
     componentWillReceiveProps(newProps) {
@@ -77,10 +76,10 @@ class ThemeList extends React.Component {
             data,
             res => {
                 let themeList = res.data;
-                console.log(themeList)
                 this.setState({
                     themeList: themeList,
                 });
+                console.log(themeList)
             },
             err => {
                 Toast.info("网络错误", 1)

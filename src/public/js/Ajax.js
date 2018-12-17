@@ -1,5 +1,10 @@
 import axios from "axios";
-import { getLocalStorage } from "./../../utils";
+import { getLocalStorage } from "Src/utils";
+
+export const userId = getLocalStorage("YY_userInfo")
+    ? getLocalStorage("YY_userInfo")
+    : "0001AA1000000009SORC";
+
 const Ajax = axios.create({
     transformRequest: [
         function(data) {
@@ -16,18 +21,6 @@ const Ajax = axios.create({
     ]
 });
 
-// '/commentTopic'
-// {
-//     themeId: '2',
-//     userId: '0001AA1000000002W4SU',
-//     content: "asdfasdfsd",
-//     star: "2",
-//     modules: "eg"
-// }
-
-export const userId = getLocalStorage("YY_userInfo")
-    ? getLocalStorage("YY_userInfo")
-    : "0001AA1000000002W4SU";
 export function Post(url, data, resolve, reject) {
     url = window.RootURL + url;
     if (!data.userId) {

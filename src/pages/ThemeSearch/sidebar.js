@@ -61,7 +61,6 @@ class Sidebar extends React.Component {
                     version: version
                 });
 
-                console.log(version)
             },
             err => {
                 Toast.info("网络错误", 1)

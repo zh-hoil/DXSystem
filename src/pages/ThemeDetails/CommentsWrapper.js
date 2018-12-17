@@ -40,7 +40,6 @@ class CommentsWrapper extends React.Component {
     }
     render() {
         let { good, commentlist, count } = this.props;
-        console.log(count -0);
         
         return (
             <div className="comments-wrapper">
