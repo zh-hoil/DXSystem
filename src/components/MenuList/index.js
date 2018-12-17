@@ -46,7 +46,7 @@ const MenuItem = props => {
             <a href={path} className="menu-item">
                 <span>{title}</span>
                 <div className="menu-icon">
-                    <SvgCom width="66" height="66" xlinkHref={icon} />
+                    <SvgCom width="76" height="76" xlinkHref={icon} />
                 </div>
             </a>
         );
@@ -55,7 +55,7 @@ const MenuItem = props => {
         <Link to={path} className="menu-item">
             <span>{title}</span>
             <div className="menu-icon">
-                <SvgCom width="66" height="66" xlinkHref={icon} />
+                <SvgCom width="76" height="76" xlinkHref={icon} />
             </div>
         </Link>
     );
