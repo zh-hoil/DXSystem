@@ -119,6 +119,7 @@ class ThemeList extends React.Component {
         this.setState({
             label: label
         });
+        this._getThemeList(this.props.themeFieldId, this.props.themeFields, label, this.props.filter)
     }
 
     handleDetails = e => {
