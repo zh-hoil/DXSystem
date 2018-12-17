@@ -3,7 +3,7 @@ import { List } from "antd-mobile";
 /*
 搜索历史区域
 */
-let HistoryList = props => (
+const HistoryList = props => (
     (
         <div className="history-list">
             <List>
