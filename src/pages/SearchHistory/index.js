@@ -44,10 +44,10 @@ class SearchHistory extends React.Component {
     }
 
     handleSearchBack() {
-        if(!this.state.historyBoolean) {
-            this.handleTab()
-            return
-        }
+        // if(!this.state.historyBoolean) {
+        //     this.handleTab()
+        //     return
+        // }
 
         const themeSearch = "/themeSearch";
         window.location.hash = themeSearch;
@@ -61,6 +61,16 @@ class SearchHistory extends React.Component {
         // if (this.props.changeSearchText) {
         //     this.props.changeSearchText(val)
         // }
+    }
+
+    //获取焦点时执行的函数
+    handleFocus() {
+        if(this.state.historyBoolean){
+            return
+        }
+        this.setState({
+            historyBoolean: true
+        })
     }
 
     handleTextSearch() {
@@ -124,6 +134,8 @@ class SearchHistory extends React.Component {
                     searchBoolean={this.state.searchBoolean} 
                     handleSearchBack={this.handleSearchBack.bind(this)}
                     handleSearchChange={this.handleSearchChange.bind(this)}
+                    handleFocus={this.handleFocus.bind(this)}
+                    handleTextSearch={this.handleTextSearch.bind(this)}
                 />
                 {
                     this.state.historyBoolean?

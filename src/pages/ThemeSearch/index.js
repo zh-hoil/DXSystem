@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar";
 import "./index.less";
 
 
+
 class ThemeSearch extends React.Component {
     constructor(props) {
         super(props);
@@ -24,7 +25,7 @@ class ThemeSearch extends React.Component {
     }
 
     //点击搜索框执行的操作
-    handleSearch() {
+    handleFocus() {
         const searchHistory = "/searchHistory";
         if (this.state.searchBoolean) {
             return;
@@ -69,7 +70,7 @@ class ThemeSearch extends React.Component {
                 >
                     <SearchBar
                         searchBoolean={this.state.searchBoolean}
-                        handleSearch={this.handleSearch.bind(this)}
+                        handleFocus={this.handleFocus.bind(this)}
                         handleSearchBack={this.handleSearchBack.bind(this)}
                     />
                     <ThemeList />

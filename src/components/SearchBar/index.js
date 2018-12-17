@@ -21,12 +21,13 @@ class SearchBarComponent extends React.Component {
                 <SearchBar
                     style={{height: "100px"}}
                     ref={ref => this.autoFocusInst = ref}
-                    onFocus={() => { if(!this.props.handleSearch) return; this.props.handleSearch() }}
                     showCancelButton
                     placeholder="Search"
                     onClear={value => console.log(value, "clear")}
                     cancelText={this.props.searchBoolean?"返回":"筛选"}
-                    onCancel={() => {if(!this.props.handleSearchBack) return; this.props.handleSearchBack() }}
+                    onFocus={this.props.handleFocus}
+                    onSubmit={this.props.handleTextSearch}
+                    onCancel={ this.props.handleSearchBack }
                     onChange={(val) => {if(!this.props.handleSearchChange) return; this.props.handleSearchChange(val)}}
                 />
             </div>
