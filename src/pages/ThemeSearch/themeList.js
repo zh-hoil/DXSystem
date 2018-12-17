@@ -20,6 +20,7 @@ class ThemeList extends React.Component {
 
     componentWillMount() {
         this._getThemeFields();
+        console.log("chognjiazai")
     }
 
     componentWillReceiveProps(newProps) {
@@ -28,6 +29,12 @@ class ThemeList extends React.Component {
             || newProps.themeFieldId !== oldProps.themeFieldId) {
             this._getThemeList(newProps.themeFieldId, newProps.themeFields, this.state.label, newProps.filter)
         }
+     }
+
+     componentWillUnmount () {
+         if(this.props.updateData) {
+            this.props.updateData({ themeFieldId: "" })
+         }
      }
 
 
@@ -70,6 +77,7 @@ class ThemeList extends React.Component {
             data,
             res => {
                 let themeList = res.data;
+                console.log(themeList)
                 this.setState({
                     themeList: themeList,
                 });
