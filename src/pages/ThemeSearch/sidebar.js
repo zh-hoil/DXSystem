@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { updateData } from "Store/ThemeSearch/action";
 import { userId, Get } from "Public/js/Ajax";
-import { Tabs, Radio, List } from "antd-mobile";
+import { Tabs, Radio, List, Toast } from "antd-mobile";
 
 const RadioItem = Radio.RadioItem;
 const THEMEFIELDVERDSIONURL = "/getNCCloudThemeVersion";    //获取版本数据接口
@@ -60,6 +60,11 @@ class Sidebar extends React.Component {
                 this.setState({
                     version: version
                 });
+
+                console.log(version)
+            },
+            err => {
+                Toast.info("网络错误", 1)
             }
         );
     }

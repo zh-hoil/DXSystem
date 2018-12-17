@@ -1,37 +1,21 @@
 import React from "react";
 import "./index.less";
 import PropTypes from "prop-types";
-class Grade extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            grade: -1
+const Grade = props => (
+    <div className="grade">
+        {
+            [1, 2, 3, 4, 5].map((i, index) => (
+                <span key={index} onClick={() => { props.handlePraise(index + 1) }}>
+                    {index < props.grade ? <i className="selected iconfont icon-xingxing" /> : <i className="unselected iconfont icon-xingxing" />}
+                </span>
+            ))
         }
-    }
+    </div>
+)
 
-    handlePraise= (grade)=> {
-        if(this.props.triggerGrade) {
-            this.props.triggerGrade(grade + 1)
-        }
-        this.setState({
-            grade: grade
-        })
-    }
-
-    render() {
-        let stars = [0, 1, 2, 3, 4]
-        return (
-            <div className="grade">
-                {
-                    stars.map((i, index) => (
-                        <span key={index} onClick={()=>{this.handlePraise(index)}}>
-                            {index<=this.state.grade?<i className="selected iconfont icon-xingxing" />:<i className="unselected iconfont icon-xingxing" />}
-                        </span>
-                    ))
-                }
-            </div>
-        )
-    }
+Grade.propsType = {
+    grade: PropTypes.number.isRequired,
+    handlePraise: PropTypes.func.isRequired
 }
 
 export default Grade;

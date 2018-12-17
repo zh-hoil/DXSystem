@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { updateData } from "Store/ThemeSearch/action";
 import { Drawer } from "antd-mobile";
 import SearchBar from "Components/SearchBar";
-import ThemeList from "./themeList";
-import Sidebar from "./sidebar";
+import ThemeList from "./ThemeList";
+import Sidebar from "./Sidebar";
 import "./index.less";
 
 

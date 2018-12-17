@@ -1,11 +1,12 @@
 import React from "react";
 import "./index.less";
 import SearchBar from "Components/SearchBar";
-import HistoryList from "./historyList";
-import SearchRusults from "./results";
+import HistoryList from "./HistoryList";
+import SearchRusults from "./Results";
 import { getLocalStorage, addLocalStorage } from "Src/utils";
 import { userId, Get } from "Public/js/Ajax";
 import { getTargetAttr } from "Src/utils";
+import { Toast } from "antd-mobile";
 
 
 const NCCSEARCHURL = "/getNCCloudThemeSearch";
@@ -86,17 +87,19 @@ class SearchHistory extends React.Component {
             userId: userId,
             keyword: keyword
         }, (res) => {
-            
-
             let themeList = res.data;
 
+            if(!themeList || themeList.length === 0) {
+                Toast.info("无相关内容", 1)
+                return
+            }
             this.setState({
                 themeList
             })
             this.handleTab()
 
         }, (err) => {
-            console.log(err)
+            Toast.info("网络错误", 100)
         })
     }
 

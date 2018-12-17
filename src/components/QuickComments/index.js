@@ -7,7 +7,7 @@ class QuickComments extends React.Component {
         super(props);
         this.state = {
             open: false,
-            grade: "0"
+            grade: 0
         };
     }
     handleOpenComment = () => {
@@ -19,15 +19,16 @@ class QuickComments extends React.Component {
     handleCancel = () => {
         this.autoFocusInst.value = "";
         this.setState({
-            open: false
+            open: false,
+            grade: 0
         });
     };
     handleOk = () => {
         let content = this.autoFocusInst.value;
         let star = this.state.grade;
-        if (!content) {
-            Toast.info("请输入评论内容!", 1);
-            return;
+        if(content.trim().length === 0){
+            Toast.info("请检查输入内容!", 1);
+            return 
         }
         if (star <= 0) {
             Toast.info("请打分!", 1);
@@ -38,15 +39,17 @@ class QuickComments extends React.Component {
             star
         },this.handleCancel);
     };
-    getGrade = grade => {
-        this.setState({
-            grade: String(grade)
-        });
-    };
+    
     // 点击图标跳转
     handlePraiseDetail = () => {
         this.props.openToPraiseDetail ? this.props.openToPraiseDetail() : null;
     };
+
+    handlePraise = (grade)=> {
+        this.setState({
+            grade: grade
+        })
+    }
     render() {
         if (!this.state.open) {
             return (
@@ -72,7 +75,7 @@ class QuickComments extends React.Component {
                     <div className="comment_container">
                         <div className="mark">
                             <span className="mark_text">请为该主题打分</span>
-                            <Grade triggerGrade={this.getGrade} />
+                            <Grade grade={this.state.grade} handlePraise={this.handlePraise} />
                         </div>
                         <textarea
                             ref={ref => (this.autoFocusInst = ref)}
