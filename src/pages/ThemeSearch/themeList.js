@@ -13,7 +13,6 @@ class ThemeList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: 0,
             themeList: [], //存放每次获取到的主题列表
             label: 1       //1 按好评排序 0 按时间排序
         };
@@ -60,7 +59,6 @@ class ThemeList extends React.Component {
             fieldId: themeFieldId,
             label: label
         }
-        console.log(filter)
         if (filter) {
             data = {
                 ...data,

@@ -23,7 +23,6 @@ class Sidebar extends React.Component {
         super(props);
         this.state = {
             themeFieldId: "",       //当前筛选主题域id
-            filter: "",             //筛选字符串   
             page: 0,                //当前页
             version: [],            //可选版本数据
             type: [                 //可选类型数据
@@ -144,22 +143,24 @@ class Sidebar extends React.Component {
 
     //获取筛选字符串
     _getFilterKeys() {
-        let keys = [];
+        let keys = {};
 
         filterVersion = this.state.version.filter((item) => item.checked).map((item) => item.version);
         filterType = this.state.type.filter((item) => item.checked).map((item) => item.type);
         filterStatus = this.state.status.filter((item) => item.checked).map((item) => item.status);
 
         if (this._getArrString(filterVersion)) {
-            keys.push({version: this._getArrString(filterVersion)});
+            keys.version = this._getArrString(filterVersion)
+            
         }
         if (this._getArrString(filterType)) {
-            keys.push({type: this._getArrString(filterType)});
+            keys.type = this._getArrString(filterType)
+            // keys.push({type: this._getArrString(filterType)});
         }
         if (this._getArrString(filterStatus)) {
-            keys.push({status: this._getArrString(filterStatus)});
+            keys.status = this._getArrString(filterStatus)
         }
-        if (keys.length) {
+        if (JSON.stringify(keys) !== "{}") {
             return keys
         }
         return null;
