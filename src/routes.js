@@ -4,101 +4,17 @@ import Loadable from "react-loadable";
 import Loading from "Components/Loading";
 import Home from "Pages/Home";
 
-const NCMenu = Loadable({
-    loader: () => import("Pages/NCMenu"),
-    loading: Loading
-});
+// const NCMenu = Loadable({
+//     loader: () => import("Pages/NCMenu"),
+//     loading: Loading
+// });
 
-const NCCMenu = Loadable({
-    loader: () => import("Pages/NCCMenu"),
-    loading: Loading
-});
-
-const ThemeSearch = Loadable({
-    loader: () => import("Pages/ThemeSearch"),
-    loading: Loading
-});
-
-const SearchHistory = Loadable({
-    loader: () => import("Pages/SearchHistory"),
-    loading: Loading
-});
-
-const ThemeDetails = Loadable({
-    loader: () => import("Pages/ThemeDetails"),
-    loading: Loading
-});
-
-const PraiseDetail = Loadable({
-    loader: () => import("Pages/PraiseDetail"),
-    loading: Loading
-});
-
-const About = Loadable({
-    loader: () => import("Pages/About"),
-    loading: Loading
-});
-
-const AboutDetails = Loadable({
-    loader: () => import("Pages/AboutDetails"),
-    loading: Loading
-});
-
-const QuickGuide = Loadable({
-    loader: () => import("Pages/QuickGuide"),
-    loading: Loading
-});
-
-const MyAttention = Loadable({
-    loader: () => import("Pages/MyAttention"),
-    loading: Loading
-});
 
 const routes = [
     {
         path: "/",
         exact: true,
         component: Home
-    },
-    {
-        path: "/nc",
-        component: NCMenu
-    },
-    {
-        path: "/ncc",
-        component: NCCMenu
-    },
-    {
-        path: "/themeSearch",
-        component: ThemeSearch
-    },
-    {
-        path: "/searchHistory",
-        component: SearchHistory
-    },
-    {
-        path: "/themeDetails/:themeId",
-        component: ThemeDetails
-    },
-    {
-        path: "/praiseDetail/:themeId",
-        component: PraiseDetail
-    },
-    {
-        path: "/about",
-        component: About
-    },
-    {
-        path: "/aboutdetails",
-        component: AboutDetails
-    },
-    {
-        path: "/quickguide",
-        component: QuickGuide
-    },
-    {
-        path: "/myattention",
-        component: MyAttention
     }
 ];
 const RouteWithSubRoutes = route => (

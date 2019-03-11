@@ -1,15 +1,11 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import * as Home from "./Home/reducer";
-import * as ThemeDetails from "./ThemeDetails/reducer";
-import * as ThemeSearch from "./ThemeSearch/reducer";
 
 import thunk from "redux-thunk";
 let store = createStore(
     combineReducers({
-        ...Home,
-        ...ThemeDetails,
-        ...ThemeSearch
+        ...Home
     }),
     {},
     composeWithDevTools(applyMiddleware(thunk))
