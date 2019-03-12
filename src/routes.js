@@ -2,7 +2,7 @@ import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Loadable from "react-loadable";
 import Loading from "Components/Loading";
-import Home from "Pages/Home";
+import Index from "Pages/Index";
 
 // const NCMenu = Loadable({
 //     loader: () => import("Pages/NCMenu"),
@@ -14,7 +14,7 @@ const routes = [
     {
         path: "/",
         exact: true,
-        component: Home
+        component: Index
     }
 ];
 const RouteWithSubRoutes = route => (
