@@ -1,8 +1,8 @@
 import React from "react";
-import { Form, Icon, Input, Button, Checkbox, notification } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 import "./index.less";
 
-class NormalLoginForm extends React.Component {
+class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,6 +11,12 @@ class NormalLoginForm extends React.Component {
         }
     }
     componentWillMount() {
+        document.onkeydown = (e) => {
+            let event = e || window.event;
+            if(event.keyCode === 13) {
+                this.handleSubmit(event)
+            }
+        }
         if(localStorage.getItem("username")){
             let username = localStorage.getItem("username");
             let password = localStorage.getItem("password");
@@ -21,12 +27,6 @@ class NormalLoginForm extends React.Component {
         }
     }
 
-    /** 弹框提醒 */
-    openNotification = message => {
-        notification.open({
-            message: message
-        });
-    }
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -57,12 +57,16 @@ class NormalLoginForm extends React.Component {
                         }
                         
                     }
-                    this.openNotification("登录成功")
+
+                    message.success("登陆成功", 1)
+
+                    //跳转到首页
+                    window.location.hash = "home";
                 }else{
-                    this.openNotification("用户名或密码错误")
+                    message.error("登陆失败", 1)
                 }
             }else{
-                this.openNotification("请检查您的输入")
+                message.info("请检查您的输入", 1)
             }
         });
 
@@ -113,5 +117,5 @@ class NormalLoginForm extends React.Component {
     }
 }
 
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
-export default WrappedNormalLoginForm;
+Index = Form.create({ name: 'normal_login' })(Index);
+export default Index;

@@ -6,8 +6,8 @@ import store from "./src/store";
 import Routes from "./src/routes";
 import { GetQuery } from "./src/utils";
 // import "Assets/js/mobile-util.js";
-import "Assets/css/normalize.css";
-import "Assets/iconfont/iconfont.css";
+// import "Assets/css/normalize.css";
+// import "Assets/iconfont/iconfont.css";
 import "Public/css/public.less";
 class App extends React.Component {
     constructor(props, context) {

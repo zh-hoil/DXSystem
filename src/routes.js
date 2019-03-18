@@ -4,10 +4,15 @@ import Loadable from "react-loadable";
 import Loading from "Components/Loading";
 import Index from "Pages/Index";
 
-// const NCMenu = Loadable({
-//     loader: () => import("Pages/NCMenu"),
-//     loading: Loading
-// });
+const Home = Loadable({
+    loader: () => import("Pages/Home"),
+    loading: Loading
+});
+
+const File = Loadable({
+    loader: () => import("Pages/File"),
+    loading: Loading
+});
 
 
 const routes = [
@@ -15,6 +20,16 @@ const routes = [
         path: "/",
         exact: true,
         component: Index
+    },
+    {
+        path: "/home",
+        exact: true,
+        component: Home
+    },
+    {
+        path: "/file",
+        exact: true,
+        component: File
     }
 ];
 const RouteWithSubRoutes = route => (

@@ -1,0 +1,45 @@
+.list{
+    flex: 1;
+    max-width: 40%;
+    .list-title{
+        position: relative;
+        color: red;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        height: 30px;
+        text-indent: 10px;
+        &::before{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            content: "";
+            background-color: red;
+        }
+    }
+    .list-content{
+        li{ 
+            max-width: 100%;
+            height: 40px;
+            line-height: 40px;
+            padding: 10px 0;
+            a{
+                display: inline-block;
+                letter-spacing: 1px;
+                max-width: 100%;
+                font-size: 16px;
+                color: #545456;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            a:hover{
+                color: red;
+                text-decoration: underline;
+            }
+        }
+        
+    }
+}

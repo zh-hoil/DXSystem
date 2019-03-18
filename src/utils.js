@@ -50,10 +50,9 @@ export function addLocalStorage(key, value) {
 //获取本地存储中的数据
 export function getLocalStorage(key) {
     let value = localStorage.getItem(key);
-    if (!value) {
-        return
+    if (value) {
+        return JSON.parse(value)
     }
-    return JSON.parse(value)
 }
 
 // 将时间戳转为日期格式
