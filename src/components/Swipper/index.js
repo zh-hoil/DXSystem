@@ -1,25 +1,17 @@
 import React from "react";
-import { Carousel } from 'antd';
+import { Carousel, Popover } from "antd";
 import "./index.less";
-class Swipper extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-    }
-    componentDidMount() {
-        
-    }
-    
-    render() {
-        return (
-            <div className="carousel">
-               <Carousel autoplay>
-                    <div><h3>图文新闻1</h3></div>
-                    <div><h3>图文新闻2</h3></div>
-                    <div><h3>图文新闻3</h3></div>
-                    <div><h3>图文新闻4</h3></div>
-                </Carousel>
-            </div>
-        );
-    }
-}
+const Swipper = props => (
+  <div className="carousel">
+    <Carousel autoplay>
+      {props.images.map((item, index) => (
+        <div key={index} className="banner">
+            <a href={item.href} title={item.title} alt={item.title}>
+              <img src={item.src} alt={item.title} />
+            </a>
+        </div>
+      ))}
+    </Carousel>
+  </div>
+);
 export default Swipper;

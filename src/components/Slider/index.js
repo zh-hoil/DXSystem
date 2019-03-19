@@ -1,8 +1,8 @@
 import React from "react";
-import "./index.less";
 import PropTypes from "prop-types";
 import { Menu, Icon, Layout } from "antd";
 import Logo from "Assets/images/logo.jpg";
+import "./index.less";
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
