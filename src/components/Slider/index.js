@@ -30,12 +30,12 @@ const Slider = props => (
           <Icon type="file" />
           <span>历史文件</span>
         </Menu.Item>
-        <Menu.Item key="file">
+        <Menu.Item key="material">
           <Icon type="file" />
-          <span>发展手册</span>
+          <span>参考资料</span>
         </Menu.Item>
         <SubMenu
-          key="data"
+          key="roster"
           title={
             <span>
               <Icon type="team" />
@@ -61,7 +61,7 @@ const Slider = props => (
           <Menu.Item key="table_2">表二</Menu.Item>
           <Menu.Item key="table_3">表三</Menu.Item>
           <Menu.Item key="table_4">表四</Menu.Item>
-          <Menu.Item key="publicity">公式材料</Menu.Item>
+          <Menu.Item key="publicity">公示材料</Menu.Item>
           <Menu.Item key="graduated">毕业生转出</Menu.Item>
         </SubMenu>
       </Menu>

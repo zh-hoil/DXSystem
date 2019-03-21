@@ -9,11 +9,6 @@ const Home = Loadable({
     loading: Loading
 });
 
-const File = Loadable({
-    loader: () => import("Pages/File"),
-    loading: Loading
-});
-
 
 const routes = [
     {
@@ -25,11 +20,6 @@ const routes = [
         path: "/home",
         exact: true,
         component: Home
-    },
-    {
-        path: "/file",
-        exact: true,
-        component: File
     }
 ];
 const RouteWithSubRoutes = route => (

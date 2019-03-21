@@ -35,15 +35,27 @@ module.exports = (dirname, config) => {
         module: {
             rules: [
                 {
-                    test: /\.(css|less)$/,
-                    // exclude: /node_modules/,
+                    test: /\.(less|css)$/,
                     use: [
-                        "style-loader",
-                        "css-loader",
-                        "postcss-loader",
-                        "less-loader"
+                      {
+                        loader: "style-loader"
+                      },
+                      {
+                        loader: "css-loader" // translates CSS into CommonJS
+                      },
+                      {
+                        loader: "less-loader", // compiles Less to CSS
+                        options: {
+                          modifyVars: {
+                            "primary-color": "#ff4242f2",
+                            "box-shadow-base": "0 0 0 2px rgba(255, 76, 76, 0.2),"
+                          },
+                          javascriptEnabled: true
+                        }
+                      }
                     ]
-                }
+                    // ...other rules
+                  }
             ]
         },
         plugins: [
