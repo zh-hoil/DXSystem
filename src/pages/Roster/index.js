@@ -1,18 +1,17 @@
 import React from "react";
-import { Get } from "Public/js/Ajax";
 import TableList from "Components/TableList";
 import { Select } from "antd";
 import "./index.less";
-
 class Roster extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      params: {}
+      params: {},
+      path: ""
     };
   }
   componentWillMount() {
-    /* 发送请求更新数据 */
+    /* 更新数据 */
     this._initRoster(this.props.fullPath);
   }
 
@@ -21,32 +20,33 @@ class Roster extends React.Component {
   }
 
   _initRoster(path) {
-    console.log(path);
-    // Get(
-    //   path,
-    //   this.state.params,
-    //   res => {
-    //       console.log("请求成功")
-    //       console.log(res)
-    //   },
-    //   err => {
-    //     console.log(err);
-    //   }
-    // );
+    this.setState({
+      path
+    });
   }
 
-  handleGrade(value) {
-    console.log(value);
-  }
+  handleGrade = grade => {
+    this.setState({
+      params: {
+        ...this.state.params,
+        grade
+      }
+    });
+    console.log(grade);
+  };
 
-  handleGroup(value) {
-    console.log(value);
-  }
+  handleGroup = group => {
+    this.setState({
+      params: {
+        ...this.state.params,
+        group
+      }
+    });
+  };
 
   render() {
     return (
-        <div className="roster">
-        
+      <div className="roster">
         <div className="options">
           <span className="tip">请选择筛选条件：</span>
           <Select
@@ -78,13 +78,10 @@ class Roster extends React.Component {
             </Select.Option>
           </Select>
         </div>
-        <TableList />
-
-    </div>
+        <TableList {...this.state} />
+      </div>
     );
   }
 }
-
-
 
 export default Roster;

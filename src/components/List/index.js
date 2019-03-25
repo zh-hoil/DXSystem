@@ -17,6 +17,7 @@ const List = props => (
   </div>
 );
 List.propsType = {
+  title: PropTypes.string,
   list: PropTypes.array.isRequired
 };
 

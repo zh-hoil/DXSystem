@@ -1,0 +1,448 @@
+{
+  "all": {
+    "columns": [
+      {
+        "title": "序号",
+        "dataIndex": "index"
+      },
+      {
+        "title": "学号",
+        "dataIndex": "id"
+      },
+      {
+        "title": "班级",
+        "dataIndex": "class",
+        "editable": "true"
+      },
+      {
+        "title": "名字",
+        "dataIndex": "name",
+        "editable": "true"
+      },
+      {
+        "title": "出生年月日",
+        "dataIndex": "both",
+        "editable": "true"
+      },
+      {
+        "title": "入党申请时间",
+        "dataIndex": "apply",
+        "editable": "true"
+      },
+      {
+        "title": "积极分子时间",
+        "dataIndex": "active",
+        "editable": "true"
+      },
+      {
+        "title": "入党时间",
+        "dataIndex": "ready",
+        "editable": "true"
+      },
+      {
+        "title": "转正时间",
+        "dataIndex": "approved",
+        "editable": "true"
+      },
+      {
+        "title": "奖学金一",
+        "dataIndex": "scholarship_1",
+        "editable": "true"
+      },
+      {
+        "title": "奖学金二",
+        "dataIndex": "scholarship_2",
+        "editable": "true"
+      },
+      {
+        "title": "奖学金三",
+        "dataIndex": "scholarship_3",
+        "editable": "true"
+      },
+      {
+        "title": "奖学金四",
+        "dataIndex": "scholarship_4",
+        "editable": "true"
+      },
+      {
+        "title": "奖学金五",
+        "dataIndex": "scholarship_5",
+        "editable": "true"
+      },
+      {
+        "title": "奖学金六",
+        "dataIndex": "scholarship_6",
+        "editable": "true"
+      },
+      {
+        "title": "奖学金七",
+        "dataIndex": "scholarship_7",
+        "editable": "true"
+      },
+      {
+        "title": "奖学金八",
+        "dataIndex": "scholarship_8",
+        "editable": "true"
+      }
+    ],
+    "data": [
+      {
+        "id": "2153301",
+        "class": "21533",
+        "name": "康磊",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "scholarship_1": "三等",
+        "scholarship_2": "三等",
+        "scholarship_3": "三等",
+        "scholarship_4": "三等",
+        "scholarship_5": "三等",
+        "scholarship_6": "三等",
+        "scholarship_7": "三等",
+        "scholarship_8": "三等"
+      },
+      {
+        "id": "2153302",
+        "class": "21533",
+        "name": "趙浚儀",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "scholarship_1": "三等",
+        "scholarship_2": "三等",
+        "scholarship_3": "三等",
+        "scholarship_4": "三等",
+        "scholarship_5": "三等",
+        "scholarship_6": "三等",
+        "scholarship_7": "三等",
+        "scholarship_8": "三等"
+      },
+      {
+        "id": "2153303",
+        "class": "21533",
+        "name": "王勇一",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "scholarship_1": "三等",
+        "scholarship_2": "三等",
+        "scholarship_3": "三等",
+        "scholarship_4": "三等",
+        "scholarship_5": "三等",
+        "scholarship_6": "三等",
+        "scholarship_7": "三等",
+        "scholarship_8": "三等"
+      },
+      {
+        "id": "2153304",
+        "class": "21533",
+        "name": "程野見",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "scholarship_1": "三等",
+        "scholarship_2": "三等",
+        "scholarship_3": "三等",
+        "scholarship_4": "三等",
+        "scholarship_5": "三等",
+        "scholarship_6": "三等",
+        "scholarship_7": "三等",
+        "scholarship_8": "三等"
+      }
+    ]
+  },
+  "activist": {
+    "columns": [
+      {
+        "title": "序号",
+        "dataIndex": "index"
+      },
+      {
+        "title": "学号",
+        "dataIndex": "id"
+      },
+      {
+        "title": "班级",
+        "dataIndex": "class",
+        "editable": "true"
+      },
+      {
+        "title": "名字",
+        "dataIndex": "name",
+        "editable": "true"
+      },
+      {
+        "title": "出生年月日",
+        "dataIndex": "both",
+        "editable": "true"
+      },
+      {
+        "title": "入党申请时间",
+        "dataIndex": "apply",
+        "editable": "true"
+      },
+      {
+        "title": "积极分子时间",
+        "dataIndex": "active",
+        "editable": "true"
+      }
+    ],
+    "data": [
+      {
+        "id": "2153301",
+        "class": "21533",
+        "name": "康磊",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023"
+      },
+      {
+        "id": "2153302",
+        "class": "21533",
+        "name": "趙浚儀",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023"
+      },
+      {
+        "id": "2153303",
+        "class": "21533",
+        "name": "王勇一",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023"
+      },
+      {
+        "id": "2153304",
+        "class": "21533",
+        "name": "程野見",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023"
+      }
+    ]
+  },
+  "ready": {
+    "columns": [
+      {
+        "title": "序号",
+        "dataIndex": "index"
+      },
+      {
+        "title": "学号",
+        "dataIndex": "id"
+      },
+      {
+        "title": "班级",
+        "dataIndex": "class",
+        "editable": "true"
+      },
+      {
+        "title": "名字",
+        "dataIndex": "name",
+        "editable": "true"
+      },
+      {
+        "title": "出生年月日",
+        "dataIndex": "both",
+        "editable": "true"
+      },
+      {
+        "title": "入党申请时间",
+        "dataIndex": "apply",
+        "editable": "true"
+      },
+      {
+        "title": "积极分子时间",
+        "dataIndex": "active",
+        "editable": "true"
+      },
+      {
+        "title": "入党时间",
+        "dataIndex": "ready",
+        "editable": "true"
+      },
+      {
+        "title": "介绍人一",
+        "dataIndex": "introducer_1",
+        "editable": "true"
+      },
+      {
+        "title": "介绍人二",
+        "dataIndex": "introducer_2",
+        "editable": "true"
+      }
+    ],
+    "data": [
+      {
+        "id": "2153301",
+        "class": "21533",
+        "name": "康磊",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "introducer_1": "张欢",
+        "introducer_2": "冯帅"
+      },
+      {
+        "id": "2153302",
+        "class": "21533",
+        "name": "趙浚儀",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "introducer_1": "张欢",
+        "introducer_2": "冯帅"
+      },
+      {
+        "id": "2153303",
+        "class": "21533",
+        "name": "王勇一",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "introducer_1": "张欢",
+        "introducer_2": "冯帅"
+      },
+      {
+        "id": "2153304",
+        "class": "21533",
+        "name": "程野見",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "introducer_1": "张欢",
+        "introducer_2": "冯帅"
+      }
+    ]
+  },
+  "approved": {
+    "columns": [
+      {
+        "title": "序号",
+        "dataIndex": "index"
+      },
+      {
+        "title": "学号",
+        "dataIndex": "id"
+      },
+      {
+        "title": "班级",
+        "dataIndex": "class",
+        "editable": "true"
+      },
+      {
+        "title": "名字",
+        "dataIndex": "name",
+        "editable": "true"
+      },
+      {
+        "title": "出生年月日",
+        "dataIndex": "both",
+        "editable": "true"
+      },
+      {
+        "title": "入党申请时间",
+        "dataIndex": "apply",
+        "editable": "true"
+      },
+      {
+        "title": "积极分子时间",
+        "dataIndex": "active",
+        "editable": "true"
+      },
+      {
+        "title": "入党时间",
+        "dataIndex": "ready",
+        "editable": "true"
+      },
+      {
+        "title": "转正时间",
+        "dataIndex": "approved",
+        "editable": "true"
+      },
+      {
+        "title": "介绍人一",
+        "dataIndex": "introducer_1",
+        "editable": "true"
+      },
+      {
+        "title": "介绍人二",
+        "dataIndex": "introducer_2",
+        "editable": "true"
+      },
+      {
+        "title": "支部职务",
+        "dataIndex": "rank",
+        "editable": "true"
+      }
+    ],
+    "data": [
+      {
+        "id": "2153301",
+        "class": "21533",
+        "name": "康磊",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "introducer_1": "张欢",
+        "introducer_2": "冯帅",
+        "rank": "支部书记"
+      },
+      {
+        "id": "2153302",
+        "class": "21533",
+        "name": "趙浚儀",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "introducer_1": "张欢",
+        "introducer_2": "冯帅",
+        "rank": "宣传委员"
+      },
+      {
+        "id": "2153303",
+        "class": "21533",
+        "name": "王勇一",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "introducer_1": "张欢",
+        "introducer_2": "冯帅",
+        "rank": "组织委员"
+      },
+      {
+        "id": "2153304",
+        "class": "21533",
+        "name": "程野見",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "introducer_1": "张欢",
+        "introducer_2": "冯帅",
+        "rank": ""
+      }
+    ]
+  }
+}
