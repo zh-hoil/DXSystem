@@ -58,3 +58,43 @@ export function Get(url, data, resolve, reject) {
             reject && reject(error);
         });
 }
+
+export function Put(url, data, resolve, reject) {
+    url = window.RootURL + url;
+    if (!data.userId) {
+        data.userId = userId;
+    }
+    Ajax.put(url, {
+        params: data
+    })
+        .then(function(response) {
+            if (response.status === 200) {
+                resolve && resolve(response.data);
+            } else {
+                reject && reject(response.statusText);
+            }
+        })
+        .catch(function(error) {
+            reject && reject(error);
+        });
+}
+
+export function Delete(url, data, resolve, reject) {
+    url = window.RootURL + url;
+    if (!data.userId) {
+        data.userId = userId;
+    }
+    Ajax.delete(url, {
+        params: data
+    })
+        .then(function(response) {
+            if (response.status === 200) {
+                resolve && resolve(response.data);
+            } else {
+                reject && reject(response.statusText);
+            }
+        })
+        .catch(function(error) {
+            reject && reject(error);
+        });
+}

@@ -1,9 +1,12 @@
 import React from "react";
 import "./index.less";
-import { Get } from "Public/js/Ajax";
+import { Get, Put, Deletes } from "Public/js/Ajax";
+import {DELETEURL, PUTURL} from "Public/js/Api";
 import Data from "../../../Data.json";
 import { Input, Pagination } from "antd";
 
+
+;
 //用来保存当前选中行
 let curRow = null;
 
@@ -23,6 +26,7 @@ class TableList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.visible === !nextProps.visible) return; //如果仅仅改变了modal框的显示与否 则不刷新数据
     let { path, params } = nextProps;
     if (this.props.path !== path) {
       params = {};
@@ -45,7 +49,8 @@ class TableList extends React.Component {
       ...params,
       page
     };
-    let data = [], columns = [];
+    let data = [],
+      columns = [];
     switch (path) {
       case "/roster/all":
         data = Data.all.data;
@@ -63,22 +68,56 @@ class TableList extends React.Component {
         data = Data.approved.data;
         columns = Data.approved.columns;
         break;
+      case "/table/table_1":
+        data = Data.table_1.data;
+        columns = Data.table_1.columns;
+        break;
+      case "/table/table_2":
+        data = Data.table_2.data;
+        columns = Data.table_2.columns;
+        break;
+      case "/table/table_3":
+        data = Data.table_3.data;
+        columns = Data.table_3.columns;
+        break;
+      case "/table/table_4":
+        data = Data.table_4.data;
+        columns = Data.table_4.columns;
+        break;
+      case "/table/candidate":
+        data = Data.candidate.data;
+        columns = Data.candidate.columns;
+        break;
+      case "/table/publicity":
+        data = Data.publicity.data;
+        columns = Data.publicity.columns;
+        break;
+      case "/table/graduated":
+        data = Data.graduated.data;
+        columns = Data.graduated.columns;
+        break;
     }
-    this.setState({
-      data,
-      columns
-    });
     // Get(
     //   path,
     //   params,
     //   res => {
     //       console.log("请求成功")
     //       console.log(res)
+    // let { data, columns } = res.data;
+    // this.setState({
+    //   data,
+    //   columns
+    // });
     //   },
     //   err => {
     //     console.log(err);
     //   }
     // );
+
+    this.setState({
+      data,
+      columns
+    });
     console.log(params);
     console.log(path);
   };
@@ -103,13 +142,24 @@ class TableList extends React.Component {
           let value = input.value;
           if (value !== target.innerHTML) {
             if (window.confirm("确认修改？")) {
-              target.innerHTML = value;
+              let params = { id, attr };
+              // Put(
+              //   path + PUTURL,
+              //   params,
+              //   res => {
+              //       console.log("请求成功")
+              //       console.log(res)
+              /* 请求发送成功后 */
+              // target.innerHTML = value;
+              // target.style.display = "inline-block";
+              // input.style.display = "none";
+              //   },
+              //   err => {
+              //     console.log(err);
+              //   }
+              // );
             }
           }
-
-          /* 请求发送成功后 */
-          target.style.display = "inline-block";
-          input.style.display = "none";
         },
         false
       );
@@ -138,11 +188,23 @@ class TableList extends React.Component {
       console.log(event.keyCode);
       if (this.state.id) {
         if (window.confirm("确认删除该生所有信息？")) {
+          let params = { id: this.state.id };
           /** 提交删除 */
-          curRow.parentNode.removeChild(curRow);
-          curRow = null;
-          id = "";
-          console.log(this.state.id);
+          // Delete(
+          //   path + DELETEURL,
+          //   params,
+          //   res => {
+          //       console.log("请求成功")
+          //       console.log(res)
+          //       curRow.parentNode.removeChild(curRow);
+          //       curRow = null;
+          // /* 请求发送成功后 */
+          //   },
+          //   err => {
+          //     console.log(err);
+          //   }
+          // );
+          this.setState({ id: "" });
           console.log("delete");
         }
       }
@@ -176,6 +238,7 @@ class TableList extends React.Component {
                   key={index}
                   onClick={this.handleRow.bind(this, item.id)}
                   onDoubleClick={this.handleEdit.bind(this, item.id)}
+                  // onContextmenu={this.handleDelete}
                 >
                   <td>
                     <span>{index + 1}</span>

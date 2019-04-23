@@ -10,6 +10,7 @@ const List = props => (
     <ul className="list-content">
       {props.list.map((item, index) => (
         <li key={index} className="list-item">
+        <span>※</span>
           <a href={item.href}>{item.title}</a>
         </li>
       ))}

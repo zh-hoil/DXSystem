@@ -1,15 +1,19 @@
 import React from "react";
 import TableList from "Components/TableList";
-import { Select } from "antd";
+import Option from "Components/Option";
 import "./index.less";
+
+
 class Roster extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       params: {},
-      path: ""
+      path: "",
+      visible: false
     };
   }
+
   componentWillMount() {
     /* 更新数据 */
     this._initRoster(this.props.fullPath);
@@ -44,40 +48,19 @@ class Roster extends React.Component {
     });
   };
 
+
+
   render() {
     return (
       <div className="roster">
-        <div className="options">
-          <span className="tip">请选择筛选条件：</span>
-          <Select
-            showSearch
-            style={{ width: 200 }}
-            placeholder="选择年级"
-            optionFilterProp="children"
-            onChange={this.handleGrade}
-          >
-            <Select.Option value="15">15级</Select.Option>
-            <Select.Option value="16">16级</Select.Option>
-            <Select.Option value="17">17级</Select.Option>
-            <Select.Option value="18">18级</Select.Option>
-          </Select>
-          <Select
-            showSearch
-            style={{ width: 200 }}
-            placeholder="选择支部"
-            optionFilterProp="children"
-            onChange={this.handleGroup}
-          >
-            <Select.Option value="computer_1">计算机类第一党支部</Select.Option>
-            <Select.Option value="computer_2">计算机类第二党支部</Select.Option>
-            <Select.Option value="electrical_1">
-              电子信息类第一党支部
-            </Select.Option>
-            <Select.Option value="electrical_2">
-              电子信息类第二党支部
-            </Select.Option>
-          </Select>
-        </div>
+        <Option
+          href={this.props.href}
+          visible={this.state.visible}
+          fullPath={this.props.fullPath}
+          handleGrade={this.handleGrade}
+          handleGroup={this.handleGroup}
+          handleSelectGroup={this.handleSelectGroup}
+        />
         <TableList {...this.state} />
       </div>
     );

@@ -1,52 +1,70 @@
 import React from "react";
-import { Get } from "Public/js/Ajax";
-import { Select } from "antd";
+import TableList from "Components/TableList";
+import Option from "Components/Option";
 import "./index.less";
 
-class Table extends React.Component {
+
+class Roster extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      params: {}
+      params: {},
+      path: "",
+      visible: false
     };
   }
+
   componentWillMount() {
-    /* 发送请求更新数据 */
-    this._initTable(this.props.fullPath);
+    /* 更新数据 */
+    this._initRoster(this.props.fullPath);
   }
 
   componentWillReceiveProps(nextProps) {
-    this._initTable(nextProps.fullPath);
+    this._initRoster(nextProps.fullPath);
   }
 
-  _initTable(path) {
-    console.log(path);
-    // Get(
-    //   path,
-    //   this.state.params,
-    //   res => {
-    //       console.log("请求成功")
-    //       console.log(res)
-    //   },
-    //   err => {
-    //     console.log(err);
-    //   }
-    // );
+  _initRoster(path) {
+    this.setState({
+      path
+    });
   }
 
-  handleGrade(value) {
-    console.log(value);
-  }
+  handleGrade = grade => {
+    this.setState({
+      params: {
+        ...this.state.params,
+        grade
+      }
+    });
+    console.log(grade);
+  };
 
-  handleGroup(value) {
-    console.log(value);
-  }
+  handleGroup = group => {
+    this.setState({
+      params: {
+        ...this.state.params,
+        group
+      }
+    });
+  };
+
+
 
   render() {
     return (
-      <div className="table">表格页面</div>
+      <div className="roster">
+        <Option
+          href={this.props.href}
+          visible={this.state.visible}
+          fullPath={this.props.fullPath}
+          handleGrade={this.handleGrade}
+          handleGroup={this.handleGroup}
+          handleSelectGroup={this.handleSelectGroup}
+        />
+        <TableList {...this.state} />
+      </div>
     );
   }
 }
 
-export default Table;
+export default Roster;

@@ -1,13 +1,42 @@
 import React from "react";
 import Swipper from "Components/Swipper";
 import List from "Components/List";
+import { Get } from "Public/js/Ajax";
+import NEWSURL from "Public/js/Api";
 import "./index.less";
 
 class News extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      news: [
+      nationNews: [
+        {
+          href: "http://www.baidu.com",
+          title: "这里是测试新闻信息"
+        },
+        {
+          href: "http://www.baidu.com",
+          title: "这里是测试新闻信息"
+        },
+        {
+          href: "http://www.baidu.com",
+          title: "这里是测试新闻信息"
+        },
+        {
+          href: "http://www.baidu.com",
+          title:
+            "这里是测试新闻信息这里是测试新闻信息这里是测试新闻信息这里是测试新闻信息这里是测试新闻信息这里是测试新闻信息"
+        },
+        {
+          href: "http://www.baidu.com",
+          title: "这里是测试新闻信息"
+        },
+        {
+          href: "http://www.baidu.com",
+          title: "这里是测试新闻信息"
+        }
+      ],
+      schoolNews: [
         {
           href: "http://www.baidu.com",
           title: "这里是测试新闻信息"
@@ -59,13 +88,29 @@ class News extends React.Component {
     };
   }
 
+  componentWillMount () {
+    // Get(
+    //   NEWSURL,
+    //   {},
+    //   res => {
+        // let { nationNews, schoolNews, images } = res.data;
+    //       this.setState({ nationNews, schoolNews, images })
+    //       console.log(res)
+    //   },
+    //   err => {
+      // message.error(err.message);
+    //     console.log(err);
+    //   }
+    // );
+  }
+
   render() {
     return (
       <div className="news">
         <Swipper images={this.state.images} />
         <div className="news-content">
-          <List title="国家要闻" list={this.state.news} />
-          <List title="学院动态" list={this.state.news} />
+          <List title="国家要闻" list={this.state.nationNews} />
+          <List title="学院动态" list={this.state.schoolNews} />
         </div>
       </div>
     );

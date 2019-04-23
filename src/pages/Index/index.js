@@ -1,6 +1,9 @@
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
+import { Get } from "Public/js/Ajax";
+import LOGINURL from "Public/js/Api";
 import "./index.less";
+
 
 class Index extends React.Component {
     constructor(props) {
@@ -35,6 +38,40 @@ class Index extends React.Component {
                 /** 发送网络请求登录 */
                 console.log(values)
                 const { username, password, remember } = values;
+
+                
+                // Get(
+                //   LOGINURL,
+                //   { username, password },
+                //   res => {
+                    // let curUsername = localStorage.getItem("username");
+                    // let curPassword = localStorage.getItem("password");
+                    // if(!curUsername){
+                    //     if(remember){
+                    //         localStorage.setItem("username", username);
+                    //         localStorage.setItem("password", password);
+                    //     }
+                    // }else{
+                    //     if(remember){
+                    //         if(curUsername != username){
+                    //             localStorage.setItem("username", username);
+                    //         }
+                    //         if(curPassword != password){
+                    //             localStorage.setItem("username", username);
+                    //         }
+                    //     }else{
+                    //         localStorage.setItem("username", "");
+                    //         localStorage.setItem("password", "");
+                    //     }
+                    // }
+              //         message.success("登录成功");
+                //       console.log(res)
+                //   },
+                //   err => {
+                  // message.error(err.message);
+                //     console.log(err);
+                //   }
+                // );
                 if(username=="zhang"&&password=="123456"){
                     let curUsername = localStorage.getItem("username");
                     let curPassword = localStorage.getItem("password");
@@ -55,7 +92,6 @@ class Index extends React.Component {
                             localStorage.setItem("username", "");
                             localStorage.setItem("password", "");
                         }
-                        
                     }
 
                     message.success("登陆成功", 1)
