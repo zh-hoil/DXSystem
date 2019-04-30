@@ -24,13 +24,7 @@ module.exports = (dirname, config) => {
             },
             clientLogLevel: "error",
             // 开启报错提示
-            stats: "errors-only",
-            proxy: {
-                "/": {
-                    // 代理地址
-                    target: "http://10.11.115.74:5050/fiwechat/"
-                }
-            }
+            stats: "errors-only"
         },
         module: {
             rules: [

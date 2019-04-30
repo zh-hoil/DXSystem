@@ -55,7 +55,8 @@ module.exports = (dirname) => {
                 Assets: path.resolve(dirname, "src/assets/"),
                 Pages: path.resolve(dirname, "src/pages/"),
                 Public: path.resolve(dirname, "src/public/"),
-                Store: path.resolve(dirname, "src/store/")
+                Store: path.resolve(dirname, "src/store/"),
+                Server: path.resolve(dirname, "server/")
             }
         },
         plugins: [

@@ -9,6 +9,7 @@ import { GetQuery } from "./src/utils";
 // import "Assets/css/normalize.css";
 // import "Assets/iconfont/iconfont.css";
 import "Public/css/public.less";
+
 class App extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -20,6 +21,7 @@ class App extends React.Component {
             
         }
         localStorage.setItem("YY_userInfo", token)
+
     }
     render() {
         return (
@@ -31,7 +33,7 @@ class App extends React.Component {
 }
 // 后台服务地址
 // 开发环境
-window.RootURL = "http://10.11.115.74:5050/fiwechat";
+window.RootURL = "http://127.0.0.1:3005/api";
 // 生产环境
 // window.RootURL = "http://172.20.6.119:8901/fiwechat";
 

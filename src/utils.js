@@ -103,3 +103,11 @@ export function hasItemInArr (arr, item) {
     }
     return false
 }
+
+export function stringKeyValue(obj) {
+    let str = "";
+    for(let key in obj) {
+        str += "&"+ key.toString + "=" + obj[key];
+    }
+    return str?str.substr(1):"";
+}

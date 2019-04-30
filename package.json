@@ -4,6 +4,7 @@
   "description": "党校数据处理系统",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon ./server/bin/www",
     "dev": "webpack-dev-server --progress --colors --config ./webpack.config.js",
     "build": "cross-env NODE_ENV=production webpack --progress --colors --config ./webpack.config.js"
   },
@@ -23,6 +24,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
     "clean-webpack-plugin": "^1.0.1",
     "copy-webpack-plugin": "^4.6.0",
     "cross-env": "^5.2.0",
@@ -33,6 +35,7 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.5",
+    "nodemon": "^1.18.11",
     "open-browser-webpack-plugin": "0.0.5",
     "postcss-loader": "^3.0.0",
     "redux-devtools-extension": "^2.13.8",
@@ -47,6 +50,12 @@
   "dependencies": {
     "antd": "^3.15.0",
     "axios": "^0.18.0",
+    "cookie-parser": "^1.4.4",
+    "debug": "^4.1.1",
+    "express": "^4.16.4",
+    "http-errors": "^1.7.2",
+    "morgan": "^1.9.1",
+    "mysql": "^2.17.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",

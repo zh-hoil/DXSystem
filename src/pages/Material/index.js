@@ -1,8 +1,7 @@
 import React from "react";
 import List from "Components/List";
-import Data from "../../../Data.json";
 import { Get } from "Public/js/Ajax";
-import MATERIALURL from "Public/js/Api";
+import { MATERIALURL } from "Public/js/Api";
 import "./index.less";
 
 
@@ -15,22 +14,18 @@ class Material extends React.Component{
     }
 
     componentWillMount () {
-            // Get(
-            //   MATERIALURL,
-            //   {},
-            //   res => {
-            //       this.setState({ materials: res.data })
-            //       console.log(res)
-            //   },
-            //   err => {
-              // message.error(err.message);
-            //     console.log(err);
-            //   }
-            // );
+            Get(
+              MATERIALURL,
+              {},
+              res => {
+                  this.setState({ materials: res.data})
+                  console.log(res)
+              },
+              err => {
+                console.log(err);
+              }
+            );
           
-        this.setState({
-            materials: Data.meterial
-        })
     }
 
     render () {
