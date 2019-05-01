@@ -47,13 +47,23 @@
         "dataIndex": "index"
       },
       {
-        "title": "学号",
-        "dataIndex": "id"
+        "title": "党支部",
+        "dataIndex": "group",
+        "editable": "true"
+      },
+      {
+        "title": "年级",
+        "dataIndex": "grade",
+        "editable": "true"
       },
       {
         "title": "班级",
         "dataIndex": "class",
         "editable": "true"
+      },
+      {
+        "title": "学号",
+        "dataIndex": "id"
       },
       {
         "title": "名字",
@@ -86,44 +96,36 @@
         "editable": "true"
       },
       {
-        "title": "奖学金一",
-        "dataIndex": "scholarship_1",
-        "editable": "true"
+        "title": "第一学期",
+        "dataIndex": "term_1"
       },
       {
-        "title": "奖学金二",
-        "dataIndex": "scholarship_2",
-        "editable": "true"
+        "title": "第二学期",
+        "dataIndex": "term_2"
       },
       {
-        "title": "奖学金三",
-        "dataIndex": "scholarship_3",
-        "editable": "true"
+        "title": "第三学期",
+        "dataIndex": "term_3"
       },
       {
-        "title": "奖学金四",
-        "dataIndex": "scholarship_4",
-        "editable": "true"
+        "title": "第四学期",
+        "dataIndex": "term_4"
       },
       {
-        "title": "奖学金五",
-        "dataIndex": "scholarship_5",
-        "editable": "true"
+        "title": "第五学期",
+        "dataIndex": "term_5"
       },
       {
-        "title": "奖学金六",
-        "dataIndex": "scholarship_6",
-        "editable": "true"
+        "title": "第六学期",
+        "dataIndex": "term_6"
       },
       {
-        "title": "奖学金七",
-        "dataIndex": "scholarship_7",
-        "editable": "true"
+        "title": "第七学期",
+        "dataIndex": "term_7"
       },
       {
-        "title": "奖学金八",
-        "dataIndex": "scholarship_8",
-        "editable": "true"
+        "title": "第八学期",
+        "dataIndex": "term_8"
       }
     ],
     "data": [

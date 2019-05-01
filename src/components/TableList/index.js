@@ -1,12 +1,10 @@
 import React from "react";
 import "./index.less";
 import { Get, Put, Deletes } from "Public/js/Ajax";
-import {DELETEURL, PUTURL} from "Public/js/Api";
+import { DELETEURL, PUTURL } from "Public/js/Api";
 import Data from "../../../Data.json";
 import { Input, Pagination } from "antd";
 
-
-;
 //用来保存当前选中行
 let curRow = null;
 
@@ -16,7 +14,9 @@ class TableList extends React.Component {
     this.state = {
       id: "",
       page: 1,
-      pageSize: 10
+      pageSize: 2,
+      total: 200,
+      data: []
     };
   }
 
@@ -45,81 +45,70 @@ class TableList extends React.Component {
    * 初始化数据
    */
   _initTable = (path, params = {}, page = 1) => {
-    params = {
-      ...params,
-      page
-    };
-    let data = [],
-      columns = [];
+    let columns = [];
     switch (path) {
       case "/roster/all":
-        data = Data.all.data;
+        // data = Data.all.data;
         columns = Data.all.columns;
         break;
       case "/roster/activist":
-        data = Data.activist.data;
+        // data = Data.activist.data;
         columns = Data.activist.columns;
         break;
       case "/roster/ready":
-        data = Data.ready.data;
+        // data = Data.ready.data;
         columns = Data.ready.columns;
         break;
       case "/roster/approved":
-        data = Data.approved.data;
+        // data = Data.approved.data;
         columns = Data.approved.columns;
         break;
       case "/table/table_1":
-        data = Data.table_1.data;
+        // data = Data.table_1.data;
         columns = Data.table_1.columns;
         break;
       case "/table/table_2":
-        data = Data.table_2.data;
+        // data = Data.table_2.data;
         columns = Data.table_2.columns;
         break;
       case "/table/table_3":
-        data = Data.table_3.data;
+        // data = Data.table_3.data;
         columns = Data.table_3.columns;
         break;
       case "/table/table_4":
-        data = Data.table_4.data;
+        // data = Data.table_4.data;
         columns = Data.table_4.columns;
         break;
       case "/table/candidate":
-        data = Data.candidate.data;
+        // data = Data.candidate.data;
         columns = Data.candidate.columns;
         break;
       case "/table/publicity":
-        data = Data.publicity.data;
+        // data = Data.publicity.data;
         columns = Data.publicity.columns;
         break;
       case "/table/graduated":
-        data = Data.graduated.data;
+        // data = Data.graduated.data;
         columns = Data.graduated.columns;
         break;
     }
-    // Get(
-    //   path,
-    //   params,
-    //   res => {
-    //       console.log("请求成功")
-    //       console.log(res)
-    // let { data, columns } = res.data;
-    // this.setState({
-    //   data,
-    //   columns
-    // });
-    //   },
-    //   err => {
-    //     console.log(err);
-    //   }
-    // );
-
-    this.setState({
-      data,
-      columns
-    });
-    console.log(params);
-    console.log(path);
+    this.setState({ columns });
+    Get(
+      path,
+      params,
+      res => {
+        console.log("请求成功");
+        let { data, total } = res.data;
+        this.setState({
+          page,
+          total,
+          data
+        });
+      },
+      err => {
+        console.log(err);
+      }
+    );
   };
 
   /**
@@ -212,7 +201,6 @@ class TableList extends React.Component {
   };
 
   handlePage = page => {
-    this.setState({ page });
     let { path, params } = this.props;
     /*发送请求并更新数据 */
     this._initTable(path, params, page);
@@ -226,46 +214,48 @@ class TableList extends React.Component {
             <thead>
               <tr>
                 {this.state.columns.map((item, index) => (
-                  <th key={index}>
+                  <th key={index} colSpan={/term_\d/.test(item.dataIndex)?3:1}>
                     <span>{item.title}</span>
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {this.state.data.map((item, index) => (
-                <tr
-                  key={index}
-                  onClick={this.handleRow.bind(this, item.id)}
-                  onDoubleClick={this.handleEdit.bind(this, item.id)}
-                  // onContextmenu={this.handleDelete}
-                >
-                  <td>
-                    <span>{index + 1}</span>
-                  </td>
-                  {Object.keys(item).map((key, ind) => (
-                    <td key={ind}>
-                      <span
-                        attr={key}
-                        editable={key === "id" ? "false" : "true"}
-                      >
-                        {item[key]}
-                      </span>
-                      <Input
-                        style={{ display: "none" }}
-                        defaultValue={item[key]}
-                      />
-                    </td>
-                  ))}
-                </tr>
-              ))}
+              {this.state.data
+                ? this.state.data.map((item, index) => (
+                    <tr
+                      key={index}
+                      onClick={this.handleRow.bind(this, item.id)}
+                      onDoubleClick={this.handleEdit.bind(this, item.id)}
+                      // onContextmenu={this.handleDelete}
+                    >
+                      <td>
+                        <span>{index + 1}</span>
+                      </td>
+                      {Object.keys(item).map((key, ind) => (
+                        <td key={ind}>
+                          <span
+                            attr={key}
+                            editable={key === "id" ? "false" : "true"}
+                          >
+                            {item[key]?item[key]:"无"}
+                          </span>
+                          <Input
+                            style={{ display: "none" }}
+                            defaultValue={item[key]}
+                          />
+                        </td>
+                      ))}
+                    </tr>
+                  ))
+                : <tr><td>暂无数据</td></tr>}
             </tbody>
           </table>
         </div>
         <div className="pagination">
           <Pagination
             defaultCurrent={this.state.page}
-            total={500}
+            total={this.state.total}
             pageSize={this.state.pageSize}
             onChange={this.handlePage}
           />

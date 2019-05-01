@@ -23,9 +23,9 @@ const Ajax = axios.create({
 
 export function Post(url, data, resolve, reject) {
     url = window.RootURL + url;
-    if (!data.userId) {
-        data.userId = userId;
-    }
+    // if (!data.userId) {
+    //     data.userId = userId;
+    // }
     Ajax.post(url, data)
         .then(function(response) {
             if (response.status === 200) {
@@ -41,9 +41,9 @@ export function Post(url, data, resolve, reject) {
 
 export function Get(url, data, resolve, reject) {
     url = window.RootURL + url;
-    if (!data.userId) {
-        data.userId = userId;
-    }
+    // if (!data.userId) {
+    //     data.userId = userId;
+    // }
     Ajax.get(url, {
         params: data
     })
@@ -61,9 +61,9 @@ export function Get(url, data, resolve, reject) {
 
 export function Put(url, data, resolve, reject) {
     url = window.RootURL + url;
-    if (!data.userId) {
-        data.userId = userId;
-    }
+    // if (!data.userId) {
+    //     data.userId = userId;
+    // }
     Ajax.put(url, {
         params: data
     })
@@ -81,9 +81,9 @@ export function Put(url, data, resolve, reject) {
 
 export function Delete(url, data, resolve, reject) {
     url = window.RootURL + url;
-    if (!data.userId) {
-        data.userId = userId;
-    }
+    // if (!data.userId) {
+    //     data.userId = userId;
+    // }
     Ajax.delete(url, {
         params: data
     })

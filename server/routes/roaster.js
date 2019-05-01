@@ -1,16 +1,49 @@
 var express = require('express');
 var router = express.Router();
-import {select} from "../utils";
+import { select, toKeyValue } from "../utils";
 
-
-/* GET home page. */
-router.get('/news', function(req, res, next) {
-  select("news", 
+router.get('/grade', function(req, res, next) {
+  select("grade", 
   "*", 
   "",
   (results) => {
       let data = JSON.parse(JSON.stringify(results));
       res.json({code: 200, msg: "success", data});
+      return
+  }),
+  () => {
+    console.log(">>>>>>>>>>>>>>> ERROR")
+    res.json({code: 500, msg: "failed"});
+  }
+});
+
+router.get('/branch', function(req, res, next) {
+  select("branch", 
+  "*", 
+  "",
+  (results) => {
+      let data = JSON.parse(JSON.stringify(results));
+      res.json({code: 200, msg: "success", data});
+      return
+  }),
+  () => {
+    console.log(">>>>>>>>>>>>>>> ERROR")
+    res.json({code: 500, msg: "failed"});
+  }
+});
+
+router.get('/roster/all', function(req, res, next) {
+  let sql = "";
+  if(Object.keys(req.query).length){
+    sql = `WHERE ${toKeyValue(req.query)}`;
+  }
+  console.log(sql);
+  select("roster_all", 
+  "*", 
+  sql,
+  (results) => {
+      let data = JSON.parse(JSON.stringify(results));
+      res.json({code: 200, msg: "success", data: {total: data.length, data}});
       return
   }),
   () => {

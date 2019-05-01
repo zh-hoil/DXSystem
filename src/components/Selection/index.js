@@ -9,7 +9,7 @@ const Selection = props => (
       onChange={props.handleChange}
     >
       {props.selection.options.map((option, index) => (
-        <Select.Option key={index} value={option.value}>
+        <Select.Option key={index} value={option.text}>
           {option.text}
         </Select.Option>
       ))}

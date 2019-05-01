@@ -3,39 +3,83 @@ import "./index.less";
 import { Button } from "antd";
 import Selection from "Components/Selection";
 import MyModal from "Components/MyModal";
+import { Get } from "Public/js/Ajax";
+import { GRADEURL, BRANCHURL } from "Public/js/Api";
 
-const gradeOptions = {
-  placeholder: "选择年级",
-  options: [
-    { value: "15", text: "15级" },
-    { value: "16", text: "16级" },
-    { value: "17", text: "17级" },
-    { value: "18", text: "18级" }
-  ]
-};
-const groupOptions = {
-  placeholder: "选择支部",
-  options: [
-    { value: "computer_1", text: "计算机类第一党支部" },
-    { value: "computer_2", text: "计算机类第二党支部" },
-    { value: "electrical_1", text: "电子信息类第一党支部" },
-    { value: "electrical_2", text: "电子信息类第二党支部" }
-  ]
-};
-const Option = props => (
-  <div className="options">
-    <span className="tip">请选择筛选条件：</span>
-    <Selection handleChange={props.handleGrade} selection={gradeOptions} />
-    <Selection handleChange={props.handleGroup} selection={groupOptions} />
-    <Button type="primary" href={props.href}>
-      导出
-    </Button>
-    {props.fullPath === "/roster/all" ? (
-      <MyModal groupOptions={groupOptions} />
-    ) : (
-      ""
-    )}
-  </div>
-);
+class Option extends React.Component {
+  constructor(props) {
+    super();
+    this.state = {
+      branchOptions: { placeholder: "选择支部", options: [] },
+      gradeOptions: { placeholder: "选择年级", options: [] }
+    };
+  }
+
+  componentWillMount() {
+    this._initGrade();
+    this._initBranch();
+  }
+
+  _initGrade = () => {
+    Get(
+      GRADEURL,
+      {},
+      res => {
+        this.setState({
+          gradeOptions: {
+            ...this.state.gradeOptions,
+            options: res.data
+          }
+        });
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  };
+
+  _initBranch = () => {
+    Get(
+      BRANCHURL,
+      {},
+      res => {
+        this.setState({
+          branchOptions: {
+            ...this.state.branchOptions,
+            options: res.data
+          }
+        });
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  };
+
+  render() {
+    return (
+      <div className="options">
+        <span className="tip">请选择筛选条件：</span>
+        <Selection
+          handleChange={this.props.handleGrade}
+          selection={this.state.gradeOptions}
+        />
+        <Selection
+          handleChange={this.props.handleBranch}
+          selection={this.state.branchOptions}
+        />
+        <Button type="primary" href={this.props.href}>
+          导出
+        </Button>
+        {this.props.fullPath === "/roster/all" ? (
+          <MyModal branchOptions={this.state.branchOptions} />
+        ) : (
+          ""
+        )}
+      </div>
+    );
+  }
+}
 
 export default Option;

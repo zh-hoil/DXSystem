@@ -39,11 +39,11 @@ class Roster extends React.Component {
     console.log(grade);
   };
 
-  handleGroup = group => {
+  handleBranch = branch => {
     this.setState({
       params: {
         ...this.state.params,
-        group
+        branch
       }
     });
   };
@@ -58,7 +58,7 @@ class Roster extends React.Component {
           visible={this.state.visible}
           fullPath={this.props.fullPath}
           handleGrade={this.handleGrade}
-          handleGroup={this.handleGroup}
+          handleBranch={this.handleBranch}
           handleSelectGroup={this.handleSelectGroup}
         />
         <TableList {...this.state} />
