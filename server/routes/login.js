@@ -21,24 +21,11 @@ router.post('/login', function(req, res, next) {
     }else{
       res.json({code: 201, msg: "用户尚未注册"});
     }
-  }),
+  },
   () => {
     console.log(">>>>>>>>>>>>>>> ERROR")
     res.json({code: 500, msg: "failed"});
-  }
+  })
 });
-
-// router.get('/login', function(req, res, next) {
-//   select("user", 
-//   "*", 
-//   "id=1",
-//   (results) => {
-//     let data = JSON.parse(JSON.stringify(results));
-//     res.json({code: 200, msg: "success", data});
-//   }),
-//   () => {
-//     res.json({code: 500, msg: "failed"});
-//   }
-// });
 
 module.exports = router;

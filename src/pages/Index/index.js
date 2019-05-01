@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
-import { Post } from "Public/js/Ajax";
+import { Get, Post } from "Public/js/Ajax";
 import {LOGINURL} from "Public/js/Api";
 import "./index.less";
 
@@ -14,6 +14,20 @@ class Index extends React.Component {
         }
     }
     componentWillMount() {
+        Get(
+            "/test",
+            {},
+            res => {
+              console.log(res);
+            },
+            err => {
+              console.log(err);
+            }
+          );
+        
+    }
+
+    _init = () => {
         document.onkeydown = (e) => {
             let event = e || window.event;
             if(event.keyCode === 13) {
@@ -28,7 +42,7 @@ class Index extends React.Component {
                 password
             })
         }
-    }
+    } 
 
 
     handleSubmit = (e) => {

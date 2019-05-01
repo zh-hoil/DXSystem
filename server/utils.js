@@ -22,6 +22,26 @@ export function select(table, keys, sql, success, failed) {
   });
 }
 
+
+export function insert(table, keys, data, success, failed) {
+  let values = new Array(data.length);
+  for (let i = 0; i < data.length; i++) {
+    values[i] = "?";
+  }
+
+  connection.query(
+    `INSERT INTO ${table}(${keys.join(",")}) VALUES(${values.join(",")})`,
+    data,
+    function(error, result) {
+      if (error) {
+        failed(error);
+        return;
+      }
+      success(result);
+    }
+  );
+}
+
 export function toKeyValue(obj) {
   let str = "";
   for (let key in obj) {
