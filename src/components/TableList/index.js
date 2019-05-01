@@ -1,9 +1,10 @@
 import React from "react";
 import "./index.less";
-import { Get, Put, Deletes } from "Public/js/Ajax";
+import { Get, Put, Delete } from "Public/js/Ajax";
 import { DELETEURL, PUTURL } from "Public/js/Api";
 import Data from "../../../Data.json";
-import { Input, Pagination } from "antd";
+import { stringKeyValue } from "Src/utils";
+import { Input, Pagination, message } from "antd";
 
 //用来保存当前选中行
 let curRow = null;
@@ -12,7 +13,8 @@ class TableList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: "",
+      id: 0,
+      attr: "",
       page: 1,
       pageSize: 2,
       total: 200,
@@ -98,12 +100,16 @@ class TableList extends React.Component {
       params,
       res => {
         console.log("请求成功");
-        let { data, total } = res.data;
-        this.setState({
-          page,
-          total,
-          data
-        });
+        if (res.code === 200) {
+          let { data, total } = res.data;
+          this.setState({
+            page,
+            total,
+            data
+          });
+        } else {
+          message.error(res.msg);
+        }
       },
       err => {
         console.log(err);
@@ -127,26 +133,31 @@ class TableList extends React.Component {
       input.focus();
       input.addEventListener(
         "blur",
-        attr => {
+        () => {
           let value = input.value;
           if (value !== target.innerHTML) {
             if (window.confirm("确认修改？")) {
-              let params = { id, attr };
-              // Put(
-              //   path + PUTURL,
-              //   params,
-              //   res => {
-              //       console.log("请求成功")
-              //       console.log(res)
-              /* 请求发送成功后 */
-              // target.innerHTML = value;
-              // target.style.display = "inline-block";
-              // input.style.display = "none";
-              //   },
-              //   err => {
-              //     console.log(err);
-              //   }
-              // );
+              let params = { id, [attr]: value };
+              Put(
+                this.props.path + PUTURL,
+                JSON.stringify(params),
+                res => {
+                  if (res.code === 200) {
+                    /* 请求发送成功后 */
+                    target.innerHTML = value;
+                    target.style.display = "inline-block";
+                    input.style.display = "none";
+                    message.success(res.msg);
+                  } else {
+                    message.error(res.msg);
+                  }
+                  console.log("请求成功");
+                  console.log(res);
+                },
+                err => {
+                  console.log(err);
+                }
+              );
             }
           }
         },
@@ -177,24 +188,29 @@ class TableList extends React.Component {
       console.log(event.keyCode);
       if (this.state.id) {
         if (window.confirm("确认删除该生所有信息？")) {
-          let params = { id: this.state.id };
+          let params = { id };
           /** 提交删除 */
-          // Delete(
-          //   path + DELETEURL,
-          //   params,
-          //   res => {
-          //       console.log("请求成功")
-          //       console.log(res)
-          //       curRow.parentNode.removeChild(curRow);
-          //       curRow = null;
-          // /* 请求发送成功后 */
-          //   },
-          //   err => {
-          //     console.log(err);
-          //   }
-          // );
-          this.setState({ id: "" });
-          console.log("delete");
+          Delete(
+            this.props.path + DELETEURL,
+            params,
+            res => {
+              console.log("请求成功");
+              console.log(res);
+
+              /* 请求发送成功后 */
+              if (res.code === 200) {
+                this.setState({ id: 0 });
+                message.success(res.msg);
+                curRow.parentNode.removeChild(curRow);
+                curRow = null;
+              } else {
+                message.error(res.msg);
+              }
+            },
+            err => {
+              console.log(err);
+            }
+          );
         }
       }
     }
@@ -214,41 +230,48 @@ class TableList extends React.Component {
             <thead>
               <tr>
                 {this.state.columns.map((item, index) => (
-                  <th key={index} colSpan={/term_\d/.test(item.dataIndex)?3:1}>
+                  <th
+                    key={index}
+                    colSpan={/term_\d/.test(item.dataIndex) ? 3 : 1}
+                  >
                     <span>{item.title}</span>
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {this.state.data
-                ? this.state.data.map((item, index) => (
-                    <tr
-                      key={index}
-                      onClick={this.handleRow.bind(this, item.id)}
-                      onDoubleClick={this.handleEdit.bind(this, item.id)}
-                      // onContextmenu={this.handleDelete}
-                    >
-                      <td>
-                        <span>{index + 1}</span>
+              {this.state.data ? (
+                this.state.data.map((item, index) => (
+                  <tr
+                    key={index}
+                    onClick={this.handleRow.bind(this, item.id)}
+                    onDoubleClick={this.handleEdit.bind(this, item.id)}
+                    // onContextmenu={this.handleDelete}
+                  >
+                    <td>
+                      <span>{index + 1}</span>
+                    </td>
+                    {Object.keys(item).map((key, ind) => (
+                      <td key={ind}>
+                        <span
+                          attr={key}
+                          editable={key === "id" ? "false" : "true"}
+                        >
+                          {item[key] ? item[key] : "无"}
+                        </span>
+                        <Input
+                          style={{ display: "none" }}
+                          defaultValue={item[key]}
+                        />
                       </td>
-                      {Object.keys(item).map((key, ind) => (
-                        <td key={ind}>
-                          <span
-                            attr={key}
-                            editable={key === "id" ? "false" : "true"}
-                          >
-                            {item[key]?item[key]:"无"}
-                          </span>
-                          <Input
-                            style={{ display: "none" }}
-                            defaultValue={item[key]}
-                          />
-                        </td>
-                      ))}
-                    </tr>
-                  ))
-                : <tr><td>暂无数据</td></tr>}
+                    ))}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td>暂无数据</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

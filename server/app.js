@@ -6,14 +6,6 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var app = express();
 
-var indexRouter = require("./routes/login");
-var newsRouter = require("./routes/news");
-var roasterRouter = require("./routes/roaster");
-var meterialRouter = require("./routes/meterial");
-var historyRouter = require("./routes/history");
-var tableRouter = require("./routes/table");
-var testRouter = require("./routes/test");
-
 //解决跨域以及请求头的设置
 app.all("*", function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -25,6 +17,14 @@ app.all("*", function(req, res, next) {
   res.header("Content-Type", "application/json; charset=utf-8");
   next();
 });
+
+var indexRouter = require("./routes/login");
+var newsRouter = require("./routes/news");
+var roasterRouter = require("./routes/roaster");
+var meterialRouter = require("./routes/meterial");
+var historyRouter = require("./routes/history");
+var tableRouter = require("./routes/table");
+var testRouter = require("./routes/test");
 
 app.use(logger("dev"));
 app.use(express.json());

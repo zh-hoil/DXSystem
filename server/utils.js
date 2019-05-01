@@ -22,7 +22,6 @@ export function select(table, keys, sql, success, failed) {
   });
 }
 
-
 export function insert(table, keys, data, success, failed) {
   let values = new Array(data.length);
   for (let i = 0; i < data.length; i++) {
@@ -45,9 +44,34 @@ export function insert(table, keys, data, success, failed) {
 export function toKeyValue(obj) {
   let str = "";
   for (let key in obj) {
-    str += `&${key}="${obj[key]}"`;
+    str += ` AND ${key}="${obj[key]}"`;
   }
-  return str.substr(1);
+  return str.substr(5);
 }
 
-export function del() {}
+export function del(table, sql, success, failed) {
+  connection.query(`DELETE from ${table} ${sql}`, function(error, result) {
+    if (error) {
+      failed(error);
+      return;
+    }
+    success(result);
+  });
+}
+
+export function put(table, key, data, success, failed) {
+  console.log("4");
+  console.log(data);
+  console.log("5");
+  connection.query(
+    `UPDATE ${table} SET ${key} = ? WHERE id = ?`,
+    data,
+    function(error, result) {
+      if (error) {
+        failed(error);
+        return;
+      }
+      success(result);
+    }
+  );
+}
