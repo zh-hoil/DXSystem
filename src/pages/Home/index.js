@@ -62,10 +62,10 @@ class Home extends React.Component {
         contentComponent = <History />;
         break;
       case "roster":
-        contentComponent = <Roster fullPath={this.state.fullPath} href={`www.baidu.com\?${this.state.fullPath}`} />;
+        contentComponent = <Roster fullPath={this.state.fullPath} />;
         break;
       case "table":
-        contentComponent = <Table fullPath={this.state.fullPath} href={`www.baidu.com\?${this.state.fullPath}`}  />;
+        contentComponent = <Table fullPath={this.state.fullPath} />;
         break;
       default:
         contentComponent = <News />;
@@ -91,9 +91,7 @@ class Home extends React.Component {
             >
               党校数据管理系统
             </Header>
-            <Content>
-              {this._changeContent()}
-            </Content>
+            <Content>{this._changeContent()}</Content>
           </Layout>
         </Layout>
       </div>

@@ -4,6 +4,8 @@ import { Get, Put, Delete } from "Public/js/Ajax";
 import { DELETEURL, PUTURL } from "Public/js/Api";
 import Data from "../../../Data.json";
 import { stringKeyValue } from "Src/utils";
+import { connect } from "react-redux";
+import { updateData } from "Store/Roster/action";
 import { Input, Pagination, message } from "antd";
 
 //用来保存当前选中行
@@ -16,9 +18,10 @@ class TableList extends React.Component {
       id: 0,
       attr: "",
       page: 1,
-      pageSize: 2,
-      total: 200,
-      data: []
+      pageSize: 10,
+      total: 10,
+      data: [],
+      params: {}
     };
   }
 
@@ -28,12 +31,26 @@ class TableList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let params = {};
     if (this.props.visible === !nextProps.visible) return; //如果仅仅改变了modal框的显示与否 则不刷新数据
-    let { path, params } = nextProps;
-    if (this.props.path !== path) {
-      params = {};
+    if (this.props.path !== nextProps.path) {
+      console.log("切换路径");
+      this._initTable(nextProps.path);
+    } else {
+      if (
+        nextProps.gradeValue &&
+        nextProps.gradeValue !== this.props.gradeValue
+      ) {
+        params.grade = nextProps.gradeValue;
+      }
+      if (
+        nextProps.branchValue &&
+        nextProps.branchValue !== this.props.branchValue
+      ) {
+        params.branch = nextProps.branchValue;
+      }
+      this._initTable(this.props.path, params);
     }
-    this._initTable(path, params);
   }
 
   _init = () => {
@@ -47,6 +64,8 @@ class TableList extends React.Component {
    * 初始化数据
    */
   _initTable = (path, params = {}, page = 1) => {
+    console.log(params);
+    console.log(">>>>>>>>>>>");
     let columns = [];
     switch (path) {
       case "/roster/all":
@@ -217,9 +236,15 @@ class TableList extends React.Component {
   };
 
   handlePage = page => {
-    let { path, params } = this.props;
+    let params = {};
+    if (this.props.gradeValue) {
+      params.grade = this.props.gradeValue;
+    }
+    if (this.props.branchValue) {
+      params.grade = this.props.branchValue;
+    }
     /*发送请求并更新数据 */
-    this._initTable(path, params, page);
+    this._initTable(this.props.path, params, page);
   };
 
   render() {
@@ -232,7 +257,13 @@ class TableList extends React.Component {
                 {this.state.columns.map((item, index) => (
                   <th
                     key={index}
-                    colSpan={/term_\d/.test(item.dataIndex) ? 3 : 1}
+                    colSpan={
+                      /term_\d/.test(item.dataIndex)
+                        ? 3
+                        : /sponsor/.test(item.dataIndex)
+                        ? 2
+                        : 1
+                    }
                   >
                     <span>{item.title}</span>
                   </th>
@@ -241,32 +272,37 @@ class TableList extends React.Component {
             </thead>
             <tbody>
               {this.state.data ? (
-                this.state.data.map((item, index) => (
-                  <tr
-                    key={index}
-                    onClick={this.handleRow.bind(this, item.id)}
-                    onDoubleClick={this.handleEdit.bind(this, item.id)}
-                    // onContextmenu={this.handleDelete}
-                  >
-                    <td>
-                      <span>{index + 1}</span>
-                    </td>
-                    {Object.keys(item).map((key, ind) => (
-                      <td key={ind}>
-                        <span
-                          attr={key}
-                          editable={key === "id" ? "false" : "true"}
-                        >
-                          {item[key] ? item[key] : "无"}
-                        </span>
-                        <Input
-                          style={{ display: "none" }}
-                          defaultValue={item[key]}
-                        />
+                this.state.data
+                  .slice(
+                    (this.state.page - 1) * this.state.pageSize,
+                    this.state.page * this.state.pageSize
+                  )
+                  .map((item, index) => (
+                    <tr
+                      key={index}
+                      onClick={this.handleRow.bind(this, item.id)}
+                      onDoubleClick={this.handleEdit.bind(this, item.id)}
+                      // onContextmenu={this.handleDelete}
+                    >
+                      <td>
+                        <span>{index + 1}</span>
                       </td>
-                    ))}
-                  </tr>
-                ))
+                      {Object.keys(item).map((key, ind) => (
+                        <td key={ind}>
+                          <span
+                            attr={key}
+                            editable={key === "id" ? "false" : "true"}
+                          >
+                            {item[key] ? item[key] : "无"}
+                          </span>
+                          <Input
+                            style={{ display: "none" }}
+                            defaultValue={item[key]}
+                          />
+                        </td>
+                      ))}
+                    </tr>
+                  ))
               ) : (
                 <tr>
                   <td>暂无数据</td>
@@ -288,4 +324,11 @@ class TableList extends React.Component {
   }
 }
 
-export default TableList;
+export default connect(
+  state => ({
+    branchValue: state.rosterData.branchValue,
+    gradeValue: state.rosterData.gradeValue,
+    path: state.rosterData.path
+  }),
+  { updateData }
+)(TableList);

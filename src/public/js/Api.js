@@ -9,6 +9,8 @@ export const HISTORYURL = "/history"; //历史文件页面
 export const GRADEURL = "/grade"; //获取年级选项
 export const BRANCHURL = "/branch"; //获取支部选项
 
+export const EXPORTURL = "/export"; //导出文件
+
 export const ADDGRADEURL = "/"; //新建大表url
 
 export const DELETEURL = "/delete"; //删除url

@@ -1,5 +1,10 @@
 var express = require("express");
 var router = express.Router();
+var path = require("path");
+var filePath = path.join(path.resolve(__dirname, "../../"), "/file/");
+var fs = require("fs");
+var multer = require("multer"); //引入multer
+var upload = multer({ dest: filePath }); //设置上传文件存储地址
 import { select, toKeyValue, del, put } from "../utils";
 
 router.get("/grade", function(req, res, next) {
@@ -41,10 +46,129 @@ router.get("/roster/all", function(req, res, next) {
   if (Object.keys(req.query).length) {
     sql = `WHERE ${toKeyValue(req.query)}`;
   }
-  console.log(sql);
   select(
     "roster_all",
     "*",
+    sql,
+    results => {
+      let data = JSON.parse(JSON.stringify(results));
+      res.json({
+        code: 200,
+        msg: "success",
+        data: { total: data.length, data }
+      });
+      return;
+    },
+    () => {
+      console.log(">>>>>>>>>>>>>>> ERROR");
+      res.json({ code: 500, msg: "failed" });
+    }
+  );
+});
+
+router.post("/roster/all/upload", upload.single("file"), (req, res, next) => {
+  // sreq.header("Content-Type", "multipart/form-data");
+  var file = req.file;
+  if (file) {
+    var fileNameArr = file.originalname.split(".");
+    var suffix = fileNameArr[fileNameArr.length - 1];
+    //文件重命名
+    fs.renameSync(
+      `${filePath}${file.filename}`,
+      `${filePath}${file.filename}.${suffix}`
+    );
+    let newFileName = `${file.filename}.${suffix}`;
+    res.header("Content-Type", "application/json");
+    res.json({
+      code: 200,
+      mag: "上传成功",
+      data: { fileId: newFileName, path: filePath }
+    });
+  }
+});
+
+// let sql = "";
+// if (Object.keys(req.query).length) {
+//   sql = `WHERE ${toKeyValue(req.query)}`;
+// }
+// select(
+//   "roster_all",
+//   "*",
+//   sql,
+//   results => {
+//     let data = JSON.parse(JSON.stringify(results));
+//     res.json({
+//       code: 200,
+//       msg: "success",
+//       data: { total: data.length, data }
+//     });
+//     return;
+//   },
+//   () => {
+//     console.log(">>>>>>>>>>>>>>> ERROR");
+//     res.json({ code: 500, msg: "failed" });
+//   }
+// );
+
+router.get("/roster/activist", function(req, res, next) {
+  let sql = "WHERE apply>0 AND active>0";
+  if (Object.keys(req.query).length) {
+    sql += ` AND ${toKeyValue(req.query)}`;
+  }
+  console.log(sql);
+  select(
+    "roster_all",
+    "branch, grade, class, id, name, birth, apply, active",
+    sql,
+    results => {
+      let data = JSON.parse(JSON.stringify(results));
+      res.json({
+        code: 200,
+        msg: "success",
+        data: { total: data.length, data }
+      });
+      return;
+    },
+    () => {
+      console.log(">>>>>>>>>>>>>>> ERROR");
+      res.json({ code: 500, msg: "failed" });
+    }
+  );
+});
+
+router.get("/roster/ready", function(req, res, next) {
+  let sql = "WHERE apply>0 AND active>0 AND ready>0";
+  if (Object.keys(req.query).length) {
+    sql += ` AND ${toKeyValue(req.query)}`;
+  }
+  select(
+    "roster_all",
+    "branch, grade, class, id, name, birth, apply, active, ready, sponsor_1, sponsor_2",
+    sql,
+    results => {
+      let data = JSON.parse(JSON.stringify(results));
+      res.json({
+        code: 200,
+        msg: "success",
+        data: { total: data.length, data }
+      });
+      return;
+    },
+    () => {
+      console.log(">>>>>>>>>>>>>>> ERROR");
+      res.json({ code: 500, msg: "failed" });
+    }
+  );
+});
+
+router.get("/roster/approved", function(req, res, next) {
+  let sql = "WHERE apply>0 AND active>0 AND ready>0 AND approved>0";
+  if (Object.keys(req.query).length) {
+    sql += ` AND ${toKeyValue(req.query)}`;
+  }
+  select(
+    "roster_all",
+    "branch, grade, class, id, name, birth, apply, active, ready, approved, leadership, sponsor_1, sponsor_2",
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));

@@ -3,6 +3,7 @@ import { Button, Upload, Icon, message } from "antd";
 import "./index.less";
 
 let fileId = "";
+let path = "";
 class MyUpload extends React.Component {
   constructor(props) {
     super(props);
@@ -11,40 +12,39 @@ class MyUpload extends React.Component {
     };
   }
   onChange = info => {
-    // 1. Limit the number of uploaded files
-    // Only to show two recent uploaded files, and old ones will be replaced by the new
     this.setState({
-        fileList:info.fileList.slice(-1)
-    })
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-      fileId = info.file.uid;
-    }
+      fileList: info.fileList.slice(-1)
+    });
     if (info.file.status === "done") {
-      message.success(`已成功上传 ${info.file.name}`);
+      let res = info.file.response;
+      message.success(res.msg);
+      path = res.data.filePath;
+      fileId = res.data.fileId;
+      console.log(res);
       this.props.uploadSuccessful();
     } else if (info.file.status === "error") {
       message.error("上传失败");
     }
-  }
+  };
 
   render() {
     const uploadProps = {
-        name: "file",
-        action: "//jsonplaceholder.typicode.com/posts/",
-        accept: ".xlsx, .xls",
-        onChange: this.onChange
-      };
+      name: "file",
+      action: "http://127.0.0.1:3005/api/roster/all/upload",
+      // action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+      accept: ".xlsx, .xls",
+      onChange: this.onChange
+    };
     return (
-        <Upload
-          className="upload"
-          {...uploadProps}
-          fileList={this.state.fileList}
-        >
-          <Button>
-            <Icon type="upload" /> 上传党建大表
-          </Button>
-        </Upload>
+      <Upload
+        className="upload"
+        {...uploadProps}
+        fileList={this.state.fileList}
+      >
+        <Button>
+          <Icon type="upload" /> 上传党建大表
+        </Button>
+      </Upload>
     );
   }
 }

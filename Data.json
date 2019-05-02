@@ -1,45 +1,44 @@
 {
-
-"history": [
+  "history": [
     {
-        "title": "2018年文件.zip",
-        "href": "https://www.baidu.com"
+      "title": "2018年文件.zip",
+      "href": "https://www.baidu.com"
     },
     {
-        "title": "2018年文件.zip",
-        "href": "https://www.baidu.com"
+      "title": "2018年文件.zip",
+      "href": "https://www.baidu.com"
     },
     {
-        "title": "2018年文件.zip",
-        "href": "https://www.baidu.com"
+      "title": "2018年文件.zip",
+      "href": "https://www.baidu.com"
     },
     {
-        "title": "2018年文件.zip",
-        "href": "https://www.baidu.com"
+      "title": "2018年文件.zip",
+      "href": "https://www.baidu.com"
     },
     {
-        "title": "2018年文件.zip",
-        "href": "https://www.baidu.com"
+      "title": "2018年文件.zip",
+      "href": "https://www.baidu.com"
     },
     {
-        "title": "2018年文件.zip",
-        "href": "https://www.baidu.com"
+      "title": "2018年文件.zip",
+      "href": "https://www.baidu.com"
     }
-],
-"meterial": [
+  ],
+  "meterial": [
     {
-        "title": "发展党员手册",
-        "href": "https://www.baidu.com"
+      "title": "发展党员手册",
+      "href": "https://www.baidu.com"
     },
     {
-        "title": "会议记录样本",
-        "href": "https://www.baidu.com"
+      "title": "会议记录样本",
+      "href": "https://www.baidu.com"
     },
     {
-        "title": "支部大会流程",
-        "href": "https://www.baidu.com"
+      "title": "支部大会流程",
+      "href": "https://www.baidu.com"
     }
-],
+  ],
   "all": {
     "columns": [
       {
@@ -93,6 +92,15 @@
       {
         "title": "转正时间",
         "dataIndex": "approved",
+        "editable": "true"
+      },
+      {
+        "title": "支部职位",
+        "dataIndex": "leadership"
+      },
+      {
+        "title": "入党介绍人",
+        "dataIndex": "sponsor",
         "editable": "true"
       },
       {
@@ -210,13 +218,20 @@
         "dataIndex": "index"
       },
       {
-        "title": "学号",
-        "dataIndex": "id"
+        "title": "党支部",
+        "dataIndex": "branch"
+      },
+      {
+        "title": "年级",
+        "dataIndex": "grade"
       },
       {
         "title": "班级",
-        "dataIndex": "class",
-        "editable": "true"
+        "dataIndex": "class"
+      },
+      {
+        "title": "学号",
+        "dataIndex": "id"
       },
       {
         "title": "名字",
@@ -281,48 +296,44 @@
         "dataIndex": "index"
       },
       {
+        "title": "党支部",
+        "dataIndex": "branch"
+      },
+      {
+        "title": "年级",
+        "dataIndex": "grade"
+      },
+      {
+        "title": "班级",
+        "dataIndex": "class"
+      },
+      {
         "title": "学号",
         "dataIndex": "id"
       },
       {
-        "title": "班级",
-        "dataIndex": "class",
-        "editable": "true"
-      },
-      {
         "title": "名字",
-        "dataIndex": "name",
-        "editable": "true"
+        "dataIndex": "name"
       },
       {
         "title": "出生年月日",
-        "dataIndex": "both",
-        "editable": "true"
+        "dataIndex": "both"
       },
       {
         "title": "入党申请时间",
-        "dataIndex": "apply",
-        "editable": "true"
+        "dataIndex": "apply"
       },
       {
         "title": "积极分子时间",
-        "dataIndex": "active",
-        "editable": "true"
+        "dataIndex": "active"
       },
       {
         "title": "入党时间",
-        "dataIndex": "ready",
-        "editable": "true"
+        "dataIndex": "ready"
       },
       {
-        "title": "介绍人一",
-        "dataIndex": "introducer_1",
-        "editable": "true"
-      },
-      {
-        "title": "介绍人二",
-        "dataIndex": "introducer_2",
-        "editable": "true"
+        "title": "入党介绍人",
+        "dataIndex": "sponsor"
       }
     ],
     "data": [
@@ -379,13 +390,20 @@
         "dataIndex": "index"
       },
       {
-        "title": "学号",
-        "dataIndex": "id"
+        "title": "党支部",
+        "dataIndex": "branch"
+      },
+      {
+        "title": "年级",
+        "dataIndex": "grade"
       },
       {
         "title": "班级",
-        "dataIndex": "class",
-        "editable": "true"
+        "dataIndex": "class"
+      },
+      {
+        "title": "学号",
+        "dataIndex": "id"
       },
       {
         "title": "名字",
@@ -418,18 +436,12 @@
         "editable": "true"
       },
       {
-        "title": "介绍人一",
-        "dataIndex": "introducer_1",
-        "editable": "true"
+        "title": "支部职位",
+        "dataIndex": "leadership"
       },
       {
-        "title": "介绍人二",
-        "dataIndex": "introducer_2",
-        "editable": "true"
-      },
-      {
-        "title": "支部职务",
-        "dataIndex": "rank",
+        "title": "入党介绍人",
+        "dataIndex": "sponsor",
         "editable": "true"
       }
     ],

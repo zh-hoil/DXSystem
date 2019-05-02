@@ -30,25 +30,24 @@ class MyModal extends React.Component {
   handleOk = e => {
     if (!selectGroup || !newGrade || !this.state.upload) {
       window.alert("请检查您的输入");
-      return 
+      return;
     }
 
     // Post(
     //   ADDROSTERURL,
-    //   { grade: newGrade, group: selectGroup},
+    //   { grade: newGrade, group: selectGroup },
     //   res => {
-  //         message.success("新建成功");
-    //       this.closeModal();
-    //       console.log(res)
+    //     message.success("新建成功");
+    //     this.closeModal();
+    //     console.log(res);
     //   },
     //   err => {
-      // message.error(err.message);
+    //     message.error(err.message);
     //     console.log(err);
     //   }
     // );
 
     console.log(e);
-    
   };
 
   //取消新建
@@ -72,10 +71,10 @@ class MyModal extends React.Component {
   };
 
   uploadSuccessful = () => {
-      this.setState({
-        upload: true
-      })
-  }
+    this.setState({
+      upload: true
+    });
+  };
 
   //关闭弹框所处理的函数
   closeModal = () => {
@@ -105,9 +104,9 @@ class MyModal extends React.Component {
             onChange={this.inputChange}
           />
           <Selection
-            value={this.state.selectGroup}
+            defaultValue={this.state.selectGroup}
             handleChange={this.handleSelectGroup}
-            selection={this.props.groupOptions}
+            selection={this.props.branchOptions}
           />
           <MyUpload uploadSuccessful={this.uploadSuccessful} />
         </Modal>

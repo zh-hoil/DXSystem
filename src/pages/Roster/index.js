@@ -1,15 +1,15 @@
 import React from "react";
 import TableList from "Components/TableList";
 import Option from "Components/Option";
+import { connect } from "react-redux";
+import { updateData } from "Store/Roster/action";
 import "./index.less";
-
 
 class Roster extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       params: {},
-      path: "",
       visible: false
     };
   }
@@ -20,51 +20,39 @@ class Roster extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this._initRoster(nextProps.fullPath);
+    if (nextProps.fullPath === nextProps.path) {
+    } else {
+      this.props.updateData({
+        path: nextProps.fullPath,
+        branchValue: undefined,
+        gradeValue: undefined
+      });
+    }
   }
 
   _initRoster(path) {
-    this.setState({
-      path
-    });
+    this.props.updateData({ path: path });
   }
-
-  handleGrade = grade => {
-    this.setState({
-      params: {
-        ...this.state.params,
-        grade
-      }
-    });
-    console.log(grade);
-  };
-
-  handleBranch = branch => {
-    this.setState({
-      params: {
-        ...this.state.params,
-        branch
-      }
-    });
-  };
-
-
 
   render() {
     return (
       <div className="roster">
         <Option
-          href={this.props.href}
           visible={this.state.visible}
-          fullPath={this.props.fullPath}
           handleGrade={this.handleGrade}
           handleBranch={this.handleBranch}
-          handleSelectGroup={this.handleSelectGroup}
         />
-        <TableList {...this.state} />
+        <TableList />
       </div>
     );
   }
 }
 
-export default Roster;
+export default connect(
+  state => ({
+    branchValue: state.rosterData.branchValue,
+    gradeValue: state.rosterData.gradeValue,
+    path: state.rosterData.path
+  }),
+  { updateData }
+)(Roster);
