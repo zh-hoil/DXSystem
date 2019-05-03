@@ -23,10 +23,12 @@ export function select(table, keys, sql, success, failed) {
 }
 
 export function insert(table, keys, data, success, failed) {
-  let values = new Array(data.length);
+  let values = [];
   for (let i = 0; i < data.length; i++) {
     values[i] = "?";
   }
+  //传入的data的长度有可能与keys的长度不同 需要做匹配
+  keys = keys.slice(0, data.length);
 
   connection.query(
     `INSERT INTO ${table}(${keys.join(",")}) VALUES(${values.join(",")})`,

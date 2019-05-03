@@ -11,7 +11,7 @@ export const BRANCHURL = "/branch"; //获取支部选项
 
 export const EXPORTURL = "/export"; //导出文件
 
-export const ADDGRADEURL = "/"; //新建大表url
+export const ADDROSTERURL = "/add"; //新建大表url
 
 export const DELETEURL = "/delete"; //删除url
 

@@ -1,13 +1,10 @@
 import React from "react";
-import { Modal, Input, Button } from "antd";
+import { Modal, Input, Button, message } from "antd";
 import { Post } from "Public/js/Ajax";
-import ADDROSTERURL from "Public/js/Api";
+import { ADDROSTERURL } from "Public/js/Api";
 import MyUpload from "Components/MyUpload";
 import Selection from "Components/Selection";
 import "./index.less";
-
-let newGrade = "";
-let selectGroup = "";
 
 class MyModal extends React.Component {
   constructor(props) {
@@ -15,8 +12,9 @@ class MyModal extends React.Component {
     this.state = {
       visible: false,
       upload: false,
-      newGrade: "",
-      selectGroup: ""
+      grade: "",
+      fileId: "",
+      branch: undefined
     };
   }
   handleAdd = () => {
@@ -28,26 +26,31 @@ class MyModal extends React.Component {
 
   //确认新建
   handleOk = e => {
-    if (!selectGroup || !newGrade || !this.state.upload) {
+    if (!this.state.branch || !this.state.grade || !this.state.upload) {
       window.alert("请检查您的输入");
       return;
     }
-
-    // Post(
-    //   ADDROSTERURL,
-    //   { grade: newGrade, group: selectGroup },
-    //   res => {
-    //     message.success("新建成功");
-    //     this.closeModal();
-    //     console.log(res);
-    //   },
-    //   err => {
-    //     message.error(err.message);
-    //     console.log(err);
-    //   }
-    // );
-
-    console.log(e);
+    let params = {
+      grade: this.state.grade,
+      branch: this.state.branch,
+      fileId: this.state.fileId
+    };
+    console.log(params);
+    Post(
+      this.props.path + ADDROSTERURL,
+      params,
+      res => {
+        if (res.code === 200) {
+          message.success(res.msg);
+        } else {
+          message.error(res.msg);
+        }
+        this.closeModal();
+      },
+      err => {
+        console.log(err);
+      }
+    );
   };
 
   //取消新建
@@ -57,22 +60,26 @@ class MyModal extends React.Component {
   };
 
   //选择支部
-  handleSelectGroup = group => {
-    console.log("选择的是 " + group);
-    selectGroup = group;
+  handleSelectBranch = branch => {
+    console.log("选择的是 " + branch);
+    this.setState({
+      branch: branch
+    });
   };
 
   //输入新建的年级
   inputChange = e => {
     this.setState({
-      newGrade: e.target.value
+      grade: e.target.value
     });
-    console.log(newGrade);
+    console.log(this.state.grade);
   };
 
-  uploadSuccessful = () => {
+  uploadSuccessful = fileId => {
+    console.log(fileId);
     this.setState({
-      upload: true
+      upload: true,
+      fileId
     });
   };
 
@@ -81,8 +88,9 @@ class MyModal extends React.Component {
     this.setState({
       visible: false,
       upload: false,
-      newGrade,
-      selectGroup
+      grade: "",
+      fileId: "",
+      branch: undefined
     });
   };
 
@@ -99,13 +107,13 @@ class MyModal extends React.Component {
           onCancel={this.handleCancel}
         >
           <Input
-            value={this.state.newGrade}
+            value={this.state.grade}
             placeholder="请输入年级，如：15级"
             onChange={this.inputChange}
           />
           <Selection
-            defaultValue={this.state.selectGroup}
-            handleChange={this.handleSelectGroup}
+            defaultValue={this.state.branch}
+            handleChange={this.handleSelectBranch}
             selection={this.props.branchOptions}
           />
           <MyUpload uploadSuccessful={this.uploadSuccessful} />

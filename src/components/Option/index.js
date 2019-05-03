@@ -110,7 +110,10 @@ class Option extends React.Component {
           导出
         </Button>
         {this.props.path === "/roster/all" ? (
-          <MyModal branchOptions={this.state.branchOptions} />
+          <MyModal
+            branchOptions={this.state.branchOptions}
+            path={this.props.path}
+          />
         ) : (
           ""
         )}
