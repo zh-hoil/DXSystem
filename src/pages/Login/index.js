@@ -4,7 +4,7 @@ import { Get, Post } from "Public/js/Ajax";
 import { LOGINURL } from "Public/js/Api";
 import "./index.less";
 
-class Index extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,16 +13,16 @@ class Index extends React.Component {
     };
   }
   componentWillMount() {
-    Get(
-      "/test",
-      {},
-      res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    // Get(
+    //   "/test",
+    //   {},
+    //   res => {
+    //     console.log(res);
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // );
     // Post(
     //   "/test",
     //   { grade: newGrade, group: selectGroup },
@@ -191,5 +191,5 @@ class Index extends React.Component {
   }
 }
 
-Index = Form.create({ name: "normal_login" })(Index);
-export default Index;
+Login = Form.create({ name: "normal_login" })(Login);
+export default Login;

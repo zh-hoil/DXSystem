@@ -70,9 +70,21 @@
         "editable": "true"
       },
       {
+        "title": "性别",
+        "dataIndex": "sex"
+      },
+      {
         "title": "出生年月日",
-        "dataIndex": "both",
+        "dataIndex": "birth",
         "editable": "true"
+      },
+      {
+        "title": "民族",
+        "dataIndex": "nation"
+      },
+      {
+        "title": "身份证号",
+        "dataIndex": "id_card"
       },
       {
         "title": "入党申请时间",
@@ -82,6 +94,11 @@
       {
         "title": "积极分子时间",
         "dataIndex": "active",
+        "editable": "true"
+      },
+      {
+        "title": "发展对象时间",
+        "dataIndex": "develop",
         "editable": "true"
       },
       {
@@ -102,6 +119,26 @@
         "title": "入党介绍人",
         "dataIndex": "sponsor",
         "editable": "true"
+      },
+      {
+        "title": "支部大会所提出优点",
+        "dataIndex": "merit"
+      },
+      {
+        "title": "支部大会所提出缺点",
+        "dataIndex": "shortcoming"
+      },
+      {
+        "title": "有无不及格情况",
+        "dataIndex": "fail"
+      },
+      {
+        "title": "有无违纪现象",
+        "dataIndex": "discipline"
+      },
+      {
+        "title": "发展后班级党员比例",
+        "dataIndex": "percent"
       },
       {
         "title": "第一学期",
@@ -134,80 +171,10 @@
       {
         "title": "第八学期",
         "dataIndex": "term_8"
-      }
-    ],
-    "data": [
-      {
-        "id": "2153301",
-        "class": "21533",
-        "name": "康磊",
-        "both": "19960701",
-        "apply": "20081023",
-        "active": "20091023",
-        "ready": "20101023",
-        "approved": "20111023",
-        "scholarship_1": "三等",
-        "scholarship_2": "三等",
-        "scholarship_3": "三等",
-        "scholarship_4": "三等",
-        "scholarship_5": "三等",
-        "scholarship_6": "三等",
-        "scholarship_7": "三等",
-        "scholarship_8": "三等"
       },
       {
-        "id": "2153302",
-        "class": "21533",
-        "name": "趙浚儀",
-        "both": "19960701",
-        "apply": "20081023",
-        "active": "20091023",
-        "ready": "20101023",
-        "approved": "20111023",
-        "scholarship_1": "三等",
-        "scholarship_2": "三等",
-        "scholarship_3": "三等",
-        "scholarship_4": "三等",
-        "scholarship_5": "三等",
-        "scholarship_6": "三等",
-        "scholarship_7": "三等",
-        "scholarship_8": "三等"
-      },
-      {
-        "id": "2153303",
-        "class": "21533",
-        "name": "王勇一",
-        "both": "19960701",
-        "apply": "20081023",
-        "active": "20091023",
-        "ready": "20101023",
-        "approved": "20111023",
-        "scholarship_1": "三等",
-        "scholarship_2": "三等",
-        "scholarship_3": "三等",
-        "scholarship_4": "三等",
-        "scholarship_5": "三等",
-        "scholarship_6": "三等",
-        "scholarship_7": "三等",
-        "scholarship_8": "三等"
-      },
-      {
-        "id": "2153304",
-        "class": "21533",
-        "name": "程野見",
-        "both": "19960701",
-        "apply": "20081023",
-        "active": "20091023",
-        "ready": "20101023",
-        "approved": "20111023",
-        "scholarship_1": "三等",
-        "scholarship_2": "三等",
-        "scholarship_3": "三等",
-        "scholarship_4": "三等",
-        "scholarship_5": "三等",
-        "scholarship_6": "三等",
-        "scholarship_7": "三等",
-        "scholarship_8": "三等"
+        "title": "备注",
+        "dataIndex": "adition"
       }
     ]
   },
@@ -497,6 +464,360 @@
         "introducer_1": "张欢",
         "introducer_2": "冯帅",
         "rank": ""
+      }
+    ]
+  },
+  "table_1": {
+    "columns": [
+      {
+        "title": "序号",
+        "dataIndex": "index"
+      },
+      {
+        "title": "党支部",
+        "dataIndex": "group",
+        "editable": "true"
+      },
+      {
+        "title": "年级",
+        "dataIndex": "grade",
+        "editable": "true"
+      },
+      {
+        "title": "班级",
+        "dataIndex": "class",
+        "editable": "true"
+      },
+      {
+        "title": "学号",
+        "dataIndex": "id"
+      },
+      {
+        "title": "名字",
+        "dataIndex": "name",
+        "editable": "true"
+      },
+      {
+        "title": "出生年月日",
+        "dataIndex": "both",
+        "editable": "true"
+      },
+      {
+        "title": "入党申请时间",
+        "dataIndex": "apply",
+        "editable": "true"
+      },
+      {
+        "title": "积极分子时间",
+        "dataIndex": "active",
+        "editable": "true"
+      },
+      {
+        "title": "入党时间",
+        "dataIndex": "ready",
+        "editable": "true"
+      },
+      {
+        "title": "转正时间",
+        "dataIndex": "approved",
+        "editable": "true"
+      },
+      {
+        "title": "支部职位",
+        "dataIndex": "leadership"
+      },
+      {
+        "title": "入党介绍人",
+        "dataIndex": "sponsor",
+        "editable": "true"
+      },
+      {
+        "title": "第一学期",
+        "dataIndex": "term_1"
+      },
+      {
+        "title": "第二学期",
+        "dataIndex": "term_2"
+      },
+      {
+        "title": "第三学期",
+        "dataIndex": "term_3"
+      },
+      {
+        "title": "第四学期",
+        "dataIndex": "term_4"
+      },
+      {
+        "title": "第五学期",
+        "dataIndex": "term_5"
+      },
+      {
+        "title": "第六学期",
+        "dataIndex": "term_6"
+      },
+      {
+        "title": "第七学期",
+        "dataIndex": "term_7"
+      },
+      {
+        "title": "第八学期",
+        "dataIndex": "term_8"
+      }
+    ],
+    "data": [
+      {
+        "id": "2153301",
+        "class": "21533",
+        "name": "康磊",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "scholarship_1": "三等",
+        "scholarship_2": "三等",
+        "scholarship_3": "三等",
+        "scholarship_4": "三等",
+        "scholarship_5": "三等",
+        "scholarship_6": "三等",
+        "scholarship_7": "三等",
+        "scholarship_8": "三等"
+      },
+      {
+        "id": "2153302",
+        "class": "21533",
+        "name": "趙浚儀",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "scholarship_1": "三等",
+        "scholarship_2": "三等",
+        "scholarship_3": "三等",
+        "scholarship_4": "三等",
+        "scholarship_5": "三等",
+        "scholarship_6": "三等",
+        "scholarship_7": "三等",
+        "scholarship_8": "三等"
+      },
+      {
+        "id": "2153303",
+        "class": "21533",
+        "name": "王勇一",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "scholarship_1": "三等",
+        "scholarship_2": "三等",
+        "scholarship_3": "三等",
+        "scholarship_4": "三等",
+        "scholarship_5": "三等",
+        "scholarship_6": "三等",
+        "scholarship_7": "三等",
+        "scholarship_8": "三等"
+      },
+      {
+        "id": "2153304",
+        "class": "21533",
+        "name": "程野見",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023",
+        "ready": "20101023",
+        "approved": "20111023",
+        "scholarship_1": "三等",
+        "scholarship_2": "三等",
+        "scholarship_3": "三等",
+        "scholarship_4": "三等",
+        "scholarship_5": "三等",
+        "scholarship_6": "三等",
+        "scholarship_7": "三等",
+        "scholarship_8": "三等"
+      }
+    ]
+  },
+  "table_2": {
+    "columns": [
+      {
+        "title": "序号",
+        "dataIndex": "index"
+      },
+      {
+        "title": "姓名",
+        "dataIndex": "name"
+      },
+      {
+        "title": "性别",
+        "dataIndex": "sex"
+      },
+      {
+        "title": "出生年月日",
+        "dataIndex": "both"
+      },
+      {
+        "title": "班级学号",
+        "dataIndex": "id"
+      },
+      {
+        "title": "确定入党时间",
+        "dataIndex": "apply",
+        "editable": "true"
+      },
+      {
+        "title": "确定积极分子时间",
+        "dataIndex": "active",
+        "editable": "true"
+      },
+      {
+        "title": "确定发展对象时间",
+        "dataIndex": "develop"
+      },
+      {
+        "title": "思想品德评估排名",
+        "dataIndex": "assessment"
+      },
+      {
+        "title": "文化课平均成绩",
+        "dataIndex": "mark"
+      },
+      {
+        "title": "奖学金等级",
+        "dataIndex": "scholarship"
+      },
+      {
+        "title": "有无不及格情况",
+        "dataIndex": "fail"
+      },
+      {
+        "title": "有无违纪现象",
+        "dataIndex": "discipline"
+      },
+      {
+        "title": "发展后班级党员比例",
+        "dataIndex": "percent"
+      },
+      {
+        "title": "备注",
+        "dataIndex": "addition"
+      }
+    ]
+  },
+  "table_3": {
+    "columns": [
+      {
+        "title": "序号",
+        "dataIndex": "index"
+      },
+      {
+        "title": "姓名",
+        "dataIndex": "name"
+      },
+      {
+        "title": "性别",
+        "dataIndex": "sex"
+      },
+      {
+        "title": "班级学号",
+        "dataIndex": "id"
+      },
+      {
+        "title": "出生年月日",
+        "dataIndex": "both"
+      },
+      {
+        "title": "籍贯",
+        "dataIndex": "ori_place"
+      },
+      {
+        "title": "民族",
+        "dataIndex": "nation"
+      },
+      {
+        "title": "身份证号码",
+        "dataIndex": "id_card"
+      },
+      {
+        "title": "支部讨论入党时间",
+        "dataIndex": "ready"
+      },
+      {
+        "title": "支部大会所提出的优点",
+        "dataIndex": "merit"
+      },
+      {
+        "title": "支部大会所提出的缺点",
+        "dataIndex": "shortcoming"
+      },
+      {
+        "title": "入党介绍人",
+        "dataIndex": "sponsor"
+      },
+      {
+        "title": "备注",
+        "dataIndex": "addition"
+      }
+    ]
+  },
+  "table_4": {
+    "columns": [
+      {
+        "title": "序号",
+        "dataIndex": "index"
+      },
+      {
+        "title": "姓名",
+        "dataIndex": "name"
+      },
+      {
+        "title": "性别",
+        "dataIndex": "sex"
+      },
+      {
+        "title": "班级学号",
+        "dataIndex": "id"
+      },
+      {
+        "title": "确定入党申请时间",
+        "dataIndex": "apply"
+      },
+      {
+        "title": "确定入党积极分子时间",
+        "dataIndex": "active"
+      },
+      {
+        "title": "确定发展对象时间",
+        "dataIndex": "develop"
+      },
+      {
+        "title": "支部讨论入党时间",
+        "dataIndex": "ready"
+      },
+      {
+        "title": "支部讨论转正时间",
+        "dataIndex": "approved"
+      },
+      {
+        "title": "思想品德评估排名",
+        "dataIndex": "assessment"
+      },
+      {
+        "title": "文化课平均成绩",
+        "dataIndex": "mark"
+      },
+      {
+        "title": "有无不及格情况",
+        "dataIndex": "fail"
+      },
+      {
+        "title": "有无违纪现象",
+        "dataIndex": "discipline"
+      },
+      {
+        "title": "备注",
+        "dataIndex": "addition"
       }
     ]
   }

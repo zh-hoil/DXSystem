@@ -11,29 +11,27 @@ import { GetQuery } from "./src/utils";
 import "Public/css/public.less";
 
 class App extends React.Component {
-    constructor(props, context) {
-        super(props, context);
+  constructor(props, context) {
+    super(props, context);
+  }
+  componentWillMount() {
+    let token = "";
+    if (GetQuery(window.location.hash).token) {
+      token = JSON.stringify(GetQuery(window.location.hash).token);
     }
-    componentWillMount() {
-        let token = "";
-        if(GetQuery(window.location.hash).token){
-            token = JSON.stringify(GetQuery(window.location.hash).token)
-            
-        }
-        localStorage.setItem("YY_userInfo", token)
-
-    }
-    render() {
-        return (
-            <Provider store={store}>
-                <Routes />
-            </Provider>
-        );
-    }
+    localStorage.setItem("YY_userInfo", token);
+  }
+  render() {
+    return (
+      <Provider store={store}>
+        <Routes />
+      </Provider>
+    );
+  }
 }
 // 后台服务地址
 // 开发环境
-window.RootURL = "http://127.0.0.1:3005/api";
+window.RootURL = "/api";
 // 生产环境
 // window.RootURL = "http://172.20.6.119:8901/fiwechat";
 

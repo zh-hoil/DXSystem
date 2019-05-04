@@ -1,24 +1,26 @@
 var createError = require("http-errors");
 var express = require("express");
-var bodyParser = require("body-parser");
-// var path = require('path');
+var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+
 var app = express();
+var session = require("express-session");
 
 //解决跨域以及请求头的设置
 app.all("*", function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "http://127.0.0.1:3005");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type"
   );
   res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Credentials", true);
   res.header("Content-Type", "application/json; charset=utf-8");
   next();
 });
 
-var indexRouter = require("./routes/login");
+var loginRouter = require("./routes/login");
 var newsRouter = require("./routes/news");
 var roasterRouter = require("./routes/roaster");
 var meterialRouter = require("./routes/meterial");
@@ -26,13 +28,25 @@ var historyRouter = require("./routes/history");
 var tableRouter = require("./routes/table");
 var testRouter = require("./routes/test");
 
+// session
+app.use(
+  session({
+    name: "dxsystem",
+    secret: "p4f8051f-c883-4147-8fe2", // 用来对session id相关的cookie进行签名
+    saveUninitialized: true, // 是否自动保存未初始化的会话，建议false
+    resave: false, // 是否每次都重新保存会话，建议false
+    cookie: {
+      signed: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 有效期，单位是毫秒 这里是一周
+    }
+  })
+);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser("p4f8051f-c883-4147-8fe2"));
 
-app.use("/api", indexRouter);
+app.use("/api", loginRouter);
 app.use("/api", newsRouter);
 app.use("/api", roasterRouter);
 app.use("/api", meterialRouter);

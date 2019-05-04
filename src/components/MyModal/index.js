@@ -1,8 +1,7 @@
 import React from "react";
-import { Modal, Input, Button, message } from "antd";
+import { Modal, Input, Button, message, Upload, Icon } from "antd";
 import { Post } from "Public/js/Ajax";
 import { ADDROSTERURL } from "Public/js/Api";
-import MyUpload from "Components/MyUpload";
 import Selection from "Components/Selection";
 import "./index.less";
 
@@ -10,6 +9,7 @@ class MyModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      fileList: [],
       visible: false,
       upload: false,
       grade: "",
@@ -77,10 +77,6 @@ class MyModal extends React.Component {
 
   uploadSuccessful = fileId => {
     console.log(fileId);
-    this.setState({
-      upload: true,
-      fileId
-    });
   };
 
   //关闭弹框所处理的函数
@@ -90,11 +86,38 @@ class MyModal extends React.Component {
       upload: false,
       grade: "",
       fileId: "",
-      branch: undefined
+      branch: undefined,
+      fileList: []
     });
   };
 
+  fileChange = info => {
+    this.setState({
+      fileList: info.fileList.slice(-1)
+    });
+    if (info.file.status === "done") {
+      let res = info.file.response;
+      if (res.code === 200) {
+        let fileId = res.fileId;
+        info.fileList.pop();
+        this.setState({ upload: true, fileId });
+        message.success(res.msg);
+      } else {
+        message.error(res.msg);
+      }
+    } else if (info.file.status === "error") {
+      message.error("上传失败");
+    }
+  };
+
   render() {
+    const uploadProps = {
+      name: "file",
+      action: "http://127.0.0.1:3005/api/roster/all/upload",
+      accept: ".xlsx, .xls",
+      onChange: this.fileChange
+    };
+
     return (
       <div className="my-modal">
         <Button type="primary" onClick={this.handleAdd}>
@@ -116,7 +139,15 @@ class MyModal extends React.Component {
             handleChange={this.handleSelectBranch}
             selection={this.props.branchOptions}
           />
-          <MyUpload uploadSuccessful={this.uploadSuccessful} />
+          <Upload
+            className="upload"
+            {...uploadProps}
+            fileList={this.state.fileList}
+          >
+            <Button>
+              <Icon type="upload" /> 上传党建大表
+            </Button>
+          </Upload>
         </Modal>
       </div>
     );

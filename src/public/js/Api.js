@@ -8,6 +8,7 @@ export const HISTORYURL = "/history"; //历史文件页面
 
 export const GRADEURL = "/grade"; //获取年级选项
 export const BRANCHURL = "/branch"; //获取支部选项
+export const READYURL = "/ready"; //获取入党批次选项
 
 export const EXPORTURL = "/export"; //导出文件
 

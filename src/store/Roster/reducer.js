@@ -5,6 +5,7 @@ renameActionType(roster, "Roster");
 let defaultState = {
   branchValue: undefined,
   gradeValue: undefined,
+  readyValue: undefined,
   path: ""
 };
 // 首页数据

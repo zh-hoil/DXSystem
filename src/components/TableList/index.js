@@ -37,17 +37,26 @@ class TableList extends React.Component {
       console.log("切换路径");
       this._initTable(nextProps.path);
     } else {
-      if (
-        nextProps.gradeValue &&
-        nextProps.gradeValue !== this.props.gradeValue
-      ) {
-        params.grade = nextProps.gradeValue;
+      if (nextProps.gradeValue) {
+        if (nextProps.gradeValue !== this.props.gradeValue) {
+          params.grade = nextProps.gradeValue;
+        } else {
+          params.grade = this.props.gradeValue;
+        }
       }
-      if (
-        nextProps.branchValue &&
-        nextProps.branchValue !== this.props.branchValue
-      ) {
-        params.branch = nextProps.branchValue;
+      if (nextProps.branchValue) {
+        if (nextProps.branchValue !== this.props.branchValue) {
+          params.grade = nextProps.branchValue;
+        } else {
+          params.grade = this.props.branchValue;
+        }
+      }
+      if (nextProps.readyValue) {
+        if (nextProps.readyValue !== this.props.readyValue) {
+          params.grade = nextProps.readyValue;
+        } else {
+          params.grade = this.props.readyValue;
+        }
       }
       this._initTable(this.props.path, params);
     }
@@ -150,38 +159,42 @@ class TableList extends React.Component {
       input.style.display = "block";
       input.value = target.innerHTML;
       input.focus();
-      input.addEventListener(
-        "blur",
-        () => {
-          let value = input.value;
-          if (value !== target.innerHTML) {
-            if (window.confirm("确认修改？")) {
-              let params = { id, [attr]: value };
-              Put(
-                this.props.path + PUTURL,
-                JSON.stringify(params),
-                res => {
-                  if (res.code === 200) {
-                    /* 请求发送成功后 */
-                    target.innerHTML = value;
-                    target.style.display = "inline-block";
-                    input.style.display = "none";
-                    message.success(res.msg);
-                  } else {
-                    message.error(res.msg);
-                  }
-                  console.log("请求成功");
-                  console.log(res);
-                },
-                err => {
-                  console.log(err);
-                }
-              );
+      input.onblur = () => {
+        let value = input.value;
+        if (value !== target.innerHTML) {
+          if (window.confirm("确认修改？")) {
+            if (value === "" || value === "无") {
+              value = null;
             }
+            let params = { id, [attr]: value };
+            Put(
+              this.props.path + PUTURL,
+              JSON.stringify(params),
+              res => {
+                if (res.code === 200) {
+                  /* 请求发送成功后 */
+                  if (!value) {
+                    value = "无";
+                  }
+                  target.innerHTML = value;
+                  message.success(res.msg);
+                } else {
+                  message.error(res.msg);
+                }
+                target.style.display = "inline-block";
+                input.style.display = "none";
+              },
+              err => {
+                console.log(err);
+              }
+            );
           }
-        },
-        false
-      );
+        } else {
+          target.style.display = "inline-block";
+          input.style.display = "none";
+          message.info("无任何修改");
+        }
+      };
     }
   };
 
@@ -247,6 +260,22 @@ class TableList extends React.Component {
     this._initTable(this.props.path, params, page);
   };
 
+  getColSpan = dataIndex => {
+    if (/term_\d/.test(dataIndex)) {
+      return 3;
+    } else if (
+      /sponsor/.test(dataIndex) ||
+      /merit/.test(dataIndex) ||
+      /shortcoming/.test(dataIndex) ||
+      /mark/.test(dataIndex) ||
+      /assessment/.test(dataIndex) ||
+      /scholarship/.test(dataIndex)
+    ) {
+      return 2;
+    }
+    return 1;
+  };
+
   render() {
     return (
       <div className="table-list" onKeyDown={this.handleDelete}>
@@ -255,16 +284,7 @@ class TableList extends React.Component {
             <thead>
               <tr>
                 {this.state.columns.map((item, index) => (
-                  <th
-                    key={index}
-                    colSpan={
-                      /term_\d/.test(item.dataIndex)
-                        ? 3
-                        : /sponsor/.test(item.dataIndex)
-                        ? 2
-                        : 1
-                    }
-                  >
+                  <th key={index} colSpan={this.getColSpan(item.dataIndex)}>
                     <span>{item.title}</span>
                   </th>
                 ))}
@@ -328,6 +348,7 @@ export default connect(
   state => ({
     branchValue: state.rosterData.branchValue,
     gradeValue: state.rosterData.gradeValue,
+    readyValue: state.rosterData.readyValue,
     path: state.rosterData.path
   }),
   { updateData }

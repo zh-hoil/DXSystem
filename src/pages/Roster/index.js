@@ -25,7 +25,8 @@ class Roster extends React.Component {
       this.props.updateData({
         path: nextProps.fullPath,
         branchValue: undefined,
-        gradeValue: undefined
+        gradeValue: undefined,
+        readyValue: undefined
       });
     }
   }
@@ -52,6 +53,7 @@ export default connect(
   state => ({
     branchValue: state.rosterData.branchValue,
     gradeValue: state.rosterData.gradeValue,
+    readyValue: state.rosterData.readyValue,
     path: state.rosterData.path
   }),
   { updateData }

@@ -1,70 +1,60 @@
 import React from "react";
 import TableList from "Components/TableList";
 import Option from "Components/Option";
+import { connect } from "react-redux";
+import { updateData } from "Store/Roster/action";
 import "./index.less";
 
-
-class Roster extends React.Component {
+class Table extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       params: {},
-      path: "",
       visible: false
     };
   }
 
   componentWillMount() {
     /* 更新数据 */
-    this._initRoster(this.props.fullPath);
+    this._initTable(this.props.fullPath);
   }
 
   componentWillReceiveProps(nextProps) {
-    this._initRoster(nextProps.fullPath);
+    if (nextProps.fullPath === nextProps.path) {
+    } else {
+      this.props.updateData({
+        path: nextProps.fullPath,
+        branchValue: undefined,
+        gradeValue: undefined,
+        readyValue: undefined
+      });
+    }
   }
 
-  _initRoster(path) {
-    this.setState({
-      path
-    });
+  _initTable(path) {
+    this.props.updateData({ path: path });
   }
-
-  handleGrade = grade => {
-    this.setState({
-      params: {
-        ...this.state.params,
-        grade
-      }
-    });
-    console.log(grade);
-  };
-
-  handleGroup = group => {
-    this.setState({
-      params: {
-        ...this.state.params,
-        group
-      }
-    });
-  };
-
-
 
   render() {
     return (
       <div className="roster">
         <Option
-          href={this.props.href}
           visible={this.state.visible}
-          fullPath={this.props.fullPath}
           handleGrade={this.handleGrade}
-          handleGroup={this.handleGroup}
-          handleSelectGroup={this.handleSelectGroup}
+          handleBranch={this.handleBranch}
         />
-        <TableList {...this.state} />
+        <TableList />
       </div>
     );
   }
 }
 
-export default Roster;
+export default connect(
+  state => ({
+    branchValue: state.rosterData.branchValue,
+    gradeValue: state.rosterData.gradeValue,
+    readyValue: state.rosterData.readyValue,
+    path: state.rosterData.path
+  }),
+  { updateData }
+)(Table);

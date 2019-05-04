@@ -4,7 +4,7 @@ import { Button } from "antd";
 import Selection from "Components/Selection";
 import MyModal from "Components/MyModal";
 import { Get } from "Public/js/Ajax";
-import { GRADEURL, BRANCHURL, EXPORTURL } from "Public/js/Api";
+import { GRADEURL, BRANCHURL, EXPORTURL, READYURL } from "Public/js/Api";
 import { connect } from "react-redux";
 import { updateData } from "Store/Roster/action";
 
@@ -19,6 +19,10 @@ class Option extends React.Component {
       gradeOptions: {
         placeholder: "选择年级",
         options: []
+      },
+      readyOptions: {
+        placeholder: "选择入党时间",
+        options: []
       }
     };
   }
@@ -26,6 +30,7 @@ class Option extends React.Component {
   componentWillMount() {
     this._initGrade();
     this._initBranch();
+    this._initReady();
   }
 
   _initGrade = () => {
@@ -65,6 +70,24 @@ class Option extends React.Component {
     );
   };
 
+  _initReady = () => {
+    Get(
+      READYURL,
+      {},
+      res => {
+        this.setState({
+          readyOptions: {
+            ...this.state.readyOptions,
+            options: res.data
+          }
+        });
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  };
+
   handleGrade = grade => {
     this.props.updateData({ gradeValue: grade });
   };
@@ -73,6 +96,9 @@ class Option extends React.Component {
     this.props.updateData({ branchValue: branch });
   };
 
+  handleReady = ready => {
+    this.props.updateData({ readyValue: ready });
+  };
   handleExport = () => {
     //导出文件
     Get(
@@ -106,6 +132,11 @@ class Option extends React.Component {
           handleChange={this.handleBranch}
           selection={this.state.branchOptions}
         />
+        <Selection
+          defaultValue={this.props.readyValue}
+          handleChange={this.handleReady}
+          selection={this.state.readyOptions}
+        />
         <Button type="primary" onClick={this.handleExport}>
           导出
         </Button>
@@ -125,6 +156,7 @@ export default connect(
   state => ({
     branchValue: state.rosterData.branchValue,
     gradeValue: state.rosterData.gradeValue,
+    readyValue: state.rosterData.readyValue,
     path: state.rosterData.path
   }),
   { updateData }

@@ -45,8 +45,33 @@ router.get("/branch", function(req, res, next) {
   );
 });
 
+//获取支部信息
+router.get("/ready", function(req, res, next) {
+  select(
+    "ready",
+    "*",
+    "",
+    results => {
+      let data = JSON.parse(JSON.stringify(results));
+      res.json({ code: 200, msg: "success", data });
+      return;
+    },
+    () => {
+      console.log(">>>>>>>>>>>>>>> ERROR");
+      res.json({ code: 500, msg: "failed" });
+    }
+  );
+});
+
 //获取所有人员信息
 router.get("/roster/all", function(req, res, next) {
+  if (!req.session.login) {
+    res.json({
+      code: 302,
+      msg: "登录信息过期，请重新登录"
+    });
+    return;
+  }
   let sql = "";
   if (Object.keys(req.query).length) {
     sql = `WHERE ${toKeyValue(req.query)}`;
@@ -73,7 +98,15 @@ router.get("/roster/all", function(req, res, next) {
 
 //获取积极分子数据
 router.get("/roster/activist", function(req, res, next) {
-  let sql = "WHERE apply>0 AND active>0";
+  if (!req.session.login) {
+    res.json({
+      code: 302,
+      msg: "登录信息过期，请重新登录"
+    });
+    return;
+  }
+  let sql =
+    "WHERE apply>0 AND active>0 AND develop IS NULL AND ready IS NULL AND approved IS NULL";
   if (Object.keys(req.query).length) {
     sql += ` AND ${toKeyValue(req.query)}`;
   }
@@ -100,7 +133,14 @@ router.get("/roster/activist", function(req, res, next) {
 
 //获取预备党员数据
 router.get("/roster/ready", function(req, res, next) {
-  let sql = "WHERE apply>0 AND active>0 AND ready>0";
+  if (!req.session.login) {
+    res.json({
+      code: 302,
+      msg: "登录信息过期，请重新登录"
+    });
+    return;
+  }
+  let sql = "WHERE apply>0 AND active>0 AND ready>0 AND approved IS NULL";
   if (Object.keys(req.query).length) {
     sql += ` AND ${toKeyValue(req.query)}`;
   }
@@ -126,6 +166,13 @@ router.get("/roster/ready", function(req, res, next) {
 
 //获取正式党员数据
 router.get("/roster/approved", function(req, res, next) {
+  if (!req.session.login) {
+    res.json({
+      code: 302,
+      msg: "登录信息过期，请重新登录"
+    });
+    return;
+  }
   let sql = "WHERE apply>0 AND active>0 AND ready>0 AND approved>0";
   if (Object.keys(req.query).length) {
     sql += ` AND ${toKeyValue(req.query)}`;
@@ -254,9 +301,10 @@ router.post("/roster/all/add", function(req, res, next) {
       if (!id) {
         return;
       }
-      if (flag && count === data.length - 1) {
-        res.json({ code: 500, msg: "server error" });
+      if (flag) {
+        return;
       }
+
       //先查询表中是否有该数据 如果有 则跳过该记录
       select(
         "roster_all",
@@ -268,30 +316,31 @@ router.post("/roster/all/add", function(req, res, next) {
           results = JSON.parse(JSON.stringify(results));
           if (results.length) {
             count++;
+            if (count === data.length - 1) {
+              res.json({ code: 200, msg: "successful" });
+            }
             console.log("有该记录，退出");
           } else {
             //没有该记录 则插入
-
-            console.log(data[i]);
-
             insert(
               "roster_all",
               data[0],
               data[i],
               result => {
                 count++;
-                console.log(count);
                 console.log("插入成功的id为：" + id);
               },
               err => {
                 count++;
-                console.log(count);
+                if (count === data.length - 1) {
+                  res.json({ code: 200, msg: "successful" });
+                }
                 console.log("没有该记录，但是添加发生错误");
                 flag = true;
-                // res.json({
-                //   code: 500,
-                //   msg: "insert failed"
-                // });
+                res.json({
+                  code: 500,
+                  msg: "insert failed"
+                });
               }
             );
           }
