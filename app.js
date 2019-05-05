@@ -21,6 +21,7 @@ class App extends React.Component {
     }
     localStorage.setItem("YY_userInfo", token);
   }
+
   render() {
     return (
       <Provider store={store}>

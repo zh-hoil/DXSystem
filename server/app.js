@@ -26,8 +26,7 @@ var roasterRouter = require("./routes/roaster");
 var meterialRouter = require("./routes/meterial");
 var historyRouter = require("./routes/history");
 var tableRouter = require("./routes/table");
-var testRouter = require("./routes/test");
-
+var structureRouter = require("./routes/structure");
 // session
 app.use(
   session({
@@ -36,8 +35,7 @@ app.use(
     saveUninitialized: true, // 是否自动保存未初始化的会话，建议false
     resave: false, // 是否每次都重新保存会话，建议false
     cookie: {
-      signed: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000 // 有效期，单位是毫秒 这里是一周
+      signed: true
     }
   })
 );
@@ -52,7 +50,7 @@ app.use("/api", roasterRouter);
 app.use("/api", meterialRouter);
 app.use("/api", historyRouter);
 app.use("/api", tableRouter);
-app.use("/api", testRouter);
+app.use("/api", structureRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,43 +1,47 @@
-.options{
-    padding: 20px 0;
-    width: 100%;
-    .tip{
-        color: #545456;
+.options {
+  padding: 20px 0;
+  width: 100%;
+  .tip {
+    color: #545456;
+  }
+  .ant-btn {
+    float: right;
+    margin: 0 10px;
+  }
+  .selection {
+    margin-left: 50px;
+    .ant-select {
+      width: 200px;
     }
-    .ant-btn{
-        float: right;
-        margin: 0 10px;
-    }
-    .selection{
-        margin-left: 50px;
-        .ant-select{
-            width: 200px;
-        }
-    }
+  }
+  .my-modal {
+    float: right;
+  }
 }
-.ant-modal-body{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    .ant-input, .selection{
-        flex: 1;
-        width: 80%;
+.ant-modal-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .ant-input,
+  .selection {
+    flex: 1;
+    width: 80%;
+  }
+  .selection {
+    display: block;
+    margin: 20px 0;
+    .ant-select {
+      width: 100%;
     }
-    .selection{
-        display: block;
-        margin: 20px 0;
-        .ant-select{
-            width: 100%;
-        }
+  }
+  .upload {
+    text-align: center;
+    .ant-upload-list-item-name {
+      width: 80%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    .upload{
-        text-align: center;
-        .ant-upload-list-item-name{
-            width: 80%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-    }
+  }
 }

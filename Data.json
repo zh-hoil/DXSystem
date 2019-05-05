@@ -79,6 +79,10 @@
         "editable": "true"
       },
       {
+        "title": "籍贯",
+        "dataIndex": "ori_place"
+      },
+      {
         "title": "民族",
         "dataIndex": "nation"
       },
@@ -256,6 +260,89 @@
       }
     ]
   },
+  "candidate": {
+    "columns": [
+      {
+        "title": "序号",
+        "dataIndex": "index"
+      },
+      {
+        "title": "党支部",
+        "dataIndex": "branch"
+      },
+      {
+        "title": "年级",
+        "dataIndex": "grade"
+      },
+      {
+        "title": "班级",
+        "dataIndex": "class"
+      },
+      {
+        "title": "学号",
+        "dataIndex": "id"
+      },
+      {
+        "title": "名字",
+        "dataIndex": "name",
+        "editable": "true"
+      },
+      {
+        "title": "出生年月日",
+        "dataIndex": "both",
+        "editable": "true"
+      },
+      {
+        "title": "入党申请时间",
+        "dataIndex": "apply",
+        "editable": "true"
+      },
+      {
+        "title": "积极分子时间",
+        "dataIndex": "active",
+        "editable": "true"
+      },
+      {
+        "title": "确定发展时间",
+        "dataIndex": "develop",
+        "editable": "true"
+      }
+    ],
+    "data": [
+      {
+        "id": "2153301",
+        "class": "21533",
+        "name": "康磊",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023"
+      },
+      {
+        "id": "2153302",
+        "class": "21533",
+        "name": "趙浚儀",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023"
+      },
+      {
+        "id": "2153303",
+        "class": "21533",
+        "name": "王勇一",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023"
+      },
+      {
+        "id": "2153304",
+        "class": "21533",
+        "name": "程野見",
+        "both": "19960701",
+        "apply": "20081023",
+        "active": "20091023"
+      }
+    ]
+  },
   "ready": {
     "columns": [
       {
@@ -293,6 +380,11 @@
       {
         "title": "积极分子时间",
         "dataIndex": "active"
+      },
+      {
+        "title": "确定发展时间",
+        "dataIndex": "develop",
+        "editable": "true"
       },
       {
         "title": "入党时间",
@@ -390,6 +482,11 @@
       {
         "title": "积极分子时间",
         "dataIndex": "active",
+        "editable": "true"
+      },
+      {
+        "title": "确定发展时间",
+        "dataIndex": "develop",
         "editable": "true"
       },
       {
@@ -806,6 +903,10 @@
       {
         "title": "文化课平均成绩",
         "dataIndex": "mark"
+      },
+      {
+        "title": "奖学金等级",
+        "dataIndex": "scholarship"
       },
       {
         "title": "有无不及格情况",

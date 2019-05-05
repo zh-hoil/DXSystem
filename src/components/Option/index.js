@@ -4,7 +4,13 @@ import { Button } from "antd";
 import Selection from "Components/Selection";
 import MyModal from "Components/MyModal";
 import { Get } from "Public/js/Ajax";
-import { GRADEURL, BRANCHURL, EXPORTURL, READYURL } from "Public/js/Api";
+import {
+  GRADEURL,
+  BRANCHURL,
+  EXPORTURL,
+  READYURL,
+  CONFIRMURL
+} from "Public/js/Api";
 import { connect } from "react-redux";
 import { updateData } from "Store/Roster/action";
 
@@ -142,8 +148,9 @@ class Option extends React.Component {
         </Button>
         {this.props.path === "/roster/all" ? (
           <MyModal
-            branchOptions={this.state.branchOptions}
             path={this.props.path}
+            accept={".xlsx, .xls"}
+            confirmUrl={CONFIRMURL}
           />
         ) : (
           ""

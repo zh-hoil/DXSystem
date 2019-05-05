@@ -3,6 +3,7 @@ import Swipper from "Components/Swipper";
 import List from "Components/List";
 import { Get } from "Public/js/Ajax";
 import { NEWSURL } from "Public/js/Api";
+import { message } from "antd";
 import "./index.less";
 
 class News extends React.Component {
@@ -21,12 +22,16 @@ class News extends React.Component {
       {},
       res => {
         console.log(res.data);
-        let { nationNews, schoolNews, images } = res.data;
-        this.setState({
-          nationNews,
-          schoolNews,
-          images
-        });
+        if (res.code === 200) {
+          let { nationNews, schoolNews, images } = res.data;
+          this.setState({
+            nationNews,
+            schoolNews,
+            images
+          });
+        } else {
+          message.error(res.msg);
+        }
       },
       err => {
         throw err;

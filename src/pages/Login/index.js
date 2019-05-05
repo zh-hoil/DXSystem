@@ -65,28 +65,28 @@ class Login extends React.Component {
 
         Post(
           LOGINURL,
-          { username, password },
+          { username, password, remember },
           res => {
-            let curUsername = localStorage.getItem("username");
-            let curPassword = localStorage.getItem("password");
-            if (!curUsername) {
-              if (remember) {
-                localStorage.setItem("username", username);
-                localStorage.setItem("password", password);
-              }
-            } else {
-              if (remember) {
-                if (curUsername != username) {
-                  localStorage.setItem("username", username);
-                }
-                if (curPassword != password) {
-                  localStorage.setItem("password", username);
-                }
-              } else {
-                localStorage.setItem("username", "");
-                localStorage.setItem("password", "");
-              }
-            }
+            // let curUsername = localStorage.getItem("username");
+            // let curPassword = localStorage.getItem("password");
+            // if (!curUsername) {
+            //   if (remember) {
+            //     localStorage.setItem("username", username);
+            //     localStorage.setItem("password", password);
+            //   }
+            // } else {
+            //   if (remember) {
+            //     if (curUsername != username) {
+            //       localStorage.setItem("username", username);
+            //     }
+            //     if (curPassword != password) {
+            //       localStorage.setItem("password", username);
+            //     }
+            //   } else {
+            //     localStorage.setItem("username", "");
+            //     localStorage.setItem("password", "");
+            //   }
+            // }
 
             if (res.code === 200) {
               message.success(res.msg, 0.5, function() {

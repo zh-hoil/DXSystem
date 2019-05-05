@@ -46,16 +46,16 @@ class TableList extends React.Component {
       }
       if (nextProps.branchValue) {
         if (nextProps.branchValue !== this.props.branchValue) {
-          params.grade = nextProps.branchValue;
+          params.branch = nextProps.branchValue;
         } else {
-          params.grade = this.props.branchValue;
+          params.branch = this.props.branchValue;
         }
       }
       if (nextProps.readyValue) {
         if (nextProps.readyValue !== this.props.readyValue) {
-          params.grade = nextProps.readyValue;
+          params.ready = nextProps.readyValue;
         } else {
-          params.grade = this.props.readyValue;
+          params.ready = this.props.readyValue;
         }
       }
       this._initTable(this.props.path, params);
@@ -85,6 +85,10 @@ class TableList extends React.Component {
         // data = Data.activist.data;
         columns = Data.activist.columns;
         break;
+      case "/roster/candidate":
+        // data = Data.candidate.data;
+        columns = Data.candidate.columns;
+        break;
       case "/roster/ready":
         // data = Data.ready.data;
         columns = Data.ready.columns;
@@ -93,6 +97,10 @@ class TableList extends React.Component {
         // data = Data.approved.data;
         columns = Data.approved.columns;
         break;
+      // case "/roster/graduated":
+      //   // data = Data.graduated.data;
+      //   columns = Data.graduated.columns;
+      //   break;
       case "/table/table_1":
         // data = Data.table_1.data;
         columns = Data.table_1.columns;
@@ -109,17 +117,9 @@ class TableList extends React.Component {
         // data = Data.table_4.data;
         columns = Data.table_4.columns;
         break;
-      case "/table/candidate":
-        // data = Data.candidate.data;
-        columns = Data.candidate.columns;
-        break;
       case "/table/publicity":
         // data = Data.publicity.data;
         columns = Data.publicity.columns;
-        break;
-      case "/table/graduated":
-        // data = Data.graduated.data;
-        columns = Data.graduated.columns;
         break;
     }
     this.setState({ columns });

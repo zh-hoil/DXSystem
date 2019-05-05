@@ -53,13 +53,13 @@ class Home extends React.Component {
     let contentComponent = null;
     switch (this.state.path) {
       case "structure":
-        contentComponent = <Structure />;
+        contentComponent = <Structure path={this.state.fullPath} />;
         break;
       case "material":
-        contentComponent = <Material />;
+        contentComponent = <Material path={this.state.fullPath} />;
         break;
       case "history":
-        contentComponent = <History />;
+        contentComponent = <History path={this.state.fullPath} />;
         break;
       case "roster":
         contentComponent = <Roster fullPath={this.state.fullPath} />;
@@ -68,7 +68,7 @@ class Home extends React.Component {
         contentComponent = <Table fullPath={this.state.fullPath} />;
         break;
       default:
-        contentComponent = <News />;
+        contentComponent = <News path={this.state.fullPath} />;
     }
     return contentComponent;
   }

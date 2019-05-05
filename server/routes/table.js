@@ -124,7 +124,7 @@ router.get("/table/table_4", function(req, res, next) {
   console.log(sql);
   select(
     "roster_all",
-    "name, sex, id, apply, active, develop, ready, approved, assessment_1, assessment_2, mark_1, mark_2, fail, discipline, percent, adition",
+    "name, sex, id, apply, active, develop, ready, approved, assessment_1, assessment_2, mark_1, mark_2, fail, scholarship_1, scholoarship_2, discipline, adition",
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));

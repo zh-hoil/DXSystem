@@ -130,7 +130,39 @@ router.get("/roster/activist", function(req, res, next) {
     }
   );
 });
-
+//获取拟发展对象数据
+router.get("/roster/candidate", function(req, res, next) {
+  if (!req.session.login) {
+    res.json({
+      code: 302,
+      msg: "登录信息过期，请重新登录"
+    });
+    return;
+  }
+  let sql =
+    "WHERE apply>0 AND active>0 AND develop>0 AND ready IS NULL AND approved IS NULL";
+  if (Object.keys(req.query).length) {
+    sql += ` AND ${toKeyValue(req.query)}`;
+  }
+  select(
+    "roster_all",
+    "branch, grade, class, id, name, birth, apply, active, develop",
+    sql,
+    results => {
+      let data = JSON.parse(JSON.stringify(results));
+      res.json({
+        code: 200,
+        msg: "success",
+        data: { total: data.length, data }
+      });
+      return;
+    },
+    () => {
+      console.log(">>>>>>>>>>>>>>> ERROR");
+      res.json({ code: 500, msg: "failed" });
+    }
+  );
+});
 //获取预备党员数据
 router.get("/roster/ready", function(req, res, next) {
   if (!req.session.login) {
@@ -140,13 +172,14 @@ router.get("/roster/ready", function(req, res, next) {
     });
     return;
   }
-  let sql = "WHERE apply>0 AND active>0 AND ready>0 AND approved IS NULL";
+  let sql =
+    "WHERE apply>0 AND active>0 AND develop>0 AND ready>0 AND approved IS NULL";
   if (Object.keys(req.query).length) {
     sql += ` AND ${toKeyValue(req.query)}`;
   }
   select(
     "roster_all",
-    "branch, grade, class, id, name, birth, apply, active, ready, sponsor_1, sponsor_2",
+    "branch, grade, class, id, name, birth, apply, active, develop, ready, sponsor_1, sponsor_2",
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));
@@ -173,13 +206,14 @@ router.get("/roster/approved", function(req, res, next) {
     });
     return;
   }
-  let sql = "WHERE apply>0 AND active>0 AND ready>0 AND approved>0";
+  let sql =
+    "WHERE apply>0 AND active>0 AND develop>0 AND ready>0 AND approved>0";
   if (Object.keys(req.query).length) {
     sql += ` AND ${toKeyValue(req.query)}`;
   }
   select(
     "roster_all",
-    "branch, grade, class, id, name, birth, apply, active, ready, approved, leadership, sponsor_1, sponsor_2",
+    "branch, grade, class, id, name, birth, apply, active, develop, ready, approved, leadership, sponsor_1, sponsor_2",
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));
@@ -286,7 +320,7 @@ router.post("/roster/all/upload", upload.single("file"), function(
 });
 
 //新建大表
-router.post("/roster/all/add", function(req, res, next) {
+router.post("/roster/all/confirm", function(req, res, next) {
   let { fileId } = req.body;
   let sheets = xlsx.parse(filePath + fileId);
   let sheet = sheets[0];
@@ -328,13 +362,12 @@ router.post("/roster/all/add", function(req, res, next) {
               data[i],
               result => {
                 count++;
-                console.log("插入成功的id为：" + id);
-              },
-              err => {
-                count++;
                 if (count === data.length - 1) {
                   res.json({ code: 200, msg: "successful" });
                 }
+                console.log("插入成功的id为：" + id);
+              },
+              err => {
                 console.log("没有该记录，但是添加发生错误");
                 flag = true;
                 res.json({
