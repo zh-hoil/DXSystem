@@ -4,13 +4,13 @@ import { select } from "../utils";
 
 /* GET home page. */
 router.get("/news", function(req, res, next) {
-  if (!req.session.login) {
-    res.json({
-      code: 302,
-      msg: "登录信息过期，请重新登录"
-    });
-    return;
-  }
+  // if (!req.session.login) {
+  //   res.json({
+  //     code: 302,
+  //     msg: "登录信息过期，请重新登录"
+  //   });
+  //   return;
+  // }
   select(
     "news",
     "*",

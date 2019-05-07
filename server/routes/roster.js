@@ -4,10 +4,16 @@ var path = require("path");
 var fs = require("fs");
 var xlsx = require("node-xlsx");
 var multer = require("multer"); //引入multer
-
 const filePath = path.join(path.resolve(__dirname, "../../"), "/file/");
 var upload = multer({ dest: filePath }); //设置上传文件存储地址
-import { select, insert, toKeyValue, del, put } from "../utils";
+import {
+  select,
+  insert,
+  del,
+  put,
+  newTables,
+  toKeyValue
+} from "../utils";
 
 //获取年级信息
 router.get("/grade", function(req, res, next) {
@@ -45,33 +51,34 @@ router.get("/branch", function(req, res, next) {
   );
 });
 
-//获取支部信息
+//获取入党批次信息
 router.get("/ready", function(req, res, next) {
-  select(
-    "ready",
-    "*",
-    "",
-    results => {
-      let data = JSON.parse(JSON.stringify(results));
-      res.json({ code: 200, msg: "success", data });
-      return;
-    },
-    () => {
-      console.log(">>>>>>>>>>>>>>> ERROR");
-      res.json({ code: 500, msg: "failed" });
-    }
-  );
+  res.json({ code: 200, msg: "success", data: [] });
+  // select(
+  //   "ready",
+  //   "*",
+  //   "",
+  //   results => {
+  //     let data = JSON.parse(JSON.stringify(results));
+  //     res.json({ code: 200, msg: "success", data });
+  //     return;
+  //   },
+  //   () => {
+  //     console.log(">>>>>>>>>>>>>>> ERROR");
+  //     res.json({ code: 500, msg: "failed" });
+  //   }
+  // );
 });
 
 //获取所有人员信息
 router.get("/roster/all", function(req, res, next) {
-  if (!req.session.login) {
-    res.json({
-      code: 302,
-      msg: "登录信息过期，请重新登录"
-    });
-    return;
-  }
+  // if (!req.session.login) {
+  //   res.json({
+  //     code: 302,
+  //     msg: "登录信息过期，请重新登录"
+  //   });
+  //   return;
+  // }
   let sql = "";
   if (Object.keys(req.query).length) {
     sql = `WHERE ${toKeyValue(req.query)}`;
@@ -82,12 +89,19 @@ router.get("/roster/all", function(req, res, next) {
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));
-      res.json({
-        code: 200,
-        msg: "success",
-        data: { total: data.length, data }
-      });
-      return;
+      if (data.length) {
+        res.json({
+          code: 200,
+          msg: "success",
+          data: { total: data.length, data }
+        });
+      } else {
+        res.json({
+          code: 201,
+          msg: "没有数据, 请先上传数据表格",
+          data: []
+        });
+      }
     },
     () => {
       console.log(">>>>>>>>>>>>>>> ERROR");
@@ -98,22 +112,20 @@ router.get("/roster/all", function(req, res, next) {
 
 //获取积极分子数据
 router.get("/roster/activist", function(req, res, next) {
-  if (!req.session.login) {
-    res.json({
-      code: 302,
-      msg: "登录信息过期，请重新登录"
-    });
-    return;
-  }
-  let sql =
-    "WHERE apply>0 AND active>0 AND develop IS NULL AND ready IS NULL AND approved IS NULL";
+  // if (!req.session.login) {
+  //   res.json({
+  //     code: 302,
+  //     msg: "登录信息过期，请重新登录"
+  //   });
+  //   return;
+  // }
+  let sql = "";
   if (Object.keys(req.query).length) {
-    sql += ` AND ${toKeyValue(req.query)}`;
+    sql = `WHERE ${toKeyValue(req.query)}`;
   }
-  console.log(sql);
   select(
-    "roster_all",
-    "branch, grade, class, id, name, birth, apply, active",
+    "active",
+    "*",
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));
@@ -122,7 +134,6 @@ router.get("/roster/activist", function(req, res, next) {
         msg: "success",
         data: { total: data.length, data }
       });
-      return;
     },
     () => {
       console.log(">>>>>>>>>>>>>>> ERROR");
@@ -132,21 +143,20 @@ router.get("/roster/activist", function(req, res, next) {
 });
 //获取拟发展对象数据
 router.get("/roster/candidate", function(req, res, next) {
-  if (!req.session.login) {
-    res.json({
-      code: 302,
-      msg: "登录信息过期，请重新登录"
-    });
-    return;
-  }
-  let sql =
-    "WHERE apply>0 AND active>0 AND develop>0 AND ready IS NULL AND approved IS NULL";
+  // if (!req.session.login) {
+  //   res.json({
+  //     code: 302,
+  //     msg: "登录信息过期，请重新登录"
+  //   });
+  //   return;
+  // }
+  let sql = "";
   if (Object.keys(req.query).length) {
-    sql += ` AND ${toKeyValue(req.query)}`;
+    sql = `WHERE ${toKeyValue(req.query)}`;
   }
   select(
-    "roster_all",
-    "branch, grade, class, id, name, birth, apply, active, develop",
+    "candidate",
+    "*",
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));
@@ -155,7 +165,6 @@ router.get("/roster/candidate", function(req, res, next) {
         msg: "success",
         data: { total: data.length, data }
       });
-      return;
     },
     () => {
       console.log(">>>>>>>>>>>>>>> ERROR");
@@ -165,21 +174,20 @@ router.get("/roster/candidate", function(req, res, next) {
 });
 //获取预备党员数据
 router.get("/roster/ready", function(req, res, next) {
-  if (!req.session.login) {
-    res.json({
-      code: 302,
-      msg: "登录信息过期，请重新登录"
-    });
-    return;
-  }
-  let sql =
-    "WHERE apply>0 AND active>0 AND develop>0 AND ready>0 AND approved IS NULL";
+  // if (!req.session.login) {
+  //   res.json({
+  //     code: 302,
+  //     msg: "登录信息过期，请重新登录"
+  //   });
+  //   return;
+  // }
+  let sql = "";
   if (Object.keys(req.query).length) {
-    sql += ` AND ${toKeyValue(req.query)}`;
+    sql = `WHERE ${toKeyValue(req.query)}`;
   }
   select(
-    "roster_all",
-    "branch, grade, class, id, name, birth, apply, active, develop, ready, sponsor_1, sponsor_2",
+    "ready",
+    "*",
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));
@@ -188,7 +196,6 @@ router.get("/roster/ready", function(req, res, next) {
         msg: "success",
         data: { total: data.length, data }
       });
-      return;
     },
     () => {
       console.log(">>>>>>>>>>>>>>> ERROR");
@@ -199,21 +206,20 @@ router.get("/roster/ready", function(req, res, next) {
 
 //获取正式党员数据
 router.get("/roster/approved", function(req, res, next) {
-  if (!req.session.login) {
-    res.json({
-      code: 302,
-      msg: "登录信息过期，请重新登录"
-    });
-    return;
-  }
-  let sql =
-    "WHERE apply>0 AND active>0 AND develop>0 AND ready>0 AND approved>0";
+  // if (!req.session.login) {
+  //   res.json({
+  //     code: 302,
+  //     msg: "登录信息过期，请重新登录"
+  //   });
+  //   return;
+  // }
+  let sql = "";
   if (Object.keys(req.query).length) {
-    sql += ` AND ${toKeyValue(req.query)}`;
+    sql = `WHERE ${toKeyValue(req.query)}`;
   }
   select(
-    "roster_all",
-    "branch, grade, class, id, name, birth, apply, active, develop, ready, approved, leadership, sponsor_1, sponsor_2",
+    "approved",
+    "*",
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));
@@ -222,7 +228,6 @@ router.get("/roster/approved", function(req, res, next) {
         msg: "success",
         data: { total: data.length, data }
       });
-      return;
     },
     () => {
       console.log(">>>>>>>>>>>>>>> ERROR");
@@ -363,7 +368,8 @@ router.post("/roster/all/confirm", function(req, res, next) {
               result => {
                 count++;
                 if (count === data.length - 1) {
-                  res.json({ code: 200, msg: "successful" });
+                  //重写ready表
+                  newTables(res);
                 }
                 console.log("插入成功的id为：" + id);
               },

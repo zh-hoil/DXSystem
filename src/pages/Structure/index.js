@@ -1,6 +1,6 @@
 import React from "react";
 import { Get } from "Public/js/Ajax";
-import { STRUCTUREURL } from "Public/js/Api";
+import { STRUCTUREURL, STRUCTUREDETAILSURL } from "Public/js/Api";
 import echarts from "echarts";
 import { message } from "antd";
 import "./index.less";
@@ -15,10 +15,8 @@ class Structure extends React.Component {
       ready: {},
       approved: {},
       option_main: {},
-      option_1: {},
-      option_2: {},
-      option_3: {},
-      option_4: {}
+      options: [],
+      branches: {}
     };
   }
 
@@ -29,12 +27,12 @@ class Structure extends React.Component {
       res => {
         if (res.code === 200) {
           this.setState({
+            ...this.state,
             ...res.data
           });
 
-          this._initOption();
-          this.setChart();
-          console.log(this.state);
+          this._initMainOptions();
+          this.setMainChart();
         } else {
           message.error(res.msg);
         }
@@ -43,22 +41,26 @@ class Structure extends React.Component {
         throw err;
       }
     );
-  }
+    Get(
+      STRUCTUREDETAILSURL,
+      {},
+      res => {
+        if (res.code === 200) {
+          this.setState({
+            ...this.state,
+            branches: res.data
+          });
 
-  setChart() {
-    // 基于准备好的dom，初始化echarts实例
-    var chart_main = echarts.init(document.getElementById("chart_main"));
-    var chart_1 = echarts.init(document.getElementById("chart_1"));
-    var chart_2 = echarts.init(document.getElementById("chart_2"));
-    var chart_3 = echarts.init(document.getElementById("chart_3"));
-    var chart_4 = echarts.init(document.getElementById("chart_4"));
-
-    // 绘制图表
-    chart_main.setOption(this.state.option_main);
-    chart_1.setOption(this.state.option_1);
-    chart_2.setOption(this.state.option_2);
-    chart_3.setOption(this.state.option_3);
-    chart_4.setOption(this.state.option_4);
+          this._initDetailsOptions();
+          this.setDetailsChart();
+        } else {
+          message.error(res.msg);
+        }
+      },
+      err => {
+        throw err;
+      }
+    );
   }
 
   _init(data) {
@@ -70,7 +72,81 @@ class Structure extends React.Component {
     return result;
   }
 
-  _initOption() {
+  setDetailsChart() {
+    // 基于准备好的dom，初始化echarts实例
+    this.state.options.map((item, index) => {
+      let temp = echarts.init(document.getElementById(`chart_${index + 1}`));
+      temp.setOption(this.state.options[index]);
+    });
+  }
+
+  setMainChart = () => {
+    let chart_main = echarts.init(document.getElementById("chart_main"));
+    chart_main.setOption(this.state.option_main);
+  };
+
+  _initDetailsOptions() {
+    Object.keys(this.state.branches).map((item, index) => {
+      let temp = {
+        title: {
+          text: item,
+          x: "center",
+          y: "bottom"
+        },
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        series: [
+          {
+            name: "入党详情",
+            type: "pie",
+            radius: ["50%", "70%"],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: true,
+                position: "inner"
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: "30",
+                  fontWeight: "bold"
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: [
+              {
+                value: this.state.branches[item].apply,
+                name: "入党申请"
+              },
+              {
+                value: this.state.branches[item].active,
+                name: "积极分子"
+              },
+              {
+                value: this.state.branches[item].ready,
+                name: "预备党员"
+              },
+              { value: this.state.branches[item].approved, name: "正式党员" }
+            ]
+          }
+        ]
+      };
+      this.setState({
+        ...this.state,
+        options: [...this.state.options, temp]
+      });
+    });
+  }
+
+  _initMainOptions = () => {
     let legendData = [
       "入党申请",
       "积极分子",
@@ -79,7 +155,8 @@ class Structure extends React.Component {
       ...Object.keys(this.state.apply).slice(1),
       ...Object.keys(this.state.active).slice(1),
       ...Object.keys(this.state.ready).slice(1),
-      ...Object.keys(this.state.approved).slice(1)
+      ...Object.keys(this.state.approved).slice(1),
+      "其他"
     ];
 
     let seriesData = [
@@ -90,7 +167,15 @@ class Structure extends React.Component {
       },
       { value: this.state.active.count, name: "积极分子" },
       { value: this.state.ready.count, name: "预备党员" },
-      { value: this.state.approved.count, name: "正式党员" }
+      { value: this.state.approved.count, name: "正式党员" },
+      {
+        value:
+          this.state.total -
+          this.state.approved.count -
+          this.state.active.count -
+          this.state.ready,
+        name: "其他"
+      }
     ];
 
     let gradeData = [];
@@ -98,7 +183,20 @@ class Structure extends React.Component {
     gradeData = gradeData.concat(this._init(this.state.active));
     gradeData = gradeData.concat(this._init(this.state.ready));
     gradeData = gradeData.concat(this._init(this.state.approved));
-
+    gradeData = gradeData.concat(
+      this._init({
+        count:
+          this.state.total -
+          this.state.approved.count -
+          this.state.active.count -
+          this.state.ready,
+        其他:
+          this.state.total -
+          this.state.approved.count -
+          this.state.active.count -
+          this.state.ready
+      })
+    );
     const option_main = {
       tooltip: {
         trigger: "item",
@@ -180,170 +278,17 @@ class Structure extends React.Component {
         }
       ]
     };
-    const option_1 = {
-      tooltip: {
-        trigger: "item",
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-      },
-      series: [
-        {
-          name: "入党详情",
-          type: "pie",
-          radius: ["50%", "70%"],
-          avoidLabelOverlap: false,
-          label: {
-            normal: {
-              show: true,
-              position: "inner"
-            },
-            emphasis: {
-              show: true,
-              textStyle: {
-                fontSize: "30",
-                fontWeight: "bold"
-              }
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          data: [
-            { value: 225, name: "入党申请" },
-            { value: 139, name: "积极分子" },
-            { value: 85, name: "预备党员" },
-            { value: 52, name: "正式党员" }
-          ]
-        }
-      ]
-    };
-    const option_2 = {
-      tooltip: {
-        trigger: "item",
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-      },
-      series: [
-        {
-          name: "入党详情",
-          type: "pie",
-          radius: ["50%", "70%"],
-          avoidLabelOverlap: false,
-          label: {
-            normal: {
-              show: true,
-              position: "inner"
-            },
-            emphasis: {
-              show: true,
-              textStyle: {
-                fontSize: "30",
-                fontWeight: "bold"
-              }
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          data: [
-            { value: 225, name: "入党申请" },
-            { value: 139, name: "积极分子" },
-            { value: 85, name: "预备党员" },
-            { value: 52, name: "正式党员" }
-          ]
-        }
-      ]
-    };
-    const option_3 = {
-      tooltip: {
-        trigger: "item",
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-      },
-      series: [
-        {
-          name: "入党详情",
-          type: "pie",
-          radius: ["50%", "70%"],
-          avoidLabelOverlap: false,
-          label: {
-            normal: {
-              show: true,
-              position: "inner"
-            },
-            emphasis: {
-              show: true,
-              textStyle: {
-                fontSize: "30",
-                fontWeight: "bold"
-              }
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          data: [
-            { value: 225, name: "入党申请" },
-            { value: 139, name: "积极分子" },
-            { value: 85, name: "预备党员" },
-            { value: 52, name: "正式党员" }
-          ]
-        }
-      ]
-    };
-    const option_4 = {
-      tooltip: {
-        trigger: "item",
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-      },
-      series: [
-        {
-          name: "入党详情",
-          type: "pie",
-          radius: ["50%", "70%"],
-          avoidLabelOverlap: false,
-          label: {
-            normal: {
-              show: true,
-              position: "inner"
-            },
-            emphasis: {
-              show: true,
-              textStyle: {
-                fontSize: "30",
-                fontWeight: "bold"
-              }
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          data: [
-            { value: 225, name: "入党申请" },
-            { value: 139, name: "积极分子" },
-            { value: 85, name: "预备党员" },
-            { value: 52, name: "正式党员" }
-          ]
-        }
-      ]
-    };
-    this.setState({ option_main, option_1, option_2, option_3, option_4 });
-  }
+    this.setState({ option_main });
+  };
 
   render() {
     return (
       <div className="structure">
         <div id="chart_main" />
         <div className="details">
-          <div id="chart_1" />
-          <div id="chart_2" />
-          <div id="chart_3" />
-          <div id="chart_4" />
+          {Object.keys(this.state.branches).map((item, index) => (
+            <div key={index} id={`chart_${index + 1}`} />
+          ))}
         </div>
       </div>
     );

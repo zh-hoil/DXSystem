@@ -3,6 +3,7 @@ export const LOGINURL = "/login"; //登录url
 export const NEWSURL = "/news"; //新闻页url
 
 export const STRUCTUREURL = "/structure"; //组织架构页面
+export const STRUCTUREDETAILSURL = "/structure_details"; //组织架构各支部詳情
 
 export const MATERIALURL = "/meterial"; //参考资料页url
 

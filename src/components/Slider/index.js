@@ -62,7 +62,7 @@ const Slider = props => (
         <Menu.Item key="table_2">表二</Menu.Item>
         <Menu.Item key="table_3">表三</Menu.Item>
         <Menu.Item key="table_4">表四</Menu.Item>
-        <Menu.Item key="publicity">公示材料</Menu.Item>
+        {/* <Menu.Item key="publicity">公示材料</Menu.Item> */}
       </SubMenu>
     </Menu>
   </Sider>

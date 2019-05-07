@@ -273,4 +273,237 @@ router.get("/structure", function(req, res, next) {
   // );
 });
 
+router.get("/structure_details", function(req, res, next) {
+  let branches = {};
+  select(
+    "branch",
+    "*",
+    "",
+    results => {
+      results = JSON.parse(JSON.stringify(results));
+      results.forEach((item, index) => {
+        (function(item, index) {
+          let count = 0;
+          let branch = item.branch;
+          branches[branch] = {};
+          select(
+            "apply",
+            "*",
+            `WHERE branch="${branch}"`,
+            result => {
+              count++;
+              let data = JSON.parse(JSON.stringify(result));
+              branches[branch].apply = data.length;
+              console.log(branches);
+              if (index === results.length - 1 && count === 4) {
+                res.json({
+                  code: 200,
+                  msg: "successful",
+                  data: branches
+                });
+              }
+            },
+            err => {
+              throw err;
+            }
+          );
+          select(
+            "active",
+            "*",
+            `WHERE branch="${branch}"`,
+            result => {
+              count++;
+              let data = JSON.parse(JSON.stringify(result));
+              branches[branch].active = data.length;
+              if (index === results.length - 1 && count === 4) {
+                res.json({
+                  code: 200,
+                  msg: "successful",
+                  data: branches
+                });
+              }
+            },
+            err => {
+              throw err;
+            }
+          );
+
+          select(
+            "ready",
+            "*",
+            `WHERE branch="${branch}"`,
+            result => {
+              count++;
+              let data = JSON.parse(JSON.stringify(result));
+              branches[branch].ready = data.length;
+              if (index === results.length - 1 && count === 4) {
+                res.json({
+                  code: 200,
+                  msg: "successful",
+                  data: branches
+                });
+              }
+            },
+            err => {
+              throw err;
+            }
+          );
+
+          select(
+            "approved",
+            "*",
+            `WHERE branch="${branch}"`,
+            result => {
+              count++;
+              let data = JSON.parse(JSON.stringify(result));
+              branches[branch].approved = data.length;
+              if (index === results.length - 1 && count === 4) {
+                res.json({
+                  code: 200,
+                  msg: "successful",
+                  data: branches
+                });
+              }
+            },
+            err => {
+              throw err;
+            }
+          );
+        })(item, index);
+      });
+    },
+    err => {
+      throw err;
+    }
+  );
+
+  // select(
+  //   "roster_all",
+  //   "*",
+  //   applySql,
+  //   results => {
+  //     results = JSON.parse(JSON.stringify(results));
+  //     applyCount = results.length;
+  //     if (
+  //       total > -1 &&
+  //       applyCount > -1 &&
+  //       activeCount > -1 &&
+  //       readyCount > -1 &&
+  //       approvedCount > -1
+  //     ) {
+  //       res.json({
+  //         code: 200,
+  //         msg: "success",
+  //         data: {
+  //           total,
+  //           applyCount,
+  //           activeCount,
+  //           readyCount,
+  //           approvedCount
+  //         }
+  //       });
+  //     }
+  //   },
+  //   () => {
+  //     console.log(">>>>>>>>>>>>>>> ERROR");
+  //   }
+  // );
+
+  // select(
+  //   "roster_all",
+  //   "*",
+  //   activeSql,
+  //   results => {
+  //     results = JSON.parse(JSON.stringify(results));
+  //     activeCount = results.length;
+  //     if (
+  //       total > -1 &&
+  //       applyCount > -1 &&
+  //       activeCount > -1 &&
+  //       readyCount > -1 &&
+  //       approvedCount > -1
+  //     ) {
+  //       res.json({
+  //         code: 200,
+  //         msg: "success",
+  //         data: {
+  //           total,
+  //           applyCount,
+  //           activeCount,
+  //           readyCount,
+  //           approvedCount
+  //         }
+  //       });
+  //     }
+  //   },
+  //   () => {
+  //     console.log(">>>>>>>>>>>>>>> ERROR");
+  //   }
+  // );
+
+  // select(
+  //   "roster_all",
+  //   "*",
+  //   readySql,
+  //   results => {
+  //     results = JSON.parse(JSON.stringify(results));
+  //     readyCount = results.length;
+  //     if (
+  //       total > -1 &&
+  //       applyCount > -1 &&
+  //       activeCount > -1 &&
+  //       readyCount > -1 &&
+  //       approvedCount > -1
+  //     ) {
+  //       res.json({
+  //         code: 200,
+  //         msg: "success",
+  //         data: {
+  //           total,
+  //           applyCount,
+  //           activeCount,
+  //           readyCount,
+  //           approvedCount
+  //         }
+  //       });
+  //     }
+  //   },
+  //   () => {
+  //     console.log(">>>>>>>>>>>>>>> ERROR");
+  //   }
+  // );
+
+  // select(
+  //   "roster_all",
+  //   "*",
+  //   approvedSql,
+  //   results => {
+  //     results = JSON.parse(JSON.stringify(results));
+  //     approvedCount = results.length;
+  //     if (
+  //       total > -1 &&
+  //       applyCount > -1 &&
+  //       activeCount > -1 &&
+  //       readyCount > -1 &&
+  //       approvedCount > -1
+  //     ) {
+  //       res.json({
+  //         code: 200,
+  //         msg: "success",
+  //         data: {
+  //           total,
+  //           applyCount,
+  //           activeCount,
+  //           readyCount,
+  //           approvedCount
+  //         }
+  //       });
+  //     }
+  //   },
+  //   () => {
+  //     console.log(">>>>>>>>>>>>>>> ERROR");
+  //   }
+  // );
+});
+
 module.exports = router;

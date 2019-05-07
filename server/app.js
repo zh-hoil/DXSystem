@@ -22,7 +22,7 @@ app.all("*", function(req, res, next) {
 
 var loginRouter = require("./routes/login");
 var newsRouter = require("./routes/news");
-var roasterRouter = require("./routes/roaster");
+var rosterRouter = require("./routes/roster");
 var meterialRouter = require("./routes/meterial");
 var historyRouter = require("./routes/history");
 var tableRouter = require("./routes/table");
@@ -46,7 +46,7 @@ app.use(cookieParser("p4f8051f-c883-4147-8fe2"));
 
 app.use("/api", loginRouter);
 app.use("/api", newsRouter);
-app.use("/api", roasterRouter);
+app.use("/api", rosterRouter);
 app.use("/api", meterialRouter);
 app.use("/api", historyRouter);
 app.use("/api", tableRouter);

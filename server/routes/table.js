@@ -26,7 +26,6 @@ router.get("/table/table_1", function(req, res, next) {
         msg: "success",
         data: { total: data.length, data }
       });
-      return;
     },
     () => {
       console.log(">>>>>>>>>>>>>>> ERROR");
@@ -44,15 +43,13 @@ router.get("/table/table_2", function(req, res, next) {
     });
     return;
   }
-  let sql =
-    "WHERE apply>0 AND active>0 AND develop>0 AND ready>0 AND approved IS NULL";
+  let sql = "";
   if (Object.keys(req.query).length) {
-    sql += ` AND ${toKeyValue(req.query)}`;
+    sql = `WHERE ${toKeyValue(req.query)}`;
   }
-  console.log(sql);
   select(
-    "roster_all",
-    "name, sex, birth, id, apply, active, develop, assessment_1, assessment_2, mark_1, mark_2, scholarship_1, scholarship_2, fail, discipline, percent, adition",
+    "table_2",
+    "*",
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));
@@ -61,7 +58,6 @@ router.get("/table/table_2", function(req, res, next) {
         msg: "success",
         data: { total: data.length, data }
       });
-      return;
     },
     err => {
       console.log(err);
@@ -80,15 +76,13 @@ router.get("/table/table_3", function(req, res, next) {
     });
     return;
   }
-  let sql =
-    "WHERE apply>0 AND active>0 AND develop>0 AND ready>0 AND approved IS NULL";
+  let sql = "";
   if (Object.keys(req.query).length) {
-    sql += ` AND ${toKeyValue(req.query)}`;
+    sql = `WHERE ${toKeyValue(req.query)}`;
   }
-  console.log(sql);
   select(
-    "roster_all",
-    "name, sex, id, birth, ori_place, nation, id_card, ready, merit_1, merit_2, shortcoming_1, shortcoming_2, sponsor_1, sponsor_2, adition",
+    "table_3",
+    "*",
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));
@@ -97,7 +91,6 @@ router.get("/table/table_3", function(req, res, next) {
         msg: "success",
         data: { total: data.length, data }
       });
-      return;
     },
     err => {
       console.log(err);
@@ -116,15 +109,13 @@ router.get("/table/table_4", function(req, res, next) {
     });
     return;
   }
-  let sql =
-    "WHERE apply>0 AND active>0 AND develop>0 AND ready>0 AND approved>0";
+  let sql = "";
   if (Object.keys(req.query).length) {
-    sql += ` AND ${toKeyValue(req.query)}`;
+    sql = `WHERE ${toKeyValue(req.query)}`;
   }
-  console.log(sql);
   select(
-    "roster_all",
-    "name, sex, id, apply, active, develop, ready, approved, assessment_1, assessment_2, mark_1, mark_2, fail, scholarship_1, scholoarship_2, discipline, adition",
+    "table_4",
+    "*",
     sql,
     results => {
       let data = JSON.parse(JSON.stringify(results));
@@ -133,7 +124,6 @@ router.get("/table/table_4", function(req, res, next) {
         msg: "success",
         data: { total: data.length, data }
       });
-      return;
     },
     err => {
       console.log(err);
