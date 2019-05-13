@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Menu, Icon, Layout } from "antd";
-import Logo from "Assets/images/logo.jpg";
 import "./index.less";
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -43,7 +42,7 @@ const Slider = props => (
         }
       >
         <Menu.Item key="all">党建大表</Menu.Item>
-        <Menu.Item key="activist">积极分子</Menu.Item>
+        <Menu.Item key="active">积极分子</Menu.Item>
         <Menu.Item key="candidate">发展对象</Menu.Item>
         <Menu.Item key="ready">预备党员</Menu.Item>
         <Menu.Item key="approved">正式党员</Menu.Item>

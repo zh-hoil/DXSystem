@@ -6,14 +6,7 @@ var xlsx = require("node-xlsx");
 var multer = require("multer"); //引入multer
 const filePath = path.join(path.resolve(__dirname, "../../"), "/file/");
 var upload = multer({ dest: filePath }); //设置上传文件存储地址
-import {
-  select,
-  insert,
-  del,
-  put,
-  newTables,
-  toKeyValue
-} from "../utils";
+import { select, insert, del, put, newTables, toKeyValue } from "../utils";
 
 //获取年级信息
 router.get("/grade", function(req, res, next) {
@@ -51,25 +44,6 @@ router.get("/branch", function(req, res, next) {
   );
 });
 
-//获取入党批次信息
-router.get("/ready", function(req, res, next) {
-  res.json({ code: 200, msg: "success", data: [] });
-  // select(
-  //   "ready",
-  //   "*",
-  //   "",
-  //   results => {
-  //     let data = JSON.parse(JSON.stringify(results));
-  //     res.json({ code: 200, msg: "success", data });
-  //     return;
-  //   },
-  //   () => {
-  //     console.log(">>>>>>>>>>>>>>> ERROR");
-  //     res.json({ code: 500, msg: "failed" });
-  //   }
-  // );
-});
-
 //获取所有人员信息
 router.get("/roster/all", function(req, res, next) {
   // if (!req.session.login) {
@@ -80,6 +54,7 @@ router.get("/roster/all", function(req, res, next) {
   //   return;
   // }
   let sql = "";
+
   if (Object.keys(req.query).length) {
     sql = `WHERE ${toKeyValue(req.query)}`;
   }
@@ -111,7 +86,7 @@ router.get("/roster/all", function(req, res, next) {
 });
 
 //获取积极分子数据
-router.get("/roster/activist", function(req, res, next) {
+router.get("/roster/active", function(req, res, next) {
   // if (!req.session.login) {
   //   res.json({
   //     code: 302,
@@ -343,7 +318,6 @@ router.post("/roster/all/confirm", function(req, res, next) {
       if (flag) {
         return;
       }
-
       //先查询表中是否有该数据 如果有 则跳过该记录
       select(
         "roster_all",
@@ -376,10 +350,10 @@ router.post("/roster/all/confirm", function(req, res, next) {
               err => {
                 console.log("没有该记录，但是添加发生错误");
                 flag = true;
-                res.json({
-                  code: 500,
-                  msg: "insert failed"
-                });
+                // res.json({
+                //   code: 500,
+                //   msg: "insert failed"
+                // });
               }
             );
           }
@@ -395,18 +369,5 @@ router.post("/roster/all/confirm", function(req, res, next) {
     })(i);
   }
 });
-
-// router.get('/login', function(req, res, next) {
-//   select("user",
-//   "*",
-//   "id=1",
-//   (results) => {
-//     let data = JSON.parse(JSON.stringify(results));
-//     res.json({code: 200, msg: "success", data});
-//   },
-//   () => {
-//     res.json({code: 500, msg: "failed"});
-//   })
-// });
 
 module.exports = router;

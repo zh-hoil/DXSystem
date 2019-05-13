@@ -1,15 +1,16 @@
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
 import { Get, Post } from "Public/js/Ajax";
-import { LOGINURL } from "Public/js/Api";
+import { SIGNURL } from "Public/js/Api";
 import "./index.less";
 
-class Login extends React.Component {
+class Sign extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password_1: "",
+      password_2: ""
     };
   }
 
@@ -20,35 +21,25 @@ class Login extends React.Component {
         this.handleSubmit(event);
       }
     };
-    if (localStorage.getItem("username")) {
-      let username = localStorage.getItem("username");
-      let password = localStorage.getItem("password");
-      this.setState({
-        username,
-        password
-      });
-    }
   };
-
+  //注册提交
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         /** 发送网络请求登录 */
-        const { username, password, remember } = values;
+        const { username, password_1, password_2 } = values;
+        if (password_1 !== password_2) {
+          message.error("两次密码输入不一致", 1);
+        }
         Post(
-          LOGINURL,
-          { username, password, remember },
+          SIGNURL,
+          { username, password: password_1 },
           res => {
             if (res.code === 200) {
               message.success(res.msg, 0.5, function() {
-                // 跳转到首页
-                window.location.hash = "home";
-              });
-            } else if (res.code === 201) {
-              message.err(res.msg, function() {
-                // 跳转到注册页
-                window.location.hash = "sign";
+                // 跳转到登录页面
+                window.location.hash = "login";
               });
             } else {
               message.error(res.msg);
@@ -84,8 +75,8 @@ class Login extends React.Component {
             )}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator("password", {
-              initialValue: this.state.password,
+            {getFieldDecorator("password_1", {
+              initialValue: this.state.password_1,
               rules: [{ required: true, message: "请输入密码!" }]
             })(
               <Input
@@ -98,19 +89,26 @@ class Login extends React.Component {
             )}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator("remember", {
-              valuePropName: "checked",
-              initialValue: true
-            })(<Checkbox>记住我</Checkbox>)}
-            <a className="login-form-forgot" href="">
-              忘记密码？
-            </a>
+            {getFieldDecorator("password_2", {
+              initialValue: this.state.password_2,
+              rules: [{ required: true, message: "请再次输入密码!" }]
+            })(
+              <Input
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                type="password"
+                placeholder="确认密码"
+              />
+            )}
+          </Form.Item>
+          <Form.Item>
             <Button
               type="primary"
               htmlType="submit"
               className="login-form-button"
             >
-              登录
+              注册
             </Button>
           </Form.Item>
         </Form>
@@ -119,5 +117,5 @@ class Login extends React.Component {
   }
 }
 
-Login = Form.create({ name: "normal_login" })(Login);
-export default Login;
+Sign = Form.create({ name: "normal_login" })(Sign);
+export default Sign;

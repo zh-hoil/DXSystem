@@ -10,13 +10,13 @@ import { select, insert, toKeyValue, del, put } from "../utils";
 
 /* GET home page. */
 router.get("/history", function(req, res, next) {
-  // if (!req.session.login) {
-  //   res.json({
-  //     code: 302,
-  //     msg: "登录信息过期，请重新登录"
-  //   });
-  //   return;
-  // }
+  if (!req.session.login) {
+    res.json({
+      code: 302,
+      msg: "登录信息过期，请重新登录"
+    });
+    return;
+  }
   select(
     "history",
     "*",
@@ -66,7 +66,7 @@ router.post("/history/upload", upload.single("file"), function(req, res, next) {
 });
 
 router.post("/history/confirm", function(req, res, next) {
-  res.json({code: 200, msg: "successful"})
+  res.json({ code: 200, msg: "successful" });
 });
 
 module.exports = router;

@@ -39,14 +39,18 @@ export function Post(url, data, resolve, reject) {
     });
 }
 
-export function Get(url, data, resolve, reject) {
+export function Get(url, data, resolve, reject, config = {}) {
   url = window.RootURL + url;
   // if (!data.userId) {
   //     data.userId = userId;
   // }
-  Ajax.get(url, {
-    params: data
-  })
+  Ajax.get(
+    url,
+    {
+      params: data
+    },
+    config
+  )
     .then(function(response) {
       if (response.status === 200) {
         let data = response.data;

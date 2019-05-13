@@ -3,17 +3,15 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const OpenBrowserPlugin = require("open-browser-webpack-plugin");
 const common = require("./webpack.common");
-
 module.exports = (dirname, config) => {
   const { host, port } = config;
-  console.log("development >>>>>>>>>>>>>>>>>>>>>>>>>>>");
   return merge(common(dirname), {
     mode: "development",
     devtool: "eval-source-map",
     devServer: {
       contentBase: path.join(dirname, "dist"),
-      port: port, // 端口号
-      host: host, // 主机地址
+      port: port, // 端口号 3000
+      host: host, // 主机地址 http://127.0.0.1
       inline: true,
       hot: true,
       open: false,

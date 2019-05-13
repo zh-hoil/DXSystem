@@ -23,8 +23,8 @@ class Selection extends React.Component {
           onChange={this.props.handleChange}
         >
           {this.props.selection.options.map((option, index) => (
-            <Select.Option key={index} value={option.text}>
-              {option.text}
+            <Select.Option key={index} value={option[this.props.value]}>
+              {option[this.props.value]}
             </Select.Option>
           ))}
         </Select>

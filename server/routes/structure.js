@@ -4,14 +4,13 @@ import { select } from "../utils";
 
 /* GET home page. */
 router.get("/structure", function(req, res, next) {
-  // if (!req.session.login) {
-  //   res.json({
-  //     code: 302,
-  //     msg: "登录信息过期，请重新登录"
-  //   });
-  //   return;
-  // }
-
+  if (!req.session.login) {
+    res.json({
+      code: 302,
+      msg: "登录信息过期，请重新登录"
+    });
+    return;
+  }
   let totalSql = "";
   let applySql =
     "WHERE apply>0 AND active IS NULL AND develop IS NULL AND ready IS NULL AND approved IS NULL";

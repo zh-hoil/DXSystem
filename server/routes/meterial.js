@@ -9,13 +9,13 @@ var upload = multer({ dest: filePath }); //设置上传文件存储地址
 import { select, insert, toKeyValue, del, put } from "../utils";
 
 router.get("/meterial", function(req, res, next) {
-  // if (!req.session.login) {
-  //   res.json({
-  //     code: 302,
-  //     msg: "登录信息过期，请重新登录"
-  //   });
-  //   return;
-  // }
+  if (!req.session.login) {
+    res.json({
+      code: 302,
+      msg: "登录信息过期，请重新登录"
+    });
+    return;
+  }
   select(
     "meterial",
     "*",

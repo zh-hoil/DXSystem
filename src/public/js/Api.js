@@ -1,4 +1,5 @@
 export const LOGINURL = "/login"; //登录url
+export const SIGNURL = "/sign"; //注册url
 
 export const NEWSURL = "/news"; //新闻页url
 

@@ -173,7 +173,7 @@ class Structure extends React.Component {
           this.state.total -
           this.state.approved.count -
           this.state.active.count -
-          this.state.ready,
+          this.state.ready.count,
         name: "其他"
       }
     ];
@@ -194,7 +194,7 @@ class Structure extends React.Component {
           this.state.total -
           this.state.approved.count -
           this.state.active.count -
-          this.state.ready
+          this.state.ready.count
       })
     );
     const option_main = {

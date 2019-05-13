@@ -10,12 +10,12 @@ connection.connect();
 
 //党支部相关
 let branchKeys = "branch";
-let branchColumns = "branch varchar(255) PRIMARY KEY";
+let branchColumns = "branch varchar(255)";
 let branchSql = "WHERE branch IS NOT NULL";
 
 //年级相关
 let gradeKeys = "grade";
-let gradeColumns = "grade varchar(255) PRIMARY KEY";
+let gradeColumns = "grade varchar(255)";
 let gradeSql = "WHERE grade IS NOT NULL";
 
 //入党申请相关
@@ -186,6 +186,17 @@ function override(table, keys, sql, success) {
         success();
         return;
       }
+      //去重
+      for (var i = 0; i < data.length - 1; i++) {
+        for (var j = i + 1; j < data.length; j++) {
+          if (JSON.stringify(data[i]) == JSON.stringify(data[j])) {
+            data.splice(j, 1);
+            j--;
+          }
+        }
+      }
+      console.log(data);
+
       data.forEach(item => {
         let keys = Object.keys(item);
         let temp = [];
@@ -241,7 +252,7 @@ export function newTable(table, keys, columns, sql, success) {
 
 export function newTables(res) {
   let tableCount = 0;
-  newTable("branch", branchKeys, branchColumns, branchySql, result => {
+  newTable("branch", branchKeys, branchColumns, branchSql, result => {
     tableCount++;
     if (tableCount === 10) {
       res.json({ code: 200, msg: "successful" });

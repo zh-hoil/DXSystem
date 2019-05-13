@@ -89,7 +89,7 @@ class Home extends React.Component {
                 letterSpacing: "4px"
               }}
             >
-              党校数据管理系统
+              党员数据管理系统
             </Header>
             <Content>{this._changeContent()}</Content>
           </Layout>

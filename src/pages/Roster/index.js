@@ -26,7 +26,8 @@ class Roster extends React.Component {
         path: nextProps.fullPath,
         branchValue: undefined,
         gradeValue: undefined,
-        readyValue: undefined
+        readyValue: undefined,
+        id: undefined
       });
     }
   }
@@ -38,11 +39,7 @@ class Roster extends React.Component {
   render() {
     return (
       <div className="roster">
-        <Option
-          visible={this.state.visible}
-          handleGrade={this.handleGrade}
-          handleBranch={this.handleBranch}
-        />
+        <Option visible={this.state.visible} />
         <TableList />
       </div>
     );
@@ -54,6 +51,7 @@ export default connect(
     branchValue: state.rosterData.branchValue,
     gradeValue: state.rosterData.gradeValue,
     readyValue: state.rosterData.readyValue,
+    id: state.rosterData.id,
     path: state.rosterData.path
   }),
   { updateData }

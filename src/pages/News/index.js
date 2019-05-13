@@ -45,7 +45,7 @@ class News extends React.Component {
         <Swipper images={this.state.images} />
         <div className="news-content">
           <List title="国家要闻" list={this.state.nationNews} />
-          <List title="学院动态" list={this.state.schoolNews} />
+          <List title="学校动态" list={this.state.schoolNews} />
         </div>
       </div>
     );

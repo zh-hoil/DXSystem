@@ -14,7 +14,6 @@ router.post("/login", function(req, res, next) {
         let data = JSON.parse(JSON.stringify(results))[0];
         if (data.password === password) {
           req.session.login = true;
-
           if (remember === "true") {
             //设置cookie失效时间为一天
             req.session.cookie.maxAge = 24 * 60 * 60 * 1000;
@@ -29,7 +28,6 @@ router.post("/login", function(req, res, next) {
       }
     },
     () => {
-      console.log(">>>>>>>>>>>>>>> ERROR");
       res.json({ code: 500, msg: "failed" });
     }
   );

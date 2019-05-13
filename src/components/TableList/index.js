@@ -34,7 +34,6 @@ class TableList extends React.Component {
     let params = {};
     if (this.props.visible === !nextProps.visible) return; //如果仅仅改变了modal框的显示与否 则不刷新数据
     if (this.props.path !== nextProps.path) {
-      console.log("切换路径");
       this._initTable(nextProps.path);
     } else {
       if (nextProps.gradeValue) {
@@ -56,6 +55,13 @@ class TableList extends React.Component {
           params.ready = nextProps.readyValue;
         } else {
           params.ready = this.props.readyValue;
+        }
+      }
+      if (nextProps.id) {
+        if (nextProps.id !== this.props.id) {
+          params.id = nextProps.id;
+        } else {
+          params.id = this.props.id;
         }
       }
       this._initTable(this.props.path, params);
@@ -81,9 +87,9 @@ class TableList extends React.Component {
         // data = Data.all.data;
         columns = Data.all.columns;
         break;
-      case "/roster/activist":
+      case "/roster/active":
         // data = Data.activist.data;
-        columns = Data.activist.columns;
+        columns = Data.active.columns;
         break;
       case "/roster/candidate":
         // data = Data.candidate.data;
@@ -349,6 +355,7 @@ export default connect(
     branchValue: state.rosterData.branchValue,
     gradeValue: state.rosterData.gradeValue,
     readyValue: state.rosterData.readyValue,
+    id: state.rosterData.id,
     path: state.rosterData.path
   }),
   { updateData }

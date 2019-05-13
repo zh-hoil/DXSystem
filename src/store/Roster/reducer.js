@@ -6,6 +6,7 @@ let defaultState = {
   branchValue: undefined,
   gradeValue: undefined,
   readyValue: undefined,
+  id: undefined,
   path: ""
 };
 // 首页数据
