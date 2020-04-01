@@ -36,12 +36,6 @@ npm start
 npm run dev
 ```
 
-- 代码构建
-
-```
-npm run build
-```
-
 ### 目录结构说明
 
 ```
